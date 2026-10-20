@@ -47,6 +47,8 @@ h1{margin:0;font-size:22px;letter-spacing:-.3px}
 .tel{flex:1 1 100%;text-align:center;background:var(--bg);border-radius:12px;padding:12px;font-size:21px;font-weight:700;color:var(--tx);text-decoration:none;letter-spacing:.3px}
 .sb{flex:1;border:1px solid var(--ln);background:transparent;color:var(--tx);border-radius:10px;padding:9px;font:inherit;font-size:14px;cursor:pointer}
 a.bt{display:block;text-align:center;text-decoration:none}.ad{flex:1 1 100%;color:var(--mu);font-size:14px;padding:0 2px}
+.ag{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:4px 0 12px}.ap{display:flex;flex-direction:column;align-items:center;gap:6px;text-decoration:none;color:var(--tx);font-size:13px;text-align:center}.ap svg{width:64px;height:64px}
+.pin{position:absolute;left:50%;top:50%;transform:translate(-50%,-100%);font-size:34px;line-height:1;pointer-events:none;z-index:1000}#mr{max-height:30vh;overflow:auto}
 .em{text-align:center;color:var(--mu);padding:36px 10px}
 .fab{position:fixed;right:16px;bottom:calc(18px + env(safe-area-inset-bottom,0px));z-index:20;border:0;background:var(--ac);color:var(--on);font:inherit;font-weight:700;border-radius:28px;padding:15px 22px;box-shadow:0 6px 18px rgba(0,0,0,.25);cursor:pointer}
 main{padding-bottom:90px}
@@ -102,7 +104,7 @@ button:focus-visible,input:focus-visible,a:focus-visible{outline:2px solid var(-
  <label for="fp">Telefon raqami</label><input id="fp" class="in" type="tel" inputmode="tel" placeholder="+998 90 123 45 67">
  <label for="fa">Manzil (ixtiyoriy)</label><input id="fa" class="in" autocomplete="off" placeholder="Masalan: Chilonzor, 9-kvartal">
  <label>Joylashuv (GPS)</label>
- <div class="lr" style="flex-wrap:wrap"><button type="button" class="sb" id="gp" style="flex:none">📍 Joylashuvni saqlash</button><button type="button" class="sb" id="gx" style="flex:none" hidden>Oʻchirish</button><span id="gs" style="font-size:13px;color:var(--mu)"></span></div>
+ <div class="lr" style="flex-wrap:wrap"><button type="button" class="sb" id="gp" style="flex:none">📍 Joylashuvni saqlash</button><button type="button" class="sb" id="mp" style="flex:none">🗺 Xaritadan tanlash</button><button type="button" class="sb" id="gx" style="flex:none" hidden>Oʻchirish</button><span id="gs" style="font-size:13px;color:var(--mu)"></span></div>
  <label>Logo (ixtiyoriy)</label>
  <div class="lr"><div class="lg" id="lg"></div><button type="button" class="sb" id="lu" style="flex:none">Yuklash</button><button type="button" class="sb" id="lx" style="flex:none">Olib tashlash</button><input id="lf" type="file" accept="image/*" hidden></div>
  <label>Qaysi kunlari boriladi</label><div class="dd" id="fd"></div>
@@ -112,6 +114,13 @@ button:focus-visible,input:focus-visible,a:focus-visible{outline:2px solid var(-
  <button class="bt g" id="fc">Bekor qilish</button>
 </div></div>
 
+<div class="ov" id="mv" hidden style="align-items:stretch"><div class="sh" style="border-radius:0;height:100%;max-height:100%;display:flex;flex-direction:column;gap:8px;padding-top:calc(14px + env(safe-area-inset-top,0px))">
+ <div style="display:flex;gap:6px"><input id="mq" class="in" style="margin:0" placeholder="Joy nomi yoki manzil"><button class="sb" id="mg" style="flex:none">Qidirish</button></div>
+ <div id="mr"></div>
+ <div style="position:relative;flex:1;min-height:240px"><div id="map" style="position:absolute;inset:0;border-radius:14px"></div><div class="pin">📍</div></div>
+ <div style="display:flex;gap:6px"><input id="mc" class="in" style="margin:0" placeholder="41.3111, 69.2797 yoki xarita havolasi"><button class="sb" id="ml" style="flex:none">Qoʻllash</button></div>
+ <button class="bt" id="mo" style="margin-top:0">Shu joyni tanlash</button><button class="bt g" id="mx" style="margin-top:0">Bekor qilish</button>
+</div></div>
 <div class="ov cen" id="am" hidden><div class="sh">
  <h2 id="at"></h2><p id="ap" style="margin:0 0 6px;color:var(--mu)"></p>
  <button class="bt" id="ao"></button><button class="bt g" id="ac">Yoʻq, qolsin</button>
@@ -284,25 +293,72 @@ $("#gp").onclick=()=>{
  navigator.geolocation.getCurrentPosition(g=>{pos={lat:+g.coords.latitude.toFixed(6),lng:+g.coords.longitude.toFixed(6),acc:Math.round(g.coords.accuracy)};paintForm()},()=>{paintForm();toast("Joylashuvga ruxsat bering")},{enableHighAccuracy:true,timeout:20000,maximumAge:0});
 };
 $("#gx").onclick=()=>{pos=null;paintForm()};
+const IC={
+ ym:'<svg viewBox="0 0 64 64"><rect width="64" height="64" rx="15" fill="#fff" stroke="#d9d9d9"/><path d="M32 10c-8.3 0-15 6.5-15 14.6 0 9.6 11 20.3 14 28.2.4 1 1.6 1 2 0 3-7.9 14-18.6 14-28.2C47 16.5 40.3 10 32 10z" fill="#fc3f1d"/><circle cx="32" cy="24" r="6" fill="#fff"/></svg>',
+ go:'<svg viewBox="0 0 64 64"><rect width="64" height="64" rx="15" fill="#fed600"/><text x="32" y="44" text-anchor="middle" font-family="Arial Black,Arial,sans-serif" font-weight="900" font-style="italic" font-size="30" fill="#000">Go</text></svg>',
+ gm:'<svg viewBox="0 0 64 64"><rect width="64" height="64" rx="15" fill="#fff" stroke="#d9d9d9"/><path d="M32 8c-8.3 0-15 6.5-15 14.6 0 9.6 11 20.3 14 28.2.4 1 1.6 1 2 0 3-7.9 14-18.6 14-28.2C47 14.5 40.3 8 32 8z" fill="#ea4335"/><circle cx="32" cy="22" r="6" fill="#fff"/><rect x="12" y="54" width="14" height="4" rx="2" fill="#34a853"/><rect x="25" y="54" width="14" height="4" rx="2" fill="#fbbc04"/><rect x="38" y="54" width="14" height="4" rx="2" fill="#4285f4"/></svg>',
+ am:'<svg viewBox="0 0 64 64"><rect width="64" height="64" rx="15" fill="#e8e8ea"/><path d="M34 0h15a15 15 0 0115 15v14L34 0z" fill="#7bd35a"/><path d="M0 40l30 24H15A15 15 0 010 49z" fill="#f4a6c3"/><rect x="28" y="0" width="8" height="64" fill="#2f7bf6" transform="rotate(30 32 32)"/><circle cx="32" cy="32" r="14" fill="#fff"/><circle cx="32" cy="32" r="11" fill="#2f7bf6"/><path d="M32 23l7 17-7-4-7 4z" fill="#fff"/></svg>',
+ ot:'<svg viewBox="0 0 64 64"><rect width="64" height="64" rx="15" fill="#d5dbe1"/><path d="M32 10c-8.3 0-15 6.5-15 14.6 0 9.6 11 20.3 14 28.2.4 1 1.6 1 2 0 3-7.9 14-18.6 14-28.2C47 16.5 40.3 10 32 10z" fill="#14212b"/><circle cx="32" cy="24" r="6" fill="#fff"/></svg>'
+};
 function openNav(id){
  const s=shops[id],has=s.lat!=null&&s.lng!=null;
  if(!has&&!s.address){toast("Avval manzil yoki joylashuvni qoʻshing");return openForm(id)}
- const la=s.lat,ln=s.lng,t=encodeURIComponent(s.address||s.name),ios=/iPhone|iPad|iPod/.test(navigator.userAgent),L=[];
+ const la=s.lat,ln=s.lng,t=encodeURIComponent(s.address||s.name),ios=/iPhone|iPad|iPod/.test(navigator.userAgent),K=[];
  if(has){
-  L.push(["Yandex Xarita: yoʻnalish","https://yandex.com/maps/?rtext=~"+la+","+ln+"&rtt=auto"]);
-  L.push(["Yandex Xarita: joyni koʻrsatish","https://yandex.com/maps/?pt="+ln+","+la+"&z=17&l=map"]);
-  L.push(["Yandex Go (taksi)","https://3.redirect.appmetrica.yandex.com/route?end-lat="+la+"&end-lon="+ln+"&appmetrica_tracking_id=1178268795219780156"]);
-  L.push(["Google Maps","https://www.google.com/maps/dir/?api=1&destination="+la+","+ln]);
-  if(ios)L.push(["Apple Maps","https://maps.apple.com/?daddr="+la+","+ln]);else L.push(["Boshqa ilova (tanlash)","geo:"+la+","+ln+"?q="+la+","+ln]);
+  K.push(["ym","Yandex Xarita","https://yandex.com/maps/?rtext=~"+la+","+ln+"&rtt=auto"]);
+  K.push(["go","Yandex Go","https://3.redirect.appmetrica.yandex.com/route?end-lat="+la+"&end-lon="+ln+"&appmetrica_tracking_id=1178268795219780156"]);
+  K.push(["gm","Google Maps","https://www.google.com/maps/dir/?api=1&destination="+la+","+ln]);
+  K.push(ios?["am","Apple Maps","https://maps.apple.com/?daddr="+la+","+ln]:["ot","Boshqa ilova","geo:"+la+","+ln+"?q="+la+","+ln]);
  }else{
-  L.push(["Yandex Xarita: qidirish","https://yandex.com/maps/?text="+t]);
-  L.push(["Google Maps","https://www.google.com/maps/search/?api=1&query="+t]);
-  if(ios)L.push(["Apple Maps","https://maps.apple.com/?q="+t]);
+  K.push(["ym","Yandex Xarita","https://yandex.com/maps/?text="+t]);
+  K.push(["gm","Google Maps","https://www.google.com/maps/search/?api=1&query="+t]);
+  if(ios)K.push(["am","Apple Maps","https://maps.apple.com/?q="+t]);
  }
  $("#nt").textContent=s.name;
- $("#nl").innerHTML=L.map(x=>`<a class="bt g" href="${esc(x[1])}" target="_blank" rel="noopener">${x[0]}</a>`).join("")+(has?"":`<p class="em" style="padding:10px">Aniq yoʻnalish uchun doʻkonda turib 📍 Joylashuvni saqlang.</p>`);
+ $("#nl").innerHTML=`<div class="ag">${K.map(x=>`<a class="ap" href="${esc(x[2])}" target="_blank" rel="noopener">${IC[x[0]]}<span>${x[1]}</span></a>`).join("")}</div>`+(has?"":`<p class="em" style="padding:6px">Aniq yoʻnalish uchun doʻkonda turib 📍 Joylashuvni saqlang yoki xaritadan tanlang.</p>`);
  $("#nv").hidden=false;
 }
+let map=null;
+function loadLeaflet(){return window.L?Promise.resolve():new Promise((ok,no)=>{const l=document.createElement("link");l.rel="stylesheet";l.href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css";document.head.appendChild(l);const j=document.createElement("script");j.src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js";j.onload=ok;j.onerror=no;document.head.appendChild(j)})}
+async function openMap(){
+ $("#mv").hidden=false;$("#mr").innerHTML="";
+ try{await loadLeaflet()}catch(e){$("#mv").hidden=true;return toast("Xarita yuklanmadi. Internetni tekshiring")}
+ const c=pos?[pos.lat,pos.lng]:[41.3111,69.2797],z=pos?17:12;
+ if(!map){map=L.map("map").setView(c,z);L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:19,attribution:"© OpenStreetMap"}).addTo(map)}
+ else map.setView(c,z);
+ setTimeout(()=>map.invalidateSize(),80);
+ if(!pos&&navigator.geolocation)navigator.geolocation.getCurrentPosition(g=>map.setView([g.coords.latitude,g.coords.longitude],16),()=>{},{timeout:8000});
+}
+function parseLL(t){
+ try{t=decodeURIComponent(t)}catch(e){}
+ const N="(-?\\d{1,3}\\.\\d+)",ya=/yandex/.test(t);let m,a=null,b=null;
+ if(m=t.match(new RegExp("[?&](?:pt|ll)="+N+","+N))){if(ya){a=m[2];b=m[1]}else{a=m[1];b=m[2]}}
+ else if(m=t.match(new RegExp("@"+N+","+N))){a=m[1];b=m[2]}
+ else if(m=t.match(new RegExp("!3d"+N+"!4d"+N))){a=m[1];b=m[2]}
+ else if(m=t.match(new RegExp(N+"[,\\s]+"+N))){a=m[1];b=m[2]}
+ if(a==null)return null;
+ a=+a;b=+b;if(Math.abs(a)>90){const x=a;a=b;b=x}
+ return Math.abs(a)<=90&&Math.abs(b)<=180?{lat:a,lng:b}:null;
+}
+$("#mp").onclick=openMap;
+$("#mx").onclick=()=>{$("#mv").hidden=true};
+$("#mo").onclick=()=>{const c=map.getCenter();pos={lat:+c.lat.toFixed(6),lng:+c.lng.toFixed(6),acc:0};$("#mv").hidden=true;paintForm()};
+$("#ml").onclick=()=>{
+ const v=$("#mc").value.trim();if(!v)return;
+ const r=parseLL(v);
+ if(!r)return toast(/goo\.gl|\/maps\/-\//.test(v)?"Qisqa havola oʻqilmadi. Koordinatani nusxalab yozing":"Koordinata topilmadi");
+ map.setView([r.lat,r.lng],17);$("#mc").value="";
+};
+$("#mg").onclick=async()=>{
+ const q=$("#mq").value.trim();if(!q)return;
+ $("#mr").innerHTML='<p class="em" style="padding:8px">Qidirilmoqda…</p>';
+ try{
+  const r=await fetch("https://nominatim.openstreetmap.org/search?format=jsonv2&limit=6&accept-language=uz,ru&countrycodes=uz&q="+encodeURIComponent(q)),d=await r.json();
+  $("#mr").innerHTML=d.length?d.map((x,i)=>`<button class="ch" style="display:block;width:100%;text-align:left;margin-bottom:4px;border-radius:12px" data-i="${i}">${esc(x.display_name)}</button>`).join(""):'<p class="em" style="padding:8px">Topilmadi. Boshqacha yozib koʻring yoki xaritani suring.</p>';
+  $("#mr").onclick=e=>{const b=e.target.closest("[data-i]");if(!b)return;const x=d[+b.dataset.i];map.setView([+x.lat,+x.lon],17);$("#mr").innerHTML=""};
+ }catch(e){$("#mr").innerHTML='<p class="em" style="padding:8px">Qidiruv ishlamadi</p>'}
+};
+$("#mq").onkeydown=e=>{if(e.key=="Enter")$("#mg").click()};
 $("#nc").onclick=()=>{$("#nv").hidden=true};
 async function loadAg(){
  const{data,error}=await sb.rpc("owner_stats");
