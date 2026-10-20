@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="uz"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Marshrutim</title>
+<link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icon.svg"><meta name="theme-color" content="#14212b">
+<style>
+:root{--bg:#eef1f4;--cd:#fff;--tx:#14212b;--mu:#667583;--ln:#dde3e8;--ink:#14212b;--am:#f2a30f;--ok:#0e7c66;--okb:#e1f3ee;--dg:#c62f2f;--ac:#14212b;--on:#fff;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0e151b;--cd:#17212a;--tx:#eaf0f4;--mu:#8fa0ad;--ln:#26333e;--ink:#1f2e3a;--ok:#3ecaa8;--okb:#123028;--dg:#ff7b7b;--ac:#f2a30f;--on:#14212b;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0e151b;--cd:#17212a;--tx:#eaf0f4;--mu:#8fa0ad;--ln:#26333e;--ink:#1f2e3a;--ok:#3ecaa8;--okb:#123028;--dg:#ff7b7b;--ac:#f2a30f;--on:#14212b;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.4 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;-webkit-tap-highlight-color:transparent}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+.w{max-width:640px;margin:0 auto;padding:0 14px}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:10;background:var(--bg);padding-bottom:8px}
+.top{display:flex;align-items:center;justify-content:space-between;padding:12px 0 8px}
+h1{margin:0;font-size:22px;letter-spacing:-.3px}
+.nav{display:flex;align-items:center;gap:4px;font-size:13px;color:var(--mu)}
+.nav button{border:0;background:var(--cd);color:var(--tx);width:32px;height:32px;border-radius:10px;font-size:20px;line-height:1;cursor:pointer}
+#wk{cursor:pointer;padding:0 6px}
+.tabs{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}
+.tab{border:1px solid var(--ln);background:var(--cd);border-radius:12px;padding:6px 0;color:var(--mu);font:inherit;font-size:12px;cursor:pointer}
+.tab b{display:block;font-size:17px;color:var(--tx)}
+.tab i{display:block;font-style:normal;font-size:10px}
+.tab.td{border-color:var(--am)}
+.tab.on{background:var(--ink);border-color:var(--ink);color:#c9d3db}.tab.on b{color:#fff}
+.hero{margin-top:8px;background:var(--ink);color:#fff;border-radius:16px;padding:12px 14px}
+.hh{display:flex;justify-content:space-between;align-items:baseline}
+.hh b{font-size:22px}
+.pb{height:8px;border-radius:4px;background:rgba(255,255,255,.18);margin-top:8px;overflow:hidden}
+.pb i{display:block;height:100%;width:0;background:var(--am);transition:width .3s}
+.in{width:100%;border:1px solid var(--ln);background:var(--cd);color:var(--tx);border-radius:12px;padding:12px;font:inherit;margin:4px 0 12px}
+#sq{margin:12px 0 8px}
+.fl{display:flex;gap:6px;margin-bottom:4px;flex-wrap:wrap}
+.ch{border:1px solid var(--ln);background:var(--cd);color:var(--tx);border-radius:20px;padding:7px 13px;font:inherit;font-size:14px;cursor:pointer}
+.ch.on{background:var(--ink);border-color:var(--ink);color:#fff}
+.c{background:var(--cd);border:1px solid var(--ln);border-radius:16px;margin:8px 0;overflow:hidden}
+.c.v{background:var(--okb);border-color:transparent}
+.r{display:flex;align-items:center;gap:12px;padding:10px 12px;cursor:pointer}
+.av{width:46px;height:46px;border-radius:12px;color:#fff;display:grid;place-items:center;font-weight:700;font-size:19px;overflow:hidden;flex:none}
+.av img{width:100%;height:100%;object-fit:cover}
+.nm{flex:1;min-width:0;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.v .nm{opacity:.65}
+.ck{width:42px;height:42px;border-radius:50%;border:2px solid var(--ln);background:transparent;display:grid;place-items:center;flex:none;color:transparent;cursor:pointer;padding:0}
+.v .ck{background:var(--ok);border-color:var(--ok);color:#fff}
+.mo{padding:0 12px 12px;display:flex;gap:8px;flex-wrap:wrap}
+.tel{flex:1 1 100%;text-align:center;background:var(--bg);border-radius:12px;padding:12px;font-size:21px;font-weight:700;color:var(--tx);text-decoration:none;letter-spacing:.3px}
+.sb{flex:1;border:1px solid var(--ln);background:transparent;color:var(--tx);border-radius:10px;padding:9px;font:inherit;font-size:14px;cursor:pointer}
+.em{text-align:center;color:var(--mu);padding:36px 10px}
+.fab{position:fixed;right:16px;bottom:calc(18px + env(safe-area-inset-bottom,0px));z-index:20;border:0;background:var(--ac);color:var(--on);font:inherit;font-weight:700;border-radius:28px;padding:15px 22px;box-shadow:0 6px 18px rgba(0,0,0,.25);cursor:pointer}
+main{padding-bottom:90px}
+.ov{position:fixed;inset:0;background:rgba(8,12,18,.55);display:flex;align-items:flex-end;justify-content:center;z-index:50}
+.ov[hidden]{display:none}.ov.cen{align-items:center;padding:20px}
+.sh{background:var(--cd);width:100%;max-width:520px;border-radius:22px 22px 0 0;padding:18px 16px calc(16px + env(safe-area-inset-bottom,0px));max-height:92%;overflow:auto}
+.cen .sh{border-radius:20px;padding:20px}
+.sh h2{margin:0 0 12px;font-size:19px}
+.sh label{font-size:13px;color:var(--mu)}
+.lr{display:flex;align-items:center;gap:10px;margin:6px 0 14px}
+.lg{width:56px;height:56px;border-radius:14px;background:var(--bg);display:grid;place-items:center;overflow:hidden;font-size:24px}
+.lg img{width:100%;height:100%;object-fit:cover}
+.bt{width:100%;border:0;border-radius:12px;padding:13px;font:inherit;font-weight:700;background:var(--ac);color:var(--on);cursor:pointer;margin-top:8px}
+.bt.g{background:transparent;color:var(--tx);border:1px solid var(--ln);font-weight:600}
+.bt.d{background:transparent;color:var(--dg);border:1px solid var(--ln);font-weight:600}
+.dd{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0 4px}
+.dd .ch{padding:8px 11px}
+#ts{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(84px + env(safe-area-inset-bottom,0px));background:var(--ink);color:#fff;padding:10px 16px;border-radius:12px;font-size:14px;z-index:60;opacity:0;pointer-events:none;transition:opacity .2s}
+#ts.on{opacity:1}
+button:focus-visible,input:focus-visible,a:focus-visible{outline:2px solid var(--am);outline-offset:2px}
+</style></head><body>
+<header><div class="w">
+ <div class="top"><h1>Marshrutim <small id="sy" style="font-size:12px;color:var(--mu);font-weight:400;cursor:pointer"></small></h1><div class="nav"><button id="pv" aria-label="Oldingi hafta">‹</button><span id="wk"></span><button id="nx" aria-label="Keyingi hafta">›</button><button id="out" aria-label="Chiqish" style="font-size:15px">⏻</button></div></div>
+ <div id="tabs" class="tabs"></div>
+ <div class="hero"><div class="hh"><span id="dn"></span><b id="pg"></b></div><div class="pb"><i id="bar"></i></div></div>
+</div></header>
+<main class="w">
+ <input id="sq" class="in" type="search" placeholder="Doʻkon yoki raqam qidirish">
+ <div id="fl" class="fl"></div>
+ <div id="ls"></div>
+</main>
+<button class="fab" id="add">+ Doʻkon qoʻshish</button>
+<div id="ts"></div>
+
+<div class="ov cen" id="lo" hidden><div class="sh">
+ <h2>Marshrutim</h2>
+ <label for="gn">Login</label><input id="gn" class="in" autocomplete="username" autocapitalize="none" spellcheck="false">
+ <label for="pw">Parol</label><input id="pw" class="in" type="password" autocomplete="current-password">
+ <p id="le" style="color:var(--dg);margin:0 0 4px"></p>
+ <button class="bt" id="lb">Kirish</button>
+</div></div>
+<div class="ov" id="fm" hidden><div class="sh">
+ <h2 id="ft"></h2>
+ <label for="fn">Doʻkon nomi</label><input id="fn" class="in" autocomplete="off">
+ <label for="fp">Telefon raqami</label><input id="fp" class="in" type="tel" inputmode="tel" placeholder="+998 90 123 45 67">
+ <label>Logo (ixtiyoriy)</label>
+ <div class="lr"><div class="lg" id="lg"></div><button type="button" class="sb" id="lu" style="flex:none">Yuklash</button><button type="button" class="sb" id="lx" style="flex:none">Olib tashlash</button><input id="lf" type="file" accept="image/*" hidden></div>
+ <label>Qaysi kunlari boriladi</label><div class="dd" id="fd"></div>
+ <button class="bt" id="sv">Saqlash</button>
+ <button class="bt g" id="sa">Saqlash va yana qoʻshish</button>
+ <button class="bt d" id="del" hidden>Doʻkonni oʻchirish</button>
+ <button class="bt g" id="fc">Bekor qilish</button>
+</div></div>
+
+<div class="ov cen" id="am" hidden><div class="sh">
+ <h2 id="at"></h2><p id="ap" style="margin:0 0 6px;color:var(--mu)"></p>
+ <button class="bt" id="ao"></button><button class="bt g" id="ac">Yoʻq, qolsin</button>
+</div></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+<script>
+const $=s=>document.querySelector(s);
+const D=["Dushanba","Seshanba","Chorshanba","Payshanba","Juma","Shanba","Yakshanba"],S=["Du","Se","Ch","Pa","Ju","Sh","Ya"],M=["yanvar","fevral","mart","aprel","may","iyun","iyul","avgust","sentyabr","oktyabr","noyabr","dekabr"];
+let DB=null,shops={},visits={},wk=0,day=(new Date().getDay()+6)%7,flt="all",q="",openId=null,editId=null,logo="",fd=new Set(),cb=null;
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const pad=n=>String(n).padStart(2,"0"),dk=d=>d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate());
+function monday(){const d=new Date();d.setHours(12,0,0,0);d.setDate(d.getDate()-((d.getDay()+6)%7)+wk*7);return d}
+function dayDate(i){const d=monday();d.setDate(d.getDate()+i);return d}
+function hue(s){let h=0;for(const c of s)h=(h*31+c.charCodeAt(0))%360;return h}
+function toast(t){const e=$("#ts");e.textContent=t;e.classList.add("on");clearTimeout(toast.t);toast.t=setTimeout(()=>e.classList.remove("on"),1800)}
+
+const sb=supabase.createClient("https://wkqtqwwhchmycbkyopmh.supabase.co","sb_publishable_VNlbN1cvm9q7BwlvzvSFFw_DFdSr8Sw");
+let uid=null,syncing=false,again=false;
+const uuid=()=>crypto.randomUUID?crypto.randomUUID():"xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g,c=>{const r=Math.random()*16|0;return(c=="x"?r:r&3|8).toString(16)});
+function idb(){return new Promise(r=>{try{const o=indexedDB.open("marshrut_"+uid,2);o.onupgradeneeded=()=>{const d=o.result;["shops","visits"].forEach(n=>d.objectStoreNames.contains(n)||d.createObjectStore(n));d.objectStoreNames.contains("q")||d.createObjectStore("q",{autoIncrement:true})};o.onsuccess=()=>r(o.result);o.onerror=()=>r(null)}catch(e){r(null)}})}
+function put(st,k,v){try{if(!DB)return;const o=DB.transaction(st,"readwrite").objectStore(st);v===undefined?o.delete(k):o.put(v,k)}catch(e){}}
+function all(st){return new Promise(r=>{try{const g=DB.transaction(st).objectStore(st).getAll();g.onsuccess=()=>r(g.result);g.onerror=()=>r([])}catch(e){r([])}})}
+function qall(){return new Promise(r=>{const a=[];try{const c=DB.transaction("q").objectStore("q").openCursor();c.onsuccess=()=>{const x=c.result;if(x){a.push({k:x.key,v:x.value});x.continue()}else r(a)};c.onerror=()=>r(a)}catch(e){r(a)}})}
+function repl(st,rows,kf){return new Promise(r=>{try{const t=DB.transaction(st,"readwrite"),o=t.objectStore(st);o.clear();rows.forEach(x=>o.put(x,kf(x)));t.oncomplete=()=>r();t.onerror=()=>r()}catch(e){r()}})}
+async function st(ok){if(!DB)return;const n=(await qall()).length;$("#sy").textContent=!navigator.onLine?"· oflayn":ok===false?"· ⚠ qayta uriniladi":n?"· "+n+" ta kutmoqda":"· ✓ saqlangan"}
+function out(t,op,d){try{DB.transaction("q","readwrite").objectStore("q").add({t,op,d})}catch(e){}st();sync()}
+async function page(tb,f){let a=[],i=0;for(;;){let b=sb.from(tb).select("*").order("id");if(f)b=f(b);const{data,error}=await b.range(i,i+999);if(error)throw error;a=a.concat(data);if(data.length<1000)return a;i+=1000}}
+async function pullAll(){
+ const since=dk(new Date(Date.now()-60*864e5));
+ const sh=await page("shops"),vs=await page("visits",b=>b.gte("visit_date",since));
+ if((await qall()).length)return;
+ sh.forEach(x=>x.t=Date.parse(x.created_at));
+ await repl("shops",sh,x=>x.id);await repl("visits",vs,x=>x.visit_date+"|"+x.shop_id);
+ shops={};visits={};sh.forEach(x=>shops[x.id]=x);vs.forEach(x=>visits[x.visit_date+"|"+x.shop_id]=1);render();
+}
+async function sync(pull){
+ if(!uid||!navigator.onLine)return;
+ if(syncing){again=true;return}
+ syncing=true;let ok=true;
+ try{
+  for(const x of await qall()){
+   const v=x.v;let r;
+   if(v.t=="shop")r=v.op=="up"?await sb.from("shops").upsert(v.d):await sb.from("shops").delete().eq("id",v.d.id);
+   else r=v.op=="up"?await sb.from("visits").upsert(v.d,{onConflict:"shop_id,visit_date"}):await sb.from("visits").delete().eq("shop_id",v.d.shop_id).eq("visit_date",v.d.visit_date);
+   if(r.error)throw r.error;
+   put("q",x.k);
+  }
+  if(pull&&!(await qall()).length)await pullAll();
+ }catch(e){ok=false;console.warn(e)}
+ syncing=false;st(ok);
+ if(again&&ok){again=false;sync()}
+}
+
+function render(){
+ const m=monday(),e=dayDate(6),td=dk(new Date()),list=Object.values(shops);
+ $("#wk").textContent=(wk==0?"Shu hafta · ":"")+m.getDate()+" "+M[m.getMonth()]+" – "+e.getDate()+" "+M[e.getMonth()];
+ let h="";
+ for(let i=0;i<7;i++){const d=dayDate(i),k=dk(d),L=list.filter(s=>s.days.includes(i)),v=L.filter(s=>visits[k+"|"+s.id]).length;
+  h+=`<button class="tab${i==day?" on":""}${k==td?" td":""}" data-i="${i}">${S[i]}<b>${d.getDate()}</b><i>${v}/${L.length}</i></button>`}
+ $("#tabs").innerHTML=h;
+ const d=dayDate(day),k=dk(d),L=list.filter(s=>s.days.includes(day)).sort((a,b)=>a.t-b.t),v=L.filter(s=>visits[k+"|"+s.id]).length;
+ $("#dn").textContent=D[day]+", "+d.getDate()+" "+M[d.getMonth()];
+ $("#pg").textContent=v+" / "+L.length;
+ $("#bar").style.width=(L.length?v/L.length*100:0)+"%";
+ $("#fl").innerHTML=[["all","Hammasi",L.length],["left","Qolgan",L.length-v],["done","Bordi",v]].map(x=>`<button class="ch${flt==x[0]?" on":""}" data-f="${x[0]}">${x[1]} ${x[2]}</button>`).join("");
+ const ql=q.trim().toLowerCase();
+ const F=L.filter(s=>(flt=="all"||(flt=="done")===!!visits[k+"|"+s.id])&&(!ql||s.name.toLowerCase().includes(ql)||s.phone.includes(ql)));
+ $("#ls").innerHTML=F.length?F.map(s=>{
+  const vv=!!visits[k+"|"+s.id],o=openId==s.id;
+  return `<div class="c${vv?" v":""}" data-id="${s.id}"><div class="r" data-a="o"><div class="av" style="background:hsl(${hue(s.name)} 45% 38%)">${s.logo?`<img src="${s.logo}" alt="">`:esc((s.name[0]||"?").toUpperCase())}</div><div class="nm">${esc(s.name)}</div><button class="ck" data-a="c" aria-label="Bordim"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7"/></svg></button></div>${o?`<div class="mo">${s.phone?`<a class="tel" href="tel:${esc(s.phone)}">${esc(s.phone)}</a>`:`<div class="tel" style="color:var(--mu);font-size:15px;font-weight:500">Raqam kiritilmagan</div>`}<button class="sb" data-a="e">Tahrirlash</button></div>`:""}</div>`}).join("")
+  :`<p class="em">${L.length?"Hech narsa topilmadi.":"Bu kun uchun doʻkon yoʻq. Pastdagi tugma bilan qoʻshing."}</p>`;
+}
+
+function ask(t,p,ok,fn){$("#at").textContent=t;$("#ap").textContent=p;$("#ao").textContent=ok;cb=fn;$("#am").hidden=false}
+$("#ao").onclick=()=>{$("#am").hidden=true;cb&&cb()};
+$("#ac").onclick=()=>{$("#am").hidden=true};
+
+function toggle(id){
+ const dt=dk(dayDate(day)),k=dt+"|"+id,d={shop_id:id,visit_date:dt};
+ if(visits[k])ask("Adashib bosdingizmi?","Doʻkon belgisi olib tashlansinmi?","Ha, olib tashlansin",()=>{delete visits[k];put("visits",k);out("visit","del",d);render()});
+ else{visits[k]=1;put("visits",k,{...d,status:"visited"});out("visit","up",{...d,status:"visited"});render()}
+}
+
+$("#ls").onclick=e=>{
+ const c=e.target.closest(".c");if(!c||e.target.closest("a"))return;
+ const id=c.dataset.id,a=(e.target.closest("[data-a]")||{dataset:{}}).dataset.a;
+ if(a=="c")toggle(id);else if(a=="e")openForm(id);else if(a=="o"){openId=openId==id?null:id;render()}
+};
+$("#tabs").onclick=e=>{const b=e.target.closest(".tab");if(b){day=+b.dataset.i;openId=null;render()}};
+$("#fl").onclick=e=>{const b=e.target.closest("[data-f]");if(b){flt=b.dataset.f;render()}};
+$("#sq").oninput=e=>{q=e.target.value;render()};
+$("#pv").onclick=()=>{wk--;openId=null;render()};
+$("#nx").onclick=()=>{wk++;openId=null;render()};
+$("#wk").onclick=()=>{wk=0;day=(new Date().getDay()+6)%7;openId=null;render()};
+
+function paintForm(){
+ $("#fd").innerHTML=S.map((x,i)=>`<button type="button" class="ch${fd.has(i)?" on":""}" data-d="${i}">${x}</button>`).join("");
+ $("#lg").innerHTML=logo?`<img src="${logo}" alt="">`:"🏪";
+ $("#lx").hidden=!logo;
+}
+function openForm(id){
+ editId=id||null;const s=id?shops[id]:null;
+ logo=s?s.logo||"":"";fd=new Set(s?s.days:[day]);
+ $("#fn").value=s?s.name:"";$("#fp").value=s?s.phone:"";
+ $("#ft").textContent=s?"Doʻkonni tahrirlash":"Yangi doʻkon";
+ $("#sa").hidden=!!s;$("#del").hidden=!s;
+ paintForm();$("#fm").hidden=false;setTimeout(()=>$("#fn").focus(),50);
+}
+$("#add").onclick=()=>openForm();
+$("#fc").onclick=()=>{$("#fm").hidden=true};
+$("#fd").onclick=e=>{const b=e.target.closest("[data-d]");if(!b)return;const i=+b.dataset.d;fd.has(i)?fd.delete(i):fd.add(i);paintForm()};
+$("#lu").onclick=()=>$("#lf").click();
+$("#lx").onclick=()=>{logo="";paintForm()};
+$("#lf").onchange=e=>{
+ const f=e.target.files[0];if(!f)return;
+ const r=new FileReader();
+ r.onload=()=>{const im=new Image();im.onload=()=>{
+  const c=document.createElement("canvas");c.width=c.height=96;
+  const s=Math.min(im.width,im.height);
+  c.getContext("2d").drawImage(im,(im.width-s)/2,(im.height-s)/2,s,s,0,0,96,96);
+  logo=c.toDataURL("image/jpeg",.75);paintForm()};im.src=r.result};
+ r.readAsDataURL(f);e.target.value="";
+};
+function save(again){
+ const n=$("#fn").value.trim();
+ if(!n){$("#fn").focus();return toast("Doʻkon nomini yozing")}
+ if(!fd.size)return toast("Kamida bitta kunni tanlang");
+ const s=editId?shops[editId]:{id:uuid(),t:Date.now()};
+ Object.assign(s,{name:n,phone:$("#fp").value.trim(),logo,days:[...fd].sort()});
+ shops[s.id]=s;put("shops",s.id,s);out("shop","up",{id:s.id,name:s.name,phone:s.phone,logo:s.logo||null,days:s.days});
+ if(again&&!editId){toast("Saqlandi");$("#fn").value="";$("#fp").value="";logo="";paintForm();$("#fn").focus()}
+ else $("#fm").hidden=true;
+ render();
+}
+$("#sv").onclick=()=>save(false);
+$("#sa").onclick=()=>save(true);
+$("#del").onclick=()=>ask("Doʻkon oʻchirilsinmi?","Bu doʻkon barcha kunlardan oʻchadi.","Ha, oʻchirilsin",()=>{const id=editId;delete shops[id];put("shops",id);out("shop","del",{id});$("#fm").hidden=true;openId=null;render()});
+
+async function boot(){
+ const{data:{session}}=await sb.auth.getSession();
+ if(!session){$("#lo").hidden=false;return}
+ uid=session.user.id;$("#lo").hidden=true;
+ DB=await idb();
+ if(DB){(await all("shops")).forEach(x=>shops[x.id]=x);(await all("visits")).forEach(x=>visits[x.visit_date+"|"+x.shop_id]=1)}
+ render();st();
+ if(navigator.onLine){
+  const{data:p}=await sb.from("profiles").select("active,paid_until").eq("id",uid).maybeSingle();
+  if(p&&(!p.active||p.paid_until<dk(new Date()))){await sb.auth.signOut();uid=null;$("#lo").hidden=false;$("#le").textContent="Obuna muddati tugagan yoki akkaunt bloklangan. Egasiga murojaat qiling.";return}
+ }
+ sync(true);
+}
+$("#lb").onclick=async()=>{
+ const l=$("#gn").value.trim().toLowerCase();if(!l)return;
+ if(!navigator.onLine){$("#le").textContent="Birinchi kirish uchun internet kerak";return}
+ const{error}=await sb.auth.signInWithPassword({email:l.includes("@")?l:l+"@marshrut.app",password:$("#pw").value});
+ if(error){$("#le").textContent="Login yoki parol notoʻgʻri";return}
+ $("#pw").value="";$("#le").textContent="";boot();
+};
+$("#pw").onkeydown=e=>{if(e.key=="Enter")$("#lb").click()};
+$("#out").onclick=()=>ask("Chiqasizmi?","Kutayotgan oʻzgarishlar telefonda saqlanadi.","Ha, chiqish",async()=>{await sb.auth.signOut();location.reload()});
+$("#sy").onclick=()=>sync(true);
+addEventListener("online",()=>sync(true));addEventListener("offline",()=>st());
+if("serviceWorker" in navigator)navigator.serviceWorker.register("sw.js").catch(()=>{});
+boot();
+</script></body></html>
