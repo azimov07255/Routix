@@ -46,6 +46,7 @@ h1{margin:0;font-size:22px;letter-spacing:-.3px}
 .mo{padding:0 12px 12px;display:flex;gap:8px;flex-wrap:wrap}
 .tel{flex:1 1 100%;text-align:center;background:var(--bg);border-radius:12px;padding:12px;font-size:21px;font-weight:700;color:var(--tx);text-decoration:none;letter-spacing:.3px}
 .sb{flex:1;border:1px solid var(--ln);background:transparent;color:var(--tx);border-radius:10px;padding:9px;font:inherit;font-size:14px;cursor:pointer}
+a.bt{display:block;text-align:center;text-decoration:none}.ad{flex:1 1 100%;color:var(--mu);font-size:14px;padding:0 2px}
 .em{text-align:center;color:var(--mu);padding:36px 10px}
 .fab{position:fixed;right:16px;bottom:calc(18px + env(safe-area-inset-bottom,0px));z-index:20;border:0;background:var(--ac);color:var(--on);font:inherit;font-weight:700;border-radius:28px;padding:15px 22px;box-shadow:0 6px 18px rgba(0,0,0,.25);cursor:pointer}
 main{padding-bottom:90px}
@@ -80,6 +81,10 @@ button:focus-visible,input:focus-visible,a:focus-visible{outline:2px solid var(-
 <button class="fab" id="add">+ Doʻkon qoʻshish</button>
 <div id="ts"></div>
 
+<div class="ov" id="nv" hidden><div class="sh">
+ <h2 id="nt"></h2><div id="nl"></div>
+ <button class="bt g" id="nc">Yopish</button>
+</div></div>
 <div class="ov" id="om" hidden><div class="sh">
  <h2>Agentlar</h2><div id="ol"></div>
  <button class="bt g" id="oc">Yopish</button>
@@ -95,6 +100,9 @@ button:focus-visible,input:focus-visible,a:focus-visible{outline:2px solid var(-
  <h2 id="ft"></h2>
  <label for="fn">Doʻkon nomi</label><input id="fn" class="in" autocomplete="off">
  <label for="fp">Telefon raqami</label><input id="fp" class="in" type="tel" inputmode="tel" placeholder="+998 90 123 45 67">
+ <label for="fa">Manzil (ixtiyoriy)</label><input id="fa" class="in" autocomplete="off" placeholder="Masalan: Chilonzor, 9-kvartal">
+ <label>Joylashuv (GPS)</label>
+ <div class="lr" style="flex-wrap:wrap"><button type="button" class="sb" id="gp" style="flex:none">📍 Joylashuvni saqlash</button><button type="button" class="sb" id="gx" style="flex:none" hidden>Oʻchirish</button><span id="gs" style="font-size:13px;color:var(--mu)"></span></div>
  <label>Logo (ixtiyoriy)</label>
  <div class="lr"><div class="lg" id="lg"></div><button type="button" class="sb" id="lu" style="flex:none">Yuklash</button><button type="button" class="sb" id="lx" style="flex:none">Olib tashlash</button><input id="lf" type="file" accept="image/*" hidden></div>
  <label>Qaysi kunlari boriladi</label><div class="dd" id="fd"></div>
@@ -113,7 +121,7 @@ button:focus-visible,input:focus-visible,a:focus-visible{outline:2px solid var(-
 <script>
 const $=s=>document.querySelector(s);
 const D=["Dushanba","Seshanba","Chorshanba","Payshanba","Juma","Shanba","Yakshanba"],S=["Du","Se","Ch","Pa","Ju","Sh","Ya"],M=["yanvar","fevral","mart","aprel","may","iyun","iyul","avgust","sentyabr","oktyabr","noyabr","dekabr"];
-let DB=null,shops={},visits={},wk=0,day=(new Date().getDay()+6)%7,flt="all",q="",openId=null,editId=null,logo="",fd=new Set(),cb=null;
+let pos=null,DB=null,shops={},visits={},wk=0,day=(new Date().getDay()+6)%7,flt="all",q="",openId=null,editId=null,logo="",fd=new Set(),cb=null;
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const pad=n=>String(n).padStart(2,"0"),dk=d=>d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate());
 function monday(){const d=new Date();d.setHours(12,0,0,0);d.setDate(d.getDate()-((d.getDay()+6)%7)+wk*7);return d}
@@ -174,7 +182,7 @@ function render(){
  const F=L.filter(s=>(flt=="all"||(flt=="done")===!!visits[k+"|"+s.id])&&(!ql||s.name.toLowerCase().includes(ql)||s.phone.includes(ql)));
  $("#ls").innerHTML=F.length?F.map(s=>{
   const vv=!!visits[k+"|"+s.id],o=openId==s.id;
-  return `<div class="c${vv?" v":""}" data-id="${s.id}"><div class="r" data-a="o"><div class="av" style="background:hsl(${hue(s.name)} 45% 38%)">${s.logo?`<img src="${s.logo}" alt="">`:esc((s.name[0]||"?").toUpperCase())}</div><div class="nm">${esc(s.name)}</div><button class="ck" data-a="c" aria-label="Bordim"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7"/></svg></button></div>${o?`<div class="mo">${s.phone?`<a class="tel" href="tel:${esc(s.phone)}">${esc(s.phone)}</a>`:`<div class="tel" style="color:var(--mu);font-size:15px;font-weight:500">Raqam kiritilmagan</div>`}<button class="sb" data-a="e">Tahrirlash</button></div>`:""}</div>`}).join("")
+  return `<div class="c${vv?" v":""}" data-id="${s.id}"><div class="r" data-a="o"><div class="av" style="background:hsl(${hue(s.name)} 45% 38%)">${s.logo?`<img src="${s.logo}" alt="">`:esc((s.name[0]||"?").toUpperCase())}</div><div class="nm">${esc(s.name)}</div><button class="ck" data-a="c" aria-label="Bordim"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7"/></svg></button></div>${o?`<div class="mo">${s.phone?`<a class="tel" href="tel:${esc(s.phone)}">${esc(s.phone)}</a>`:`<div class="tel" style="color:var(--mu);font-size:15px;font-weight:500">Raqam kiritilmagan</div>`}${s.address?`<div class="ad">${esc(s.address)}</div>`:""}<button class="sb" data-a="r">📍 Yoʻnalish</button><button class="sb" data-a="e">Tahrirlash</button></div>`:""}</div>`}).join("")
   :`<p class="em">${L.length?"Hech narsa topilmadi.":"Bu kun uchun doʻkon yoʻq. Pastdagi tugma bilan qoʻshing."}</p>`;
 }
 
@@ -191,7 +199,7 @@ function toggle(id){
 $("#ls").onclick=e=>{
  const c=e.target.closest(".c");if(!c||e.target.closest("a"))return;
  const id=c.dataset.id,a=(e.target.closest("[data-a]")||{dataset:{}}).dataset.a;
- if(a=="c")toggle(id);else if(a=="e")openForm(id);else if(a=="o"){openId=openId==id?null:id;render()}
+ if(a=="c")toggle(id);else if(a=="e")openForm(id);else if(a=="r")openNav(id);else if(a=="o"){openId=openId==id?null:id;render()}
 };
 $("#tabs").onclick=e=>{const b=e.target.closest(".tab");if(b){day=+b.dataset.i;openId=null;render()}};
 $("#fl").onclick=e=>{const b=e.target.closest("[data-f]");if(b){flt=b.dataset.f;render()}};
@@ -204,11 +212,12 @@ function paintForm(){
  $("#fd").innerHTML=S.map((x,i)=>`<button type="button" class="ch${fd.has(i)?" on":""}" data-d="${i}">${x}</button>`).join("");
  $("#lg").innerHTML=logo?`<img src="${logo}" alt="">`:"🏪";
  $("#lx").hidden=!logo;
+ $("#gs").textContent=pos?"✓ saqlandi"+(pos.acc?" (±"+pos.acc+" m)":"")+(pos.acc>100?" — aniq emas, doʻkon oldida qayta aniqlang":""):"";$("#gx").hidden=!pos;$("#gp").textContent=pos?"📍 Qayta aniqlash":"📍 Joylashuvni saqlash";
 }
 function openForm(id){
  editId=id||null;const s=id?shops[id]:null;
  logo=s?s.logo||"":"";fd=new Set(s?s.days:[day]);
- $("#fn").value=s?s.name:"";$("#fp").value=s?s.phone:"";
+ $("#fn").value=s?s.name:"";$("#fp").value=s?s.phone:"";$("#fa").value=s?s.address||"":"";pos=s&&s.lat!=null&&s.lng!=null?{lat:s.lat,lng:s.lng}:null;
  $("#ft").textContent=s?"Doʻkonni tahrirlash":"Yangi doʻkon";
  $("#sa").hidden=!!s;$("#del").hidden=!s;
  paintForm();$("#fm").hidden=false;setTimeout(()=>$("#fn").focus(),50);
@@ -233,9 +242,9 @@ function save(again){
  if(!n){$("#fn").focus();return toast("Doʻkon nomini yozing")}
  if(!fd.size)return toast("Kamida bitta kunni tanlang");
  const s=editId?shops[editId]:{id:uuid(),t:Date.now()};
- Object.assign(s,{name:n,phone:$("#fp").value.trim(),logo,days:[...fd].sort()});
- shops[s.id]=s;put("shops",s.id,s);out("shop","up",{id:s.id,name:s.name,phone:s.phone,logo:s.logo||null,days:s.days});
- if(again&&!editId){toast("Saqlandi");$("#fn").value="";$("#fp").value="";logo="";paintForm();$("#fn").focus()}
+ Object.assign(s,{name:n,phone:$("#fp").value.trim(),logo,days:[...fd].sort(),address:$("#fa").value.trim(),lat:pos?pos.lat:null,lng:pos?pos.lng:null});
+ shops[s.id]=s;put("shops",s.id,s);out("shop","up",{id:s.id,name:s.name,phone:s.phone,logo:s.logo||null,days:s.days,address:s.address||null,lat:s.lat==null?null:s.lat,lng:s.lng==null?null:s.lng});
+ if(again&&!editId){toast("Saqlandi");$("#fn").value="";$("#fp").value="";$("#fa").value="";pos=null;logo="";paintForm();$("#fn").focus()}
  else $("#fm").hidden=true;
  render();
 }
@@ -269,6 +278,32 @@ $("#out").onclick=()=>ask("Chiqasizmi?","Kutayotgan oʻzgarishlar telefonda saql
 $("#sy").onclick=()=>sync(true);
 addEventListener("online",()=>sync(true));addEventListener("offline",()=>st());
 if("serviceWorker" in navigator)navigator.serviceWorker.register("sw.js").catch(()=>{});
+$("#gp").onclick=()=>{
+ if(!navigator.geolocation)return toast("Joylashuv qoʻllab-quvvatlanmaydi");
+ $("#gs").textContent="Aniqlanmoqda…";
+ navigator.geolocation.getCurrentPosition(g=>{pos={lat:+g.coords.latitude.toFixed(6),lng:+g.coords.longitude.toFixed(6),acc:Math.round(g.coords.accuracy)};paintForm()},()=>{paintForm();toast("Joylashuvga ruxsat bering")},{enableHighAccuracy:true,timeout:20000,maximumAge:0});
+};
+$("#gx").onclick=()=>{pos=null;paintForm()};
+function openNav(id){
+ const s=shops[id],has=s.lat!=null&&s.lng!=null;
+ if(!has&&!s.address){toast("Avval manzil yoki joylashuvni qoʻshing");return openForm(id)}
+ const la=s.lat,ln=s.lng,t=encodeURIComponent(s.address||s.name),ios=/iPhone|iPad|iPod/.test(navigator.userAgent),L=[];
+ if(has){
+  L.push(["Yandex Xarita: yoʻnalish","https://yandex.com/maps/?rtext=~"+la+","+ln+"&rtt=auto"]);
+  L.push(["Yandex Xarita: joyni koʻrsatish","https://yandex.com/maps/?pt="+ln+","+la+"&z=17&l=map"]);
+  L.push(["Yandex Go (taksi)","https://3.redirect.appmetrica.yandex.com/route?end-lat="+la+"&end-lon="+ln+"&appmetrica_tracking_id=1178268795219780156"]);
+  L.push(["Google Maps","https://www.google.com/maps/dir/?api=1&destination="+la+","+ln]);
+  if(ios)L.push(["Apple Maps","https://maps.apple.com/?daddr="+la+","+ln]);else L.push(["Boshqa ilova (tanlash)","geo:"+la+","+ln+"?q="+la+","+ln]);
+ }else{
+  L.push(["Yandex Xarita: qidirish","https://yandex.com/maps/?text="+t]);
+  L.push(["Google Maps","https://www.google.com/maps/search/?api=1&query="+t]);
+  if(ios)L.push(["Apple Maps","https://maps.apple.com/?q="+t]);
+ }
+ $("#nt").textContent=s.name;
+ $("#nl").innerHTML=L.map(x=>`<a class="bt g" href="${esc(x[1])}" target="_blank" rel="noopener">${x[0]}</a>`).join("")+(has?"":`<p class="em" style="padding:10px">Aniq yoʻnalish uchun doʻkonda turib 📍 Joylashuvni saqlang.</p>`);
+ $("#nv").hidden=false;
+}
+$("#nc").onclick=()=>{$("#nv").hidden=true};
 async function loadAg(){
  const{data,error}=await sb.rpc("owner_stats");
  if(error){$("#ol").innerHTML='<p class="em">Yuklab boʻlmadi</p>';return}
