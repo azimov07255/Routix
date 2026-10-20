@@ -68,7 +68,7 @@ main{padding-bottom:90px}
 button:focus-visible,input:focus-visible,a:focus-visible{outline:2px solid var(--am);outline-offset:2px}
 </style></head><body>
 <header><div class="w">
- <div class="top"><h1>Marshrutim <small id="sy" style="font-size:12px;color:var(--mu);font-weight:400;cursor:pointer"></small></h1><div class="nav"><button id="pv" aria-label="Oldingi hafta">‹</button><span id="wk"></span><button id="nx" aria-label="Keyingi hafta">›</button><button id="out" aria-label="Chiqish" style="font-size:15px">⏻</button></div></div>
+ <div class="top"><h1>Marshrutim <small id="sy" style="font-size:12px;color:var(--mu);font-weight:400;cursor:pointer"></small></h1><div class="nav"><button id="pv" aria-label="Oldingi hafta">‹</button><span id="wk"></span><button id="nx" aria-label="Keyingi hafta">›</button><button id="ag" aria-label="Agentlar" hidden style="font-size:15px">👥</button><button id="out" aria-label="Chiqish" style="font-size:15px">⏻</button></div></div>
  <div id="tabs" class="tabs"></div>
  <div class="hero"><div class="hh"><span id="dn"></span><b id="pg"></b></div><div class="pb"><i id="bar"></i></div></div>
 </div></header>
@@ -80,6 +80,10 @@ button:focus-visible,input:focus-visible,a:focus-visible{outline:2px solid var(-
 <button class="fab" id="add">+ Doʻkon qoʻshish</button>
 <div id="ts"></div>
 
+<div class="ov" id="om" hidden><div class="sh">
+ <h2>Agentlar</h2><div id="ol"></div>
+ <button class="bt g" id="oc">Yopish</button>
+</div></div>
 <div class="ov cen" id="lo" hidden><div class="sh">
  <h2>Marshrutim</h2>
  <label for="gn">Login</label><input id="gn" class="in" autocomplete="username" autocapitalize="none" spellcheck="false">
@@ -247,8 +251,9 @@ async function boot(){
  if(DB){(await all("shops")).forEach(x=>shops[x.id]=x);(await all("visits")).forEach(x=>visits[x.visit_date+"|"+x.shop_id]=1)}
  render();st();
  if(navigator.onLine){
-  const{data:p}=await sb.from("profiles").select("active,paid_until").eq("id",uid).maybeSingle();
+  const{data:p}=await sb.from("profiles").select("active,paid_until,role").eq("id",uid).maybeSingle();
   if(p&&(!p.active||p.paid_until<dk(new Date()))){await sb.auth.signOut();uid=null;$("#lo").hidden=false;$("#le").textContent="Obuna muddati tugagan yoki akkaunt bloklangan. Egasiga murojaat qiling.";return}
+  if(p&&p.role=="owner")$("#ag").hidden=false;
  }
  sync(true);
 }
@@ -264,5 +269,26 @@ $("#out").onclick=()=>ask("Chiqasizmi?","Kutayotgan oʻzgarishlar telefonda saql
 $("#sy").onclick=()=>sync(true);
 addEventListener("online",()=>sync(true));addEventListener("offline",()=>st());
 if("serviceWorker" in navigator)navigator.serviceWorker.register("sw.js").catch(()=>{});
+async function loadAg(){
+ const{data,error}=await sb.rpc("owner_stats");
+ if(error){$("#ol").innerHTML='<p class="em">Yuklab boʻlmadi</p>';return}
+ const td=dk(new Date()),sm='style="font-weight:400;font-size:13px;color:var(--mu)"';
+ $("#ol").innerHTML=data.length?data.map(a=>{const ex=a.paid_until<td;return `<div class="c" data-id="${a.agent_id}" data-pu="${a.paid_until}" data-ac="${a.active}"><div class="r" style="cursor:default"><div class="nm" style="white-space:normal">${esc(a.full_name||a.login)}<div ${sm}>${esc(a.login)} · ${a.shops_count} doʻkon · 30 kunda ${a.visits_30d} tashrif</div><div style="font-weight:400;font-size:13px;color:${!a.active||ex?"var(--dg)":"var(--ok)"}">${!a.active?"Bloklangan":ex?"Muddati tugagan":"Faol"} · ${a.paid_until}</div></div></div><div class="mo"><button class="sb" data-o="x">+30 kun</button><button class="sb" data-o="b">${a.active?"Bloklash":"Faollashtirish"}</button></div></div>`}).join(""):'<p class="em">Agent yoʻq. Supabase’da Add user bilan qoʻshing.</p>';
+}
+$("#ag").onclick=()=>{$("#om").hidden=false;loadAg()};
+$("#oc").onclick=()=>{$("#om").hidden=true};
+$("#ol").onclick=e=>{
+ const b=e.target.closest("[data-o]");if(!b)return;
+ const c=b.closest(".c"),id=c.dataset.id;
+ const go=async()=>{
+  let u;
+  if(b.dataset.o=="x"){const td=dk(new Date()),base=c.dataset.pu>td?c.dataset.pu:td,d=new Date(base+"T12:00:00");d.setDate(d.getDate()+30);u={paid_until:dk(d)}}
+  else u={active:c.dataset.ac!="true"};
+  const{error}=await sb.from("profiles").update(u).eq("id",id);
+  if(error)return toast("Xatolik: "+error.message);
+  toast("Saqlandi");loadAg();
+ };
+ if(b.dataset.o=="b"&&c.dataset.ac=="true")ask("Agent bloklansinmi?","U ilovaga kira olmaydi.","Ha, bloklansin",go);else go();
+};
 boot();
 </script></body></html>
