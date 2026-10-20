@@ -50,6 +50,8 @@ a.bt{display:block;text-align:center;text-decoration:none}.ad{flex:1 1 100%;colo
 .ag{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:4px 0 12px}.ap{display:flex;flex-direction:column;align-items:center;gap:6px;text-decoration:none;color:var(--tx);font-size:13px;text-align:center}.ap svg{width:64px;height:64px}
 .pin{position:absolute;left:50%;top:50%;transform:translate(-50%,-100%);font-size:34px;line-height:1;pointer-events:none;z-index:1000}#mr{max-height:30vh;overflow:auto}
 .top{padding-bottom:4px}.wkr{padding-bottom:8px}.wkr span{flex:1;text-align:center}
+.nx{background:var(--ink);color:#fff;border-radius:16px;padding:12px 14px;margin-top:12px}.nl{font-size:12px;opacity:.75}.nn{font-size:19px;font-weight:700;margin:2px 0 10px}.nb{display:flex;gap:8px}.nb a,.nb button{flex:1;text-align:center;text-decoration:none;color:#fff;border:1px solid rgba(255,255,255,.3);background:transparent;border-radius:10px;padding:10px 4px;font:inherit;font-size:14px;cursor:pointer}.nb .ok{background:var(--am);color:#14212b;border-color:transparent;font-weight:700}
+.ds{display:block;font-weight:400;font-size:12px;color:var(--mu)}.sec{font-size:13px;color:var(--mu);margin:14px 2px 2px;font-weight:600}.sec b{color:var(--dg)}#ms{scroll-margin-top:240px}
 .em{text-align:center;color:var(--mu);padding:36px 10px}
 .fab{position:fixed;right:16px;bottom:calc(18px + env(safe-area-inset-bottom,0px));z-index:20;border:0;background:var(--ac);color:var(--on);font:inherit;font-weight:700;border-radius:28px;padding:15px 22px;box-shadow:0 6px 18px rgba(0,0,0,.25);cursor:pointer}
 main{padding-bottom:90px}
@@ -75,9 +77,10 @@ button:focus-visible,input:focus-visible,a:focus-visible{outline:2px solid var(-
  <div class="top"><h1>Marshrutim <small id="sy" style="font-size:12px;color:var(--mu);font-weight:400;cursor:pointer"></small></h1><div class="nav"><button id="im" aria-label="Excel import" style="font-size:15px">📥</button><button id="ag" aria-label="Agentlar" hidden style="font-size:15px">👥</button><button id="out" aria-label="Chiqish" style="font-size:15px">⏻</button></div></div>
  <div class="nav wkr"><button id="pv" aria-label="Oldingi hafta">‹</button><span id="wk"></span><button id="nx" aria-label="Keyingi hafta">›</button></div>
  <div id="tabs" class="tabs"></div>
- <div class="hero"><div class="hh"><span id="dn"></span><b id="pg"></b></div><div class="pb"><i id="bar"></i></div></div>
+ <div class="hero"><div class="hh"><span id="dn"></span><b id="pg"></b></div><div class="pb"><i id="bar"></i></div><div id="mh" style="font-size:13px;margin-top:6px;cursor:pointer"></div></div>
 </div></header>
 <main class="w">
+ <div id="nx"></div>
  <input id="sq" class="in" type="search" placeholder="Doʻkon yoki raqam qidirish">
  <div id="fl" class="fl"></div>
  <div id="ls"></div>
@@ -142,7 +145,7 @@ button:focus-visible,input:focus-visible,a:focus-visible{outline:2px solid var(-
 <script>
 const $=s=>document.querySelector(s);
 const D=["Dushanba","Seshanba","Chorshanba","Payshanba","Juma","Shanba","Yakshanba"],S=["Du","Se","Ch","Pa","Ju","Sh","Ya"],M=["yanvar","fevral","mart","aprel","may","iyun","iyul","avgust","sentyabr","oktyabr","noyabr","dekabr"];
-let pos=null,DB=null,shops={},visits={},wk=0,day=(new Date().getDay()+6)%7,flt="all",q="",openId=null,editId=null,logo="",fd=new Set(),cb=null;
+let near=false,me=null,pos=null,DB=null,shops={},visits={},wk=0,day=(new Date().getDay()+6)%7,flt="all",q="",openId=null,editId=null,logo="",fd=new Set(),cb=null;
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const pad=n=>String(n).padStart(2,"0"),dk=d=>d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate());
 function monday(){const d=new Date();d.setHours(12,0,0,0);d.setDate(d.getDate()-((d.getDay()+6)%7)+wk*7);return d}
@@ -187,6 +190,39 @@ async function sync(pull){
  if(again&&ok){again=false;sync()}
 }
 
+function dist(a){if(!me||a.lat==null||a.lng==null)return null;const R=6371e3,r=Math.PI/180,dl=(a.lat-me.lat)*r,dn=(a.lng-me.lng)*r,x=Math.sin(dl/2)**2+Math.cos(me.lat*r)*Math.cos(a.lat*r)*Math.sin(dn/2)**2;return 2*R*Math.asin(Math.sqrt(x))}
+function fmtD(m){return m<1000?Math.max(10,Math.round(m/10)*10)+" m":(m/1000).toFixed(1).replace(".",",")+" km"}
+function dcmp(a,b){const x=dist(a),y=dist(b);return x==null?(y==null?0:1):y==null?-1:x-y}
+const cmp=k=>(a,b)=>{if(near&&me){const va=visits[k+"|"+a.id]?1:0,vb=visits[k+"|"+b.id]?1:0;if(va!=vb)return va-vb;const c=dcmp(a,b);if(c)return c}return a.t-b.t};
+function missed(k){
+ const D8=[];for(let b=0;b<=7;b++){const x=new Date();x.setHours(12,0,0,0);x.setDate(x.getDate()-b);D8.push({k:dk(x),w:(x.getDay()+6)%7,e:x.getTime()+12*36e5})}
+ const o=[];
+ for(const s of Object.values(shops)){
+  if(s.days.includes(D8[0].w))continue;
+  let b=1;for(;b<=7;b++)if(s.days.includes(D8[b].w))break;
+  if(b>7||s.t>D8[b].e)continue;
+  let seen=false;for(let c=1;c<=b;c++)if(visits[D8[c].k+"|"+s.id]){seen=true;break}
+  if(seen)continue;
+  o.push({s,b,w:D8[b].w,st:visits[k+"|"+s.id]?2:1});
+ }
+ return o;
+}
+function nextCard(L,M,k){
+ const open=L.filter(x=>!visits[k+"|"+x.id]),mo=M.filter(x=>x.st==1).map(x=>x.s);
+ const pool=near&&me?open.concat(mo):(open.length?open:mo);
+ if(!pool.length)return L.length||M.length?`<div class="nx"><div class="nn" style="margin:0">Bugungi doʻkonlar tugadi ✓</div></div>`:"";
+ const n=near&&me?pool.slice().sort(dcmp)[0]:pool[0],dd=near&&me&&dist(n)!=null?" · "+fmtD(dist(n)):"";
+ return `<div class="nx"><div class="nl">Keyingi doʻkon${dd}</div><div class="nn">${esc(n.name)}</div><div class="nb">${n.phone?`<a href="tel:${esc(n.phone)}">📞 Qoʻngʻiroq</a>`:""}<button data-a="r" data-id="${n.id}">📍 Yoʻnalish</button><button class="ok" data-a="c" data-id="${n.id}">✓ Bordim</button></div></div>`;
+}
+function locate(cb){
+ if(!navigator.geolocation){near=false;toast("Joylashuv qoʻllab-quvvatlanmaydi");return render()}
+ navigator.geolocation.getCurrentPosition(g=>{me={lat:g.coords.latitude,lng:g.coords.longitude};cb&&cb()},()=>{near=false;toast("Joylashuvga ruxsat bering");render()},{timeout:10000,maximumAge:30000});
+}
+function toggleNear(){if(near){near=false;render()}else{near=true;toast("Joylashuv aniqlanmoqda…");locate(render)}}
+function cardH(s,k,sub){
+ const sb=[sub,near&&dist(s)!=null?fmtD(dist(s)):""].filter(Boolean).join(" · ");
+  const vv=!!visits[k+"|"+s.id],o=openId==s.id;
+  return `<div class="c${vv?" v":""}" data-id="${s.id}"><div class="r" data-a="o"><div class="av" style="background:hsl(${hue(s.name)} 45% 38%)">${s.logo?`<img src="${s.logo}" alt="">`:esc((s.name[0]||"?").toUpperCase())}</div><div class="nm">${esc(s.name)}${sb?`<small class="ds">${sb}</small>`:""}</div><button class="ck" data-a="c" aria-label="Bordim"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7"/></svg></button></div>${o?`<div class="mo">${s.phone?`<a class="tel" href="tel:${esc(s.phone)}">${esc(s.phone)}</a>`:`<div class="tel" style="color:var(--mu);font-size:15px;font-weight:500">Raqam kiritilmagan</div>`}${s.address?`<div class="ad">${esc(s.address)}</div>`:""}<button class="sb" data-a="r">📍 Yoʻnalish</button><button class="sb" data-a="e">Tahrirlash</button></div>`:""}</div>`}
 function render(){
  const m=monday(),e=dayDate(6),td=dk(new Date()),list=Object.values(shops);
  $("#wk").textContent=(wk==0?"Shu hafta · ":"")+m.getDate()+" "+M[m.getMonth()]+" – "+e.getDate()+" "+M[e.getMonth()];
@@ -194,17 +230,23 @@ function render(){
  for(let i=0;i<7;i++){const d=dayDate(i),k=dk(d),L=list.filter(s=>s.days.includes(i)),v=L.filter(s=>visits[k+"|"+s.id]).length;
   h+=`<button class="tab${i==day?" on":""}${k==td?" td":""}" data-i="${i}">${S[i]}<b>${d.getDate()}</b><i>${v}/${L.length}</i></button>`}
  $("#tabs").innerHTML=h;
- const d=dayDate(day),k=dk(d),L=list.filter(s=>s.days.includes(day)).sort((a,b)=>a.t-b.t),v=L.filter(s=>visits[k+"|"+s.id]).length;
+ const isT=wk===0&&day===(new Date().getDay()+6)%7;
+ const d=dayDate(day),k=dk(d),L=list.filter(s=>s.days.includes(day)).sort(cmp(k)),v=L.filter(s=>visits[k+"|"+s.id]).length;
+ const M=isT?missed(k):[];
  $("#dn").textContent=D[day]+", "+d.getDate()+" "+M[d.getMonth()];
  $("#pg").textContent=v+" / "+L.length;
  $("#bar").style.width=(L.length?v/L.length*100:0)+"%";
- $("#fl").innerHTML=[["all","Hammasi",L.length],["left","Qolgan",L.length-v],["done","Bordi",v]].map(x=>`<button class="ch${flt==x[0]?" on":""}" data-f="${x[0]}">${x[1]} ${x[2]}</button>`).join("");
+ $("#fl").innerHTML=[["all","Hammasi",L.length],["left","Qolgan",L.length-v],["done","Bordi",v]].map(x=>`<button class="ch${flt==x[0]?" on":""}" data-f="${x[0]}">${x[1]} ${x[2]}</button>`).join("")+`<button class="ch${near?" on":""}" data-f="near">📍 Yaqin</button>`;
  const ql=q.trim().toLowerCase();
  const F=L.filter(s=>(flt=="all"||(flt=="done")===!!visits[k+"|"+s.id])&&(!ql||s.name.toLowerCase().includes(ql)||s.phone.includes(ql)));
- $("#ls").innerHTML=F.length?F.map(s=>{
-  const vv=!!visits[k+"|"+s.id],o=openId==s.id;
-  return `<div class="c${vv?" v":""}" data-id="${s.id}"><div class="r" data-a="o"><div class="av" style="background:hsl(${hue(s.name)} 45% 38%)">${s.logo?`<img src="${s.logo}" alt="">`:esc((s.name[0]||"?").toUpperCase())}</div><div class="nm">${esc(s.name)}</div><button class="ck" data-a="c" aria-label="Bordim"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7"/></svg></button></div>${o?`<div class="mo">${s.phone?`<a class="tel" href="tel:${esc(s.phone)}">${esc(s.phone)}</a>`:`<div class="tel" style="color:var(--mu);font-size:15px;font-weight:500">Raqam kiritilmagan</div>`}${s.address?`<div class="ad">${esc(s.address)}</div>`:""}<button class="sb" data-a="r">📍 Yoʻnalish</button><button class="sb" data-a="e">Tahrirlash</button></div>`:""}</div>`}).join("")
-  :`<p class="em">${L.length?"Hech narsa topilmadi.":"Bu kun uchun doʻkon yoʻq. Pastdagi tugma bilan qoʻshing."}</p>`;
+ const ql2=ql;
+ const MF=M.filter(x=>(flt=="all"||(flt=="done")===(x.st==2))&&(!ql2||x.s.name.toLowerCase().includes(ql2)||x.s.phone.includes(ql2))).sort((a,b)=>a.st-b.st||(near&&me?dcmp(a.s,b.s):b.b-a.b));
+ const open1=M.filter(x=>x.st==1).length;
+ const miss=MF.length?`<div class="sec" id="ms">Qolib ketganlar · <b>${open1}</b></div>`+MF.map(x=>cardH(x.s,k,D[x.w]+" kuni qolgan")).join(""):"";
+ const main=F.length?(miss?`<div class="sec" style="margin-top:4px">Bugun</div>`:"")+F.map(x=>cardH(x,k)).join(""):"";
+ $("#ls").innerHTML=main+miss||`<p class="em">${L.length?"Hech narsa topilmadi.":"Bu kun uchun doʻkon yoʻq. Pastdagi tugma bilan qoʻshing."}</p>`;
+ $("#nx").innerHTML=isT?nextCard(L,M,k):"";
+ $("#mh").textContent=open1?"⚠ Qolib ketgan: "+open1+" ta ↓":"";
 }
 
 function ask(t,p,ok,fn){$("#at").textContent=t;$("#ap").textContent=p;$("#ao").textContent=ok;cb=fn;$("#am").hidden=false}
@@ -214,16 +256,18 @@ $("#ac").onclick=()=>{$("#am").hidden=true};
 function toggle(id){
  const dt=dk(dayDate(day)),k=dt+"|"+id,d={shop_id:id,visit_date:dt};
  if(visits[k])ask("Adashib bosdingizmi?","Doʻkon belgisi olib tashlansinmi?","Ha, olib tashlansin",()=>{delete visits[k];put("visits",k);out("visit","del",d);render()});
- else{visits[k]=1;put("visits",k,{...d,status:"visited"});out("visit","up",{...d,status:"visited"});render()}
+ else{visits[k]=1;put("visits",k,{...d,status:"visited"});out("visit","up",{...d,status:"visited"});render();if(near)locate(render)}
 }
 
+$("#nx").onclick=e=>{const b=e.target.closest("[data-a]");if(!b)return;if(b.dataset.a=="r")openNav(b.dataset.id);else if(b.dataset.a=="c")toggle(b.dataset.id)};
+$("#mh").onclick=()=>{const x=document.getElementById("ms");if(x)x.scrollIntoView({behavior:"smooth"})};
 $("#ls").onclick=e=>{
  const c=e.target.closest(".c");if(!c||e.target.closest("a"))return;
  const id=c.dataset.id,a=(e.target.closest("[data-a]")||{dataset:{}}).dataset.a;
  if(a=="c")toggle(id);else if(a=="e")openForm(id);else if(a=="r")openNav(id);else if(a=="o"){openId=openId==id?null:id;render()}
 };
 $("#tabs").onclick=e=>{const b=e.target.closest(".tab");if(b){day=+b.dataset.i;openId=null;render()}};
-$("#fl").onclick=e=>{const b=e.target.closest("[data-f]");if(b){flt=b.dataset.f;render()}};
+$("#fl").onclick=e=>{const b=e.target.closest("[data-f]");if(b){if(b.dataset.f=="near")toggleNear();else{flt=b.dataset.f;render()}}};
 $("#sq").oninput=e=>{q=e.target.value;render()};
 $("#pv").onclick=()=>{wk--;openId=null;render()};
 $("#nx").onclick=()=>{wk++;openId=null;render()};
