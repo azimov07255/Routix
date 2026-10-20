@@ -49,6 +49,7 @@ h1{margin:0;font-size:22px;letter-spacing:-.3px}
 a.bt{display:block;text-align:center;text-decoration:none}.ad{flex:1 1 100%;color:var(--mu);font-size:14px;padding:0 2px}
 .ag{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:4px 0 12px}.ap{display:flex;flex-direction:column;align-items:center;gap:6px;text-decoration:none;color:var(--tx);font-size:13px;text-align:center}.ap svg{width:64px;height:64px}
 .pin{position:absolute;left:50%;top:50%;transform:translate(-50%,-100%);font-size:34px;line-height:1;pointer-events:none;z-index:1000}#mr{max-height:30vh;overflow:auto}
+.top{padding-bottom:4px}.wkr{padding-bottom:8px}.wkr span{flex:1;text-align:center}
 .em{text-align:center;color:var(--mu);padding:36px 10px}
 .fab{position:fixed;right:16px;bottom:calc(18px + env(safe-area-inset-bottom,0px));z-index:20;border:0;background:var(--ac);color:var(--on);font:inherit;font-weight:700;border-radius:28px;padding:15px 22px;box-shadow:0 6px 18px rgba(0,0,0,.25);cursor:pointer}
 main{padding-bottom:90px}
@@ -71,7 +72,8 @@ main{padding-bottom:90px}
 button:focus-visible,input:focus-visible,a:focus-visible{outline:2px solid var(--am);outline-offset:2px}
 </style></head><body>
 <header><div class="w">
- <div class="top"><h1>Marshrutim <small id="sy" style="font-size:12px;color:var(--mu);font-weight:400;cursor:pointer"></small></h1><div class="nav"><button id="pv" aria-label="Oldingi hafta">‹</button><span id="wk"></span><button id="nx" aria-label="Keyingi hafta">›</button><button id="ag" aria-label="Agentlar" hidden style="font-size:15px">👥</button><button id="out" aria-label="Chiqish" style="font-size:15px">⏻</button></div></div>
+ <div class="top"><h1>Marshrutim <small id="sy" style="font-size:12px;color:var(--mu);font-weight:400;cursor:pointer"></small></h1><div class="nav"><button id="im" aria-label="Excel import" style="font-size:15px">📥</button><button id="ag" aria-label="Agentlar" hidden style="font-size:15px">👥</button><button id="out" aria-label="Chiqish" style="font-size:15px">⏻</button></div></div>
+ <div class="nav wkr"><button id="pv" aria-label="Oldingi hafta">‹</button><span id="wk"></span><button id="nx" aria-label="Keyingi hafta">›</button></div>
  <div id="tabs" class="tabs"></div>
  <div class="hero"><div class="hh"><span id="dn"></span><b id="pg"></b></div><div class="pb"><i id="bar"></i></div></div>
 </div></header>
@@ -114,6 +116,16 @@ button:focus-visible,input:focus-visible,a:focus-visible{outline:2px solid var(-
  <button class="bt g" id="fc">Bekor qilish</button>
 </div></div>
 
+<div class="ov" id="iv" hidden><div class="sh">
+ <h2>Excel/CSV’dan yuklash</h2>
+ <p style="margin:0 0 10px;color:var(--mu);font-size:14px">Faylning birinchi qatorida ustun nomlari boʻlsin: Nomi, Telefon, Manzil, Kun (ixtiyoriy: Kenglik, Uzunlik). Ustunlar tartibi muhim emas.</p>
+ <button class="sb" id="it" style="width:100%;margin-bottom:12px">Shablonni yuklab olish (Excel)</button>
+ <label>Faylda kun koʻrsatilmagan doʻkonlar qaysi kunlarga qoʻshilsin</label><div class="dd" id="iy"></div>
+ <button class="bt g" id="ip">Fayl tanlash (.xlsx, .xls, .csv)</button><input id="iff" type="file" accept=".xlsx,.xls,.csv,.txt" hidden>
+ <div id="is"></div>
+ <button class="bt" id="ig" hidden></button>
+ <button class="bt g" id="ic">Yopish</button>
+</div></div>
 <div class="ov" id="mv" hidden style="align-items:stretch"><div class="sh" style="border-radius:0;height:100%;max-height:100%;display:flex;flex-direction:column;gap:8px;padding-top:calc(14px + env(safe-area-inset-top,0px))">
  <div style="display:flex;gap:6px"><input id="mq" class="in" style="margin:0" placeholder="Joy nomi yoki manzil"><button class="sb" id="mg" style="flex:none">Qidirish</button></div>
  <div id="mr"></div>
@@ -164,7 +176,7 @@ async function sync(pull){
  try{
   for(const x of await qall()){
    const v=x.v;let r;
-   if(v.t=="shop")r=v.op=="up"?await sb.from("shops").upsert(v.d):await sb.from("shops").delete().eq("id",v.d.id);
+   if(v.t=="shop")r=v.op=="up"||v.op=="many"?await sb.from("shops").upsert(v.d):await sb.from("shops").delete().eq("id",v.d.id);
    else r=v.op=="up"?await sb.from("visits").upsert(v.d,{onConflict:"shop_id,visit_date"}):await sb.from("visits").delete().eq("shop_id",v.d.shop_id).eq("visit_date",v.d.visit_date);
    if(r.error)throw r.error;
    put("q",x.k);
@@ -340,6 +352,95 @@ function parseLL(t){
  a=+a;b=+b;if(Math.abs(a)>90){const x=a;a=b;b=x}
  return Math.abs(a)<=90&&Math.abs(b)<=180?{lat:a,lng:b}:null;
 }
+/*IMP*/
+const SY={
+ phone:["telefon","tel","raqam","nomer","номер","телефон","phone","mobile"],
+ lat:["lat","latitude","kenglik","широта"],
+ lng:["lng","lon","long","longitude","uzunlik","долгота"],
+ coord:["koordinata","coordinates","координаты","gps","location"],
+ day:["kun","kunlar","kuni","day","days","weekday","день","дни"],
+ address:["manzil","adres","адрес","address"],
+ name:["nomi","nom","dokon","magazin","магазин","название","наименование","name","shop","klient","mijoz","клиент"]
+};
+const DR=[/^(du|dush|mon|пн|пон)/,/^(se|sesh|tue|вт|вто)/,/^(ch|chor|wed|ср|сре)/,/^(pa|pay|thu|чт|чет)/,/^(ju|jum|fri|пт|пят)/,/^(sh|shan|sat|сб|суб)/,/^(ya|yak|sun|вс|вос)/];
+const nz=x=>String(x).toLowerCase().replace(/[^a-zа-яё0-9]/g,"");
+function parseDays(v){
+ const o=new Set();
+ String(v||"").toLowerCase().replace(/[ʻ’'`‘]/g,"").split(/[,;\/\s]+/).forEach(t=>{
+  if(!t)return;
+  if(/^(har|ham|all|daily|еже)/.test(t)){for(let i=0;i<7;i++)o.add(i);return}
+  if(/^[1-7]$/.test(t)){o.add(+t-1);return}
+  DR.forEach((r,i)=>{if(r.test(t))o.add(i)});
+ });
+ return[...o].sort();
+}
+function fixPhone(p){const d=p.replace(/\D/g,"");if(!d)return p;if(d.length==9)return"+998"+d;if(d.length==12&&d.startsWith("998"))return"+"+d;return p}
+let imRows=null,imSkip=0,imd=new Set();
+function parseSheet(rows){
+ rows=rows.filter(r=>r.some(c=>String(c).trim()));
+ if(!rows.length)return[];
+ const H=rows[0].map(nz),used=new Set();let col={},start=1;
+ ["phone","lat","lng","coord","day","address","name"].forEach(k=>{
+  const i=H.findIndex((h,j)=>!used.has(j)&&h&&SY[k].some(x=>h===x||(x.length>=3&&h.includes(x))));
+  if(i>=0)used.add(i);col[k]=i;
+ });
+ if(col.name<0){col={name:0,phone:1,address:2,day:3,lat:-1,lng:-1,coord:-1};start=0}
+ const out=[];imSkip=0;
+ for(let i=start;i<rows.length;i++){
+  const r=rows[i],g=k=>col[k]>=0&&r[col[k]]!=null?String(r[col[k]]).trim():"";
+  const name=g("name");if(!name){imSkip++;continue}
+  let lat=null,lng=null;
+  const la=parseFloat(g("lat").replace(",",".")),ln=parseFloat(g("lng").replace(",","."));
+  if(isFinite(la)&&isFinite(ln)&&Math.abs(la)<=90&&Math.abs(ln)<=180){lat=la;lng=ln}
+  else if(g("coord")){const c=parseLL(g("coord"));if(c){lat=c.lat;lng=c.lng}}
+  out.push({name,phone:fixPhone(g("phone")),address:g("address"),days:parseDays(g("day")),lat,lng});
+ }
+ return out;
+}
+/*END*/
+function loadX(){return window.XLSX?Promise.resolve():new Promise((ok,no)=>{const j=document.createElement("script");j.src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js";j.onload=ok;j.onerror=no;document.head.appendChild(j)})}
+function putMany(L){try{const o=DB.transaction("shops","readwrite").objectStore("shops");L.forEach(x=>o.put(x,x.id))}catch(e){}}
+function outBulk(L){for(let i=0;i<L.length;i+=100)try{DB.transaction("q","readwrite").objectStore("q").add({t:"shop",op:"many",d:L.slice(i,i+100).map(x=>({id:x.id,name:x.name,phone:x.phone,logo:null,days:x.days,address:x.address||null,lat:x.lat,lng:x.lng,created_at:new Date(x.t).toISOString()}))})}catch(e){}st();sync()}
+function prep(){
+ const ex=new Set(Object.values(shops).map(x=>nz(x.name)+"|"+x.phone.replace(/\D/g,""))),rows=[];let dup=0;
+ for(const r of imRows||[]){const k=nz(r.name)+"|"+r.phone.replace(/\D/g,"");if(ex.has(k)){dup++;continue}ex.add(k);rows.push(r)}
+ return{rows,dup};
+}
+function showIm(){
+ if(!imRows||!imRows.length){$("#is").innerHTML='<p class="em" style="padding:10px">Faylda doʻkon topilmadi.</p>';$("#ig").hidden=true;return}
+ const{rows,dup}=prep(),nd=rows.filter(r=>!r.days.length).length;
+ $("#is").innerHTML=`<p style="margin:8px 0"><b>${rows.length}</b> ta yangi doʻkon topildi${dup?`, ${dup} tasi oldin bor (oʻtkazib yuboriladi)`:""}${imSkip?`, ${imSkip} ta qatorda nom yoʻq (oʻtkazib yuboriladi)`:""}.${nd?` ${nd} tasida kun koʻrsatilmagan, ular yuqorida tanlangan kunlarga qoʻshiladi.`:""}</p>`+rows.slice(0,4).map(r=>`<div class="ad">${esc(r.name)} · ${esc(r.phone||"raqamsiz")} · ${r.days.length?r.days.map(i=>S[i]).join(", "):"kun yoʻq"}</div>`).join("");
+ $("#ig").hidden=!rows.length;$("#ig").textContent=rows.length+" ta doʻkonni qoʻshish";
+}
+function paintIy(){$("#iy").innerHTML=S.map((x,i)=>`<button type="button" class="ch${imd.has(i)?" on":""}" data-d="${i}">${x}</button>`).join("")}
+$("#im").onclick=()=>{imd=new Set([day]);imRows=null;$("#is").innerHTML="";$("#ig").hidden=true;paintIy();$("#iv").hidden=false};
+$("#ic").onclick=()=>{$("#iv").hidden=true};
+$("#iy").onclick=e=>{const b=e.target.closest("[data-d]");if(!b)return;const i=+b.dataset.d;imd.has(i)?imd.delete(i):imd.add(i);paintIy()};
+$("#ip").onclick=()=>$("#iff").click();
+$("#it").onclick=async()=>{
+ try{await loadX()}catch(e){return toast("Internetni tekshiring")}
+ const ws=XLSX.utils.aoa_to_sheet([["Nomi","Telefon","Manzil","Kun","Kenglik","Uzunlik"],["Bahor doʻkoni","+998 90 123 45 67","Chilonzor, 9-kvartal","Dushanba, Payshanba","41.2856","69.2038"],["Orzu savdo","+998 91 765 43 21","Yunusobod","Seshanba","",""]]);
+ ws["!cols"]=[{wch:24},{wch:20},{wch:28},{wch:22},{wch:12},{wch:12}];
+ const wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,ws,"Dokonlar");XLSX.writeFile(wb,"marshrutim_shablon.xlsx");
+};
+$("#iff").onchange=async e=>{
+ const f=e.target.files[0];e.target.value="";if(!f)return;
+ $("#is").innerHTML='<p class="em" style="padding:10px">Oʻqilmoqda…</p>';
+ try{
+  await loadX();
+  const wb=/\.(csv|txt)$/i.test(f.name)?XLSX.read(await f.text(),{type:"string"}):XLSX.read(await f.arrayBuffer(),{type:"array"});
+  imRows=parseSheet(XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]],{header:1,raw:false,defval:""}));
+  showIm();
+ }catch(err){$("#is").innerHTML='<p class="em" style="padding:10px">Faylni oʻqib boʻlmadi. Excel (.xlsx) yoki CSV yuklang.</p>'}
+};
+$("#ig").onclick=()=>{
+ const{rows,dup}=prep();
+ if(rows.some(r=>!r.days.length)&&!imd.size)return toast("Kamida bitta kunni tanlang");
+ const t0=Date.now(),L=rows.map((r,i)=>({id:uuid(),t:t0+i,name:r.name,phone:r.phone,logo:"",days:r.days.length?r.days:[...imd].sort(),address:r.address,lat:r.lat,lng:r.lng}));
+ L.forEach(x=>shops[x.id]=x);putMany(L);outBulk(L);
+ $("#iv").hidden=true;render();
+ toast(L.length+" ta doʻkon qoʻshildi"+(dup?", "+dup+" ta takror oʻtkazildi":""));
+};
 $("#mp").onclick=openMap;
 $("#mx").onclick=()=>{$("#mv").hidden=true};
 $("#mo").onclick=()=>{const c=map.getCenter();pos={lat:+c.lat.toFixed(6),lng:+c.lng.toFixed(6),acc:0};$("#mv").hidden=true;paintForm()};
