@@ -55,6 +55,7 @@ a.bt{display:block;text-align:center;text-decoration:none}.ad{flex:1 1 100%;colo
 .xk{width:34px;height:34px;border-radius:50%;border:1px solid var(--ln);background:transparent;color:var(--mu);display:grid;place-items:center;flex:none;cursor:pointer;padding:0;font-size:14px}.m .xk{background:var(--am);border-color:var(--am);color:#14212b}.c.m{border-color:var(--am)}
 .tl{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:6px 0 10px}.tl div{background:var(--bg);border-radius:12px;padding:10px 6px;text-align:center}.tl b{display:block;font-size:19px}.tl span{font-size:12px;color:var(--mu)}
 .rw{display:flex;justify-content:space-between;align-items:center;gap:8px;width:100%;text-align:left;border:1px solid var(--ln);background:var(--cd);color:var(--tx);border-radius:12px;padding:10px 12px;font:inherit;margin-bottom:6px;cursor:pointer}
+.pln{margin-top:12px;padding:9px 12px;border-radius:12px;font-size:13px;background:var(--cd);border:1px solid var(--ln)}.pln.w{border-color:var(--am)}
 .em{text-align:center;color:var(--mu);padding:36px 10px}
 .fab{position:fixed;right:16px;bottom:calc(18px + env(safe-area-inset-bottom,0px));z-index:20;border:0;background:var(--ac);color:var(--on);font:inherit;font-weight:700;border-radius:28px;padding:15px 22px;box-shadow:0 6px 18px rgba(0,0,0,.25);cursor:pointer}
 main{padding-bottom:90px}
@@ -83,6 +84,7 @@ button:focus-visible,input:focus-visible,a:focus-visible{outline:2px solid var(-
  <div class="hero"><div class="hh"><span id="dn"></span><b id="pg"></b></div><div class="pb"><i id="bar"></i></div><div id="mh" style="font-size:13px;margin-top:6px;cursor:pointer"></div></div>
 </div></header>
 <main class="w">
+ <div id="plb" class="pln" hidden></div>
  <div id="nxc"></div>
  <input id="sq" class="in" type="search" placeholder="Doʻkon yoki raqam qidirish">
  <div id="fl" class="fl"></div>
@@ -99,7 +101,7 @@ button:focus-visible,input:focus-visible,a:focus-visible{outline:2px solid var(-
  <h2>Agentlar</h2>
  <div class="c" style="padding:12px;margin-bottom:10px"><b>Yangi agent</b>
   <input id="aln" class="in" placeholder="Login (masalan: aziz01)" autocapitalize="none" style="margin-top:8px">
-  <input id="apw" class="in" placeholder="Parol (kamida 6 belgi)">
+  <input id="apw" class="in" placeholder="Parol (kamida 6 belgi)"><button class="sb" id="agp" style="width:100%;margin-bottom:12px">🎲 Parol yaratish</button>
   <input id="afn" class="in" placeholder="Ism (ixtiyoriy)">
   <button class="bt" id="abt" style="margin:0">Agent qoʻshish</button></div>
  <div id="ol"></div>
@@ -163,6 +165,11 @@ button:focus-visible,input:focus-visible,a:focus-visible{outline:2px solid var(-
  <input id="xn" class="in" placeholder="Izoh (ixtiyoriy)">
  <button class="bt" id="xs">Saqlash</button><button class="bt g" id="xc">Bekor qilish</button>
 </div></div>
+<div class="ov cen" id="pk" hidden><div class="sh">
+ <h2>Parol</h2><p id="pkl" style="margin:0;color:var(--mu);font-size:14px"></p>
+ <div id="pkv" style="white-space:pre-line;font-size:20px;font-weight:700;background:var(--bg);border-radius:12px;padding:14px;margin:10px 0;user-select:all"></div>
+ <button class="bt" id="pkc">Nusxalash</button><button class="bt g" id="pkx">Yopish</button>
+</div></div>
 <div class="ov cen" id="am" hidden><div class="sh">
  <h2 id="at"></h2><p id="ap" style="margin:0 0 6px;color:var(--mu)"></p>
  <button class="bt" id="ao"></button><button class="bt g" id="ac">Yoʻq, qolsin</button>
@@ -172,7 +179,7 @@ button:focus-visible,input:focus-visible,a:focus-visible{outline:2px solid var(-
 <script>
 const $=s=>document.querySelector(s);
 const D=["Dushanba","Seshanba","Chorshanba","Payshanba","Juma","Shanba","Yakshanba"],S=["Du","Se","Ch","Pa","Ju","Sh","Ya"],M=["yanvar","fevral","mart","aprel","may","iyun","iyul","avgust","sentyabr","oktyabr","noyabr","dekabr"];
-let near=false,me=null,BAL={},orders={},pays={},miss={},pos=null,DB=null,shops={},visits={},wk=0,day=(new Date().getDay()+6)%7,flt="all",q="",openId=null,editId=null,logo="",fd=new Set(),cb=null;
+let PLAN=null,near=false,me=null,BAL={},orders={},pays={},miss={},pos=null,DB=null,shops={},visits={},wk=0,day=(new Date().getDay()+6)%7,flt="all",q="",openId=null,editId=null,logo="",fd=new Set(),cb=null;
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const pad=n=>String(n).padStart(2,"0"),dk=d=>d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate());
 function monday(){const d=new Date();d.setHours(12,0,0,0);d.setDate(d.getDate()-((d.getDay()+6)%7)+wk*7);return d}
@@ -206,16 +213,17 @@ async function pullAll(){
 async function sync(pull){
  if(!uid||!navigator.onLine)return;
  if(syncing){again=true;return}
- syncing=true;let ok=true;
+ syncing=true;let ok=true,lim=false;
  try{
   for(const x of await qall()){
    const v=x.v;let r;
    const tb={shop:"shops",visit:"visits",order:"orders",pay:"payments"}[v.t];
    if(v.t=="visit")r=v.op=="up"?await sb.from("visits").upsert(v.d,{onConflict:"shop_id,visit_date"}):await sb.from("visits").delete().eq("shop_id",v.d.shop_id).eq("visit_date",v.d.visit_date);
    else r=v.op=="del"?await sb.from(tb).delete().eq("id",v.d.id):await sb.from(tb).upsert(v.d);
-   if(r.error)throw r.error;
+   if(r.error){if(r.error.code=="42501"||/shop_limit/.test(r.error.message||"")){put("q",x.k);lim=true;continue}throw r.error}
    put("q",x.k);
   }
+  if(lim){toast("Bepul rejim sababli baʼzi oʻzgarishlar saqlanmadi");pull=true}
   if(pull&&!(await qall()).length)await pullAll();
  }catch(e){ok=false;console.warn(e)}
  syncing=false;st(ok);
@@ -331,6 +339,7 @@ function paintForm(){
  $("#gs").textContent=pos?"✓ saqlandi"+(pos.acc?" (±"+pos.acc+" m)":"")+(pos.acc>100?" — aniq emas, doʻkon oldida qayta aniqlang":""):"";$("#gx").hidden=!pos;$("#gp").textContent=pos?"📍 Qayta aniqlash":"📍 Joylashuvni saqlash";
 }
 function openForm(id){
+ if(!id&&roomLeft()<=0){toast(limMsg());return}
  editId=id||null;const s=id?shops[id]:null;
  logo=s?s.logo||"":"";fd=new Set(s?s.days:[day]);
  $("#fn").value=s?s.name:"";$("#fp").value=s?s.phone:"";$("#fa").value=s?s.address||"":"";$("#fnt").value=s?s.note||"":"";pos=s&&s.lat!=null&&s.lng!=null?{lat:s.lat,lng:s.lng}:null;
@@ -357,6 +366,7 @@ function save(again){
  const n=$("#fn").value.trim();
  if(!n){$("#fn").focus();return toast("Doʻkon nomini yozing")}
  if(!fd.size)return toast("Kamida bitta kunni tanlang");
+ if(!editId&&roomLeft()<=0)return toast(limMsg());
  const s=editId?shops[editId]:{id:uuid(),t:Date.now()};
  Object.assign(s,{name:n,phone:$("#fp").value.trim(),logo,days:[...fd].sort(),address:$("#fa").value.trim(),note:$("#fnt").value.trim(),lat:pos?pos.lat:null,lng:pos?pos.lng:null});
  shops[s.id]=s;put("shops",s.id,s);out("shop","up",{id:s.id,name:s.name,phone:s.phone,logo:s.logo||null,days:s.days,address:s.address||null,note:s.note||null,lat:s.lat==null?null:s.lat,lng:s.lng==null?null:s.lng});
@@ -379,10 +389,13 @@ async function boot(){
   (await all("orders")).forEach(x=>orders[x.id]=x);(await all("pays")).forEach(x=>pays[x.id]=x);
  }
  render();st();
+ try{PLAN=JSON.parse(localStorage.getItem("plan_"+uid))}catch(e){}
+ paintPlan();
  if(navigator.onLine){
   const{data:p}=await sb.from("profiles").select("active,paid_until,role").eq("id",uid).maybeSingle();
-  if(p&&(!p.active||p.paid_until<dk(new Date()))){await sb.auth.signOut();uid=null;$("#lo").hidden=false;$("#le").textContent="Obuna muddati tugagan yoki akkaunt bloklangan. Egasiga murojaat qiling.";return}
-  if(p&&p.role=="owner")$("#ag").hidden=false;
+  if(p&&!p.active){await sb.auth.signOut();uid=null;$("#lo").hidden=false;$("#le").textContent="Akkaunt bloklangan. Egasiga murojaat qiling.";return}
+  if(p&&p.role=="owner"){$("#ag").hidden=false;PLAN=null;paintPlan()}
+  else{const{data:pl}=await sb.rpc("my_plan");if(pl){PLAN=pl;try{localStorage.setItem("plan_"+uid,JSON.stringify(pl))}catch(e){}paintPlan()}}
  }
  sync(true);
 }
@@ -508,7 +521,7 @@ function prep(){
 function showIm(){
  if(!imRows||!imRows.length){$("#is").innerHTML='<p class="em" style="padding:10px">Faylda doʻkon topilmadi.</p>';$("#ig").hidden=true;return}
  const{rows,dup}=prep(),nd=rows.filter(r=>!r.days.length).length;
- $("#is").innerHTML=`<p style="margin:8px 0"><b>${rows.length}</b> ta yangi doʻkon topildi${dup?`, ${dup} tasi oldin bor (oʻtkazib yuboriladi)`:""}${imSkip?`, ${imSkip} ta qatorda nom yoʻq (oʻtkazib yuboriladi)`:""}.${nd?` ${nd} tasida kun koʻrsatilmagan, ular yuqorida tanlangan kunlarga qoʻshiladi.`:""}</p>`+rows.slice(0,4).map(r=>`<div class="ad">${esc(r.name)} · ${esc(r.phone||"raqamsiz")} · ${r.days.length?r.days.map(i=>S[i]).join(", "):"kun yoʻq"}</div>`).join("");
+ $("#is").innerHTML=`<p style="margin:8px 0"><b>${rows.length}</b> ta yangi doʻkon topildi${dup?`, ${dup} tasi oldin bor (oʻtkazib yuboriladi)`:""}${imSkip?`, ${imSkip} ta qatorda nom yoʻq (oʻtkazib yuboriladi)`:""}.${rows.length>roomLeft()?` Bepul limit sababli faqat ${roomLeft()} tasi qoʻshiladi.`:""}${nd?` ${nd} tasida kun koʻrsatilmagan, ular yuqorida tanlangan kunlarga qoʻshiladi.`:""}</p>`+rows.slice(0,4).map(r=>`<div class="ad">${esc(r.name)} · ${esc(r.phone||"raqamsiz")} · ${r.days.length?r.days.map(i=>S[i]).join(", "):"kun yoʻq"}</div>`).join("");
  $("#ig").hidden=!rows.length;$("#ig").textContent=rows.length+" ta doʻkonni qoʻshish";
 }
 function paintIy(){$("#iy").innerHTML=S.map((x,i)=>`<button type="button" class="ch${imd.has(i)?" on":""}" data-d="${i}">${x}</button>`).join("")}
@@ -533,12 +546,13 @@ $("#iff").onchange=async e=>{
  }catch(err){$("#is").innerHTML='<p class="em" style="padding:10px">Faylni oʻqib boʻlmadi. Excel (.xlsx) yoki CSV yuklang.</p>'}
 };
 $("#ig").onclick=()=>{
- const{rows,dup}=prep();
+ let{rows,dup}=prep();const rl=roomLeft();let cut=0;if(rows.length>rl){cut=rows.length-rl;rows=rows.slice(0,rl)}
+ if(!rows.length)return toast(limMsg());
  if(rows.some(r=>!r.days.length)&&!imd.size)return toast("Kamida bitta kunni tanlang");
  const t0=Date.now(),L=rows.map((r,i)=>({id:uuid(),t:t0+i,name:r.name,phone:r.phone,logo:"",days:r.days.length?r.days:[...imd].sort(),address:r.address,lat:r.lat,lng:r.lng}));
  L.forEach(x=>shops[x.id]=x);putMany(L);outBulk(L);
  $("#iv").hidden=true;render();
- toast(L.length+" ta doʻkon qoʻshildi"+(dup?", "+dup+" ta takror oʻtkazildi":""));
+ toast(L.length+" ta doʻkon qoʻshildi"+(dup?", "+dup+" ta takror oʻtkazildi":"")+(cut?", "+cut+" tasi bepul limit sababli qoʻshilmadi":""));
 };
 $("#mp").onclick=openMap;
 $("#mx").onclick=()=>{$("#mv").hidden=true};
@@ -560,6 +574,23 @@ $("#mg").onclick=async()=>{
 };
 $("#mq").onkeydown=e=>{if(e.key=="Enter")$("#mg").click()};
 $("#nc").onclick=()=>{$("#nv").hidden=true};
+function isFull(){return !PLAN||PLAN.lifetime||PLAN.paid_until>=dk(new Date())}
+function roomLeft(){return isFull()?Infinity:Math.max(0,(PLAN.limit||50)-Object.keys(shops).length)}
+function limMsg(){return "Bepul rejimda "+((PLAN&&PLAN.limit)||50)+" ta doʻkongacha. Davom etish uchun egasiga murojaat qiling."}
+function paintPlan(){
+ const e=$("#plb");if(!PLAN){e.hidden=true;return}
+ let t="",w=false;const td=dk(new Date());
+ if(PLAN.lifetime)t="♾ Umrbod premium";
+ else if(PLAN.paid_until>=td){
+  const n=Math.round((Date.parse(PLAN.paid_until)-Date.parse(td))/864e5),tr=PLAN.paid_until<=dk(new Date(Date.parse(PLAN.created_at)+7*864e5));
+  t=(tr?"Sinov muddati: ":"Obuna: ")+(n?n+" kun qoldi":"bugun tugaydi");
+  if(n<=3){w=true;t+=". Uzaytirish uchun egasiga murojaat qiling"}
+ }else{
+  const lim=PLAN.limit||50;w=true;
+  t="Bepul rejim: "+Math.min(PLAN.total,lim)+"/"+lim+" doʻkon"+(PLAN.total>lim?" · "+(PLAN.total-lim)+" ta qulflangan":"")+". Toʻliq foydalanish uchun egasiga murojaat qiling";
+ }
+ e.textContent=t;e.className="pln"+(w?" w":"");e.hidden=false;
+}
 const fm=n=>Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g," ")+" soʻm";
 function bal(){const b={};for(const o of Object.values(orders))b[o.shop_id]=(b[o.shop_id]||0)+o.amount;for(const o of Object.values(pays))b[o.shop_id]=(b[o.shop_id]||0)-o.amount;return b}
 let smId=null,rpP="d";
@@ -626,35 +657,57 @@ $("#abt").onclick=async()=>{
  const m=await fnCall({action:"create",login:l,password:pw,full_name:$("#afn").value.trim()});
  $("#abt").disabled=false;
  if(m)return toast("Xatolik: "+m);
- $("#aln").value=$("#apw").value=$("#afn").value="";toast("Agent qoʻshildi");loadAg();
+ $("#aln").value=$("#apw").value=$("#afn").value="";loadAg();showCred("Agent yaratildi. Maʼlumotlarni agentga yuboring (parol bir marta koʻrsatiladi):",l,pw);
 };
-async function resetPw(id){
- const pw=prompt("Yangi parol (kamida 6 belgi):");if(!pw)return;
- if(pw.length<6)return toast("Parol kamida 6 belgi");
- const m=await fnCall({action:"password",agent_id:id,password:pw});
- toast(m?"Xatolik: "+m:"Parol oʻzgartirildi");
+const genPw=()=>{const A="abcdefghjkmnpqrstuvwxyz23456789";let p="";for(const x of crypto.getRandomValues(new Uint8Array(8)))p+=A[x%A.length];return p};
+let cred="";
+function showCred(t,lg,pw){
+ $("#pkl").textContent=t;
+ $("#pkv").textContent=(lg?"Login: "+lg+"\n":"")+"Parol: "+pw;
+ cred=location.origin+location.pathname+"\n"+(lg?"Login: "+lg+"\n":"")+"Parol: "+pw;
+ $("#pk").hidden=false;
+}
+$("#agp").onclick=()=>{$("#apw").value=genPw()};
+$("#pkc").onclick=async()=>{try{await navigator.clipboard.writeText(cred);toast("Nusxalandi")}catch(e){toast("Qoʻlda koʻchirib oling")}};
+$("#pkx").onclick=()=>{$("#pk").hidden=true};
+async function resetPw(id,lg){
+ const pw=genPw(),m=await fnCall({action:"password",agent_id:id,password:pw});
+ if(m)return toast("Xatolik: "+m);
+ showCred("Yangi parol yaratildi. Agentga yuboring (bir marta koʻrsatiladi):",lg,pw);
+}
+function agStat(a){
+ const td=dk(new Date()),dl=Math.round((Date.parse(a.paid_until)-Date.parse(td))/864e5),full=!!a.active&&(a.lifetime||dl>=0);
+ let t,c="var(--ok)";
+ if(!a.active){t="Bloklangan";c="var(--dg)"}
+ else if(a.lifetime)t="♾ Umrbod premium";
+ else if(dl>=0){const tr=a.paid_until<=dk(new Date(Date.parse(a.created_at)+7*864e5));t=(tr?"Sinov":"Obuna")+": "+(dl?dl+" kun qoldi":"bugun tugaydi")+" ("+a.paid_until+")";if(dl<=3)c="var(--am)"}
+ else{t="Bepul rejim (muddat tugagan: "+a.paid_until+")";c="var(--dg)"}
+ return{t,c,full};
 }
 async function loadAg(){
  const{data,error}=await sb.rpc("owner_stats");
- if(error){$("#ol").innerHTML='<p class="em">Yuklab boʻlmadi</p>';return}
- const td=dk(new Date()),sm='style="font-weight:400;font-size:13px;color:var(--mu)"';
- $("#ol").innerHTML=data.length?data.map(a=>{const ex=a.paid_until<td;return `<div class="c" data-id="${a.agent_id}" data-pu="${a.paid_until}" data-ac="${a.active}"><div class="r" style="cursor:default"><div class="nm" style="white-space:normal">${esc(a.full_name||a.login)}<div ${sm}>${esc(a.login)} · ${a.shops_count} doʻkon · 30 kunda ${a.visits_30d} tashrif</div><div style="font-weight:400;font-size:13px;color:${!a.active||ex?"var(--dg)":"var(--ok)"}">${!a.active?"Bloklangan":ex?"Muddati tugagan":"Faol"} · ${a.paid_until}</div></div></div><div class="mo"><button class="sb" data-o="x">+30 kun</button><button class="sb" data-o="b">${a.active?"Bloklash":"Faollashtirish"}</button><button class="sb" data-o="p">Parol</button></div></div>`}).join(""):'<p class="em">Agent yoʻq. Supabase’da Add user bilan qoʻshing.</p>';
+ if(error){$("#ol").innerHTML='<p class="em">Yuklab boʻlmadi. SQL yangilanishi ishga tushirilganmi?</p>';return}
+ const sm='style="font-weight:400;font-size:13px;color:var(--mu)"';
+ $("#ol").innerHTML=data.length?data.map(a=>{
+  const g=agStat(a),lock=!g.full&&a.active&&a.shops_count>50?` · ${a.shops_count-50} ta qulflangan`:"";
+  return `<div class="c" data-id="${a.agent_id}" data-lg="${esc(a.login)}" data-pu="${a.paid_until}" data-ac="${a.active}" data-lt="${a.lifetime}"><div class="r" style="cursor:default"><div class="nm" style="white-space:normal">${esc(a.full_name||a.login)}<div ${sm}>${esc(a.login)} · ${a.shops_count} doʻkon${lock} · 30 kunda ${a.visits_30d} tashrif</div><div style="font-weight:400;font-size:13px;color:${g.c}">${esc(g.t)}</div></div></div><div class="mo"><button class="sb" data-o="d1">+1</button><button class="sb" data-o="d7">+7</button><button class="sb" data-o="d30">+30</button><button class="sb" data-o="l">${a.lifetime?"♾ Olish":"♾ Umrbod"}</button><button class="sb" data-o="b">${a.active?"Bloklash":"Faollashtirish"}</button><button class="sb" data-o="p">Parol</button></div></div>`}).join(""):'<p class="em">Agent yoʻq. Yuqoridagi forma bilan qoʻshing.</p>';
 }
 $("#ag").onclick=()=>{$("#om").hidden=false;loadAg()};
 $("#oc").onclick=()=>{$("#om").hidden=true};
 $("#ol").onclick=e=>{
  const b=e.target.closest("[data-o]");if(!b)return;
- const c=b.closest(".c"),id=c.dataset.id;
- if(b.dataset.o=="p"){resetPw(id);return}
+ const c=b.closest(".c"),id=c.dataset.id,o=b.dataset.o;
+ if(o=="p")return ask("Yangi parol yaratilsinmi?","Eski parol ishlamay qoladi. Yangisi bir marta koʻrsatiladi.","Ha, yaratilsin",()=>resetPw(id,c.dataset.lg));
  const go=async()=>{
   let u;
-  if(b.dataset.o=="x"){const td=dk(new Date()),base=c.dataset.pu>td?c.dataset.pu:td,d=new Date(base+"T12:00:00");d.setDate(d.getDate()+30);u={paid_until:dk(d)}}
+  if(o[0]=="d"){const n=+o.slice(1),td=dk(new Date()),base=c.dataset.pu>td?c.dataset.pu:td,d=new Date(base+"T12:00:00");d.setDate(d.getDate()+n);u={paid_until:dk(d)}}
+  else if(o=="l")u={lifetime:c.dataset.lt!="true"};
   else u={active:c.dataset.ac!="true"};
   const{error}=await sb.from("profiles").update(u).eq("id",id);
   if(error)return toast("Xatolik: "+error.message);
   toast("Saqlandi");loadAg();
  };
- if(b.dataset.o=="b"&&c.dataset.ac=="true")ask("Agent bloklansinmi?","U ilovaga kira olmaydi.","Ha, bloklansin",go);else go();
+ if(o=="b"&&c.dataset.ac=="true")ask("Agent bloklansinmi?","U ilovaga kira olmaydi.","Ha, bloklansin",go);else go();
 };
 boot();
 </script></body></html>
