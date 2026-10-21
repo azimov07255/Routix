@@ -80,7 +80,7 @@ button:focus-visible,input:focus-visible,a:focus-visible{outline:2px solid var(-
  <div class="hero"><div class="hh"><span id="dn"></span><b id="pg"></b></div><div class="pb"><i id="bar"></i></div><div id="mh" style="font-size:13px;margin-top:6px;cursor:pointer"></div></div>
 </div></header>
 <main class="w">
- <div id="nx"></div>
+ <div id="nxc"></div>
  <input id="sq" class="in" type="search" placeholder="Doʻkon yoki raqam qidirish">
  <div id="fl" class="fl"></div>
  <div id="ls"></div>
@@ -232,7 +232,7 @@ function render(){
  $("#tabs").innerHTML=h;
  const isT=wk===0&&day===(new Date().getDay()+6)%7;
  const d=dayDate(day),k=dk(d),L=list.filter(s=>s.days.includes(day)).sort(cmp(k)),v=L.filter(s=>visits[k+"|"+s.id]).length;
- const M=isT?missed(k):[];
+ const MM=isT?missed(k):[];
  $("#dn").textContent=D[day]+", "+d.getDate()+" "+M[d.getMonth()];
  $("#pg").textContent=v+" / "+L.length;
  $("#bar").style.width=(L.length?v/L.length*100:0)+"%";
@@ -240,12 +240,12 @@ function render(){
  const ql=q.trim().toLowerCase();
  const F=L.filter(s=>(flt=="all"||(flt=="done")===!!visits[k+"|"+s.id])&&(!ql||s.name.toLowerCase().includes(ql)||s.phone.includes(ql)));
  const ql2=ql;
- const MF=M.filter(x=>(flt=="all"||(flt=="done")===(x.st==2))&&(!ql2||x.s.name.toLowerCase().includes(ql2)||x.s.phone.includes(ql2))).sort((a,b)=>a.st-b.st||(near&&me?dcmp(a.s,b.s):b.b-a.b));
- const open1=M.filter(x=>x.st==1).length;
+ const MF=MM.filter(x=>(flt=="all"||(flt=="done")===(x.st==2))&&(!ql2||x.s.name.toLowerCase().includes(ql2)||x.s.phone.includes(ql2))).sort((a,b)=>a.st-b.st||(near&&me?dcmp(a.s,b.s):b.b-a.b));
+ const open1=MM.filter(x=>x.st==1).length;
  const miss=MF.length?`<div class="sec" id="ms">Qolib ketganlar · <b>${open1}</b></div>`+MF.map(x=>cardH(x.s,k,D[x.w]+" kuni qolgan")).join(""):"";
  const main=F.length?(miss?`<div class="sec" style="margin-top:4px">Bugun</div>`:"")+F.map(x=>cardH(x,k)).join(""):"";
  $("#ls").innerHTML=main+miss||`<p class="em">${L.length?"Hech narsa topilmadi.":"Bu kun uchun doʻkon yoʻq. Pastdagi tugma bilan qoʻshing."}</p>`;
- $("#nx").innerHTML=isT?nextCard(L,M,k):"";
+ $("#nxc").innerHTML=isT?nextCard(L,MM,k):"";
  $("#mh").textContent=open1?"⚠ Qolib ketgan: "+open1+" ta ↓":"";
 }
 
@@ -259,7 +259,7 @@ function toggle(id){
  else{visits[k]=1;put("visits",k,{...d,status:"visited"});out("visit","up",{...d,status:"visited"});render();if(near)locate(render)}
 }
 
-$("#nx").onclick=e=>{const b=e.target.closest("[data-a]");if(!b)return;if(b.dataset.a=="r")openNav(b.dataset.id);else if(b.dataset.a=="c")toggle(b.dataset.id)};
+$("#nxc").onclick=e=>{const b=e.target.closest("[data-a]");if(!b)return;if(b.dataset.a=="r")openNav(b.dataset.id);else if(b.dataset.a=="c")toggle(b.dataset.id)};
 $("#mh").onclick=()=>{const x=document.getElementById("ms");if(x)x.scrollIntoView({behavior:"smooth"})};
 $("#ls").onclick=e=>{
  const c=e.target.closest(".c");if(!c||e.target.closest("a"))return;
