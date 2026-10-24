@@ -2,7 +2,7 @@
 <html lang="uz"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Routix</title>
-<link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icon.svg"><meta name="theme-color" content="#14212b">
+<link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icon.svg"><link rel="apple-touch-icon" href="icon-180.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Routix"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="theme-color" content="#14212b">
 <style>
 :root{--bg:#eef1f4;--cd:#fff;--tx:#14212b;--mu:#667583;--ln:#dde3e8;--ink:#14212b;--am:#f2a30f;--ok:#0e7c66;--okb:#e1f3ee;--dg:#c62f2f;--ac:#14212b;--on:#fff;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 @media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0e151b;--cd:#17212a;--tx:#eaf0f4;--mu:#8fa0ad;--ln:#26333e;--ink:#1f2e3a;--ok:#3ecaa8;--okb:#123028;--dg:#ff7b7b;--ac:#f2a30f;--on:#14212b;color-scheme:dark}}
@@ -61,6 +61,26 @@ a.bt{display:block;text-align:center;text-decoration:none}.ad{flex:1 1 100%;colo
 .bn{position:fixed;left:0;right:0;bottom:0;z-index:30;background:var(--cd);border-top:1px solid var(--ln);display:flex;padding:6px 8px calc(6px + env(safe-area-inset-bottom,0px))}
 .bn button{flex:1;border:0;background:transparent;color:var(--mu);font:inherit;font-size:11px;display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 0;cursor:pointer}.bn button b{font-size:21px;line-height:1;font-weight:400}
 .mo .sb{min-width:64px}
+#sp{position:fixed;inset:0;z-index:100;background:radial-gradient(circle at 50% 38%,#1e3548 0%,#0e151b 62%);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;animation:spo .45s ease 2.1s forwards}
+@keyframes spo{to{opacity:0;visibility:hidden}}
+#sp .spl{width:116px;height:116px;animation:spi .6s cubic-bezier(.2,.9,.3,1.2) both;filter:drop-shadow(0 10px 30px rgba(242,163,15,.25))}
+@keyframes spi{from{transform:scale(.5) rotate(-8deg);opacity:0}to{transform:none;opacity:1}}
+#sp .dt{transform-box:fill-box;transform-origin:center;opacity:0;animation:dtp .3s ease both;animation-delay:calc(.25s + var(--i)*.07s)}
+@keyframes dtp{from{opacity:0;transform:scale(.2)}to{opacity:1;transform:none}}
+#sp .pn{transform-box:fill-box;transform-origin:50% 100%;animation:pnd .55s cubic-bezier(.3,1.5,.4,1) .85s both}
+@keyframes pnd{from{opacity:0;transform:translateY(-16px) scale(.5)}to{opacity:1;transform:none}}
+#sp h1{margin:6px 0 0;font-size:36px;letter-spacing:-.5px;color:#fff;animation:fu .6s ease .8s both}
+@keyframes fu{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+#sp .by{animation:byi .8s ease 1.1s both}
+@keyframes byi{from{opacity:0;letter-spacing:14px}to{opacity:1;letter-spacing:5px}}
+.by{font-size:10px;letter-spacing:3px;color:var(--am);text-transform:uppercase;font-weight:600;margin-top:1px}#sp .by{font-size:12px}
+.byt{color:var(--am);letter-spacing:2px;font-weight:600}
+.brand{display:flex;align-items:center;gap:10px}.lgo{width:40px;height:40px;flex:none}
+.wl{text-align:center;padding:30px 16px 10px;color:var(--mu)}.wl h2{margin:10px 0 6px;color:var(--tx);font-size:21px}.wl p{margin:0 0 14px;font-size:14px}
+button:active,.ap:active{transform:scale(.97)}button{transition:transform .1s}
+@keyframes up{from{transform:translateY(40px);opacity:0}to{transform:none;opacity:1}}@keyframes fd{from{opacity:0}to{opacity:1}}@keyframes pp{from{transform:scale(.92);opacity:0}to{transform:none;opacity:1}}
+.ov{animation:fd .2s ease}.ov:not(.cen)>.sh{animation:up .28s cubic-bezier(.2,.8,.2,1)}.ov.cen>.sh{animation:pp .22s ease}
+@media(prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}#sp{animation-delay:.3s!important}}
 .em{text-align:center;color:var(--mu);padding:36px 10px}
 .fab{position:fixed;right:16px;bottom:calc(82px + env(safe-area-inset-bottom,0px));z-index:20;border:0;background:var(--ac);color:var(--on);font:inherit;font-weight:700;border-radius:28px;padding:15px 22px;box-shadow:0 6px 18px rgba(0,0,0,.25);cursor:pointer}
 main.w{padding-bottom:170px}
@@ -82,13 +102,16 @@ main.w{padding-bottom:170px}
 #ts.on{opacity:1}
 button:focus-visible,input:focus-visible,a:focus-visible{outline:2px solid var(--am);outline-offset:2px}
 </style></head><body>
+<div id="sp"><svg viewBox="0 0 120 120" class="spl"><rect width="120" height="120" rx="28" fill="#14212b" stroke="rgba(255,255,255,.14)"/><circle class="dt" style="--i:0" cx="33.9" cy="94.8" r="2.5" fill="#f2a30f"/><circle class="dt" style="--i:1" cx="40.0" cy="89.7" r="2.5" fill="#f2a30f"/><circle class="dt" style="--i:2" cx="44.7" cy="83.2" r="2.5" fill="#f2a30f"/><circle class="dt" style="--i:3" cx="51.6" cy="79.2" r="2.5" fill="#f2a30f"/><circle class="dt" style="--i:4" cx="59.6" cy="77.9" r="2.5" fill="#f2a30f"/><circle class="dt" style="--i:5" cx="67.6" cy="77.1" r="2.5" fill="#f2a30f"/><circle class="dt" style="--i:6" cx="75.5" cy="75.9" r="2.5" fill="#f2a30f"/><circle class="dt" style="--i:7" cx="82.5" cy="72.2" r="2.5" fill="#f2a30f"/><circle cx="26" cy="96" r="6" fill="#fff"/><g class="pn"><path d="M86 14c-11 0-19.5 8-19.5 18.5 0 13.5 19.5 31 19.5 31s19.5-17.5 19.5-31C105.5 22 97 14 86 14z" fill="#f2a30f"/><circle cx="86" cy="32" r="9" fill="#14212b"/><path d="M81.5 32l3.5 3.5 6-7" fill="none" stroke="#f2a30f" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></g></svg><h1>Routix</h1><div class="by">by AZIMOV</div></div>
+<script>try{if(sessionStorage.getItem("sp")){document.getElementById("sp").remove()}else{sessionStorage.setItem("sp","1")}}catch(e){}</script>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="lgs" viewBox="0 0 120 120"><rect width="120" height="120" rx="28" fill="#14212b"/><g fill="#f2a30f"><circle cx="33.9" cy="94.8" r="2.5"/><circle cx="40.0" cy="89.7" r="2.5"/><circle cx="44.7" cy="83.2" r="2.5"/><circle cx="51.6" cy="79.2" r="2.5"/><circle cx="59.6" cy="77.9" r="2.5"/><circle cx="67.6" cy="77.1" r="2.5"/><circle cx="75.5" cy="75.9" r="2.5"/><circle cx="82.5" cy="72.2" r="2.5"/></g><circle cx="26" cy="96" r="6" fill="#fff"/><path d="M86 14c-11 0-19.5 8-19.5 18.5 0 13.5 19.5 31 19.5 31s19.5-17.5 19.5-31C105.5 22 97 14 86 14z" fill="#f2a30f"/><circle cx="86" cy="32" r="9" fill="#14212b"/><path d="M81.5 32l3.5 3.5 6-7" fill="none" stroke="#f2a30f" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></symbol></svg>
 <header><div class="w">
- <div class="top"><h1>Routix <small id="sy" style="font-size:12px;color:var(--mu);font-weight:400;cursor:pointer"></small></h1></div>
+ <div class="top"><div class="brand"><svg class="lgo"><use href="#lgs"/></svg><div><h1>Routix</h1><div class="by">by AZIMOV</div></div></div><small id="sy" style="font-size:12px;color:var(--mu);cursor:pointer"></small></div>
  <div class="nav wkr"><button id="pv" aria-label="Oldingi hafta">‹</button><span id="wk"></span><button id="nx" aria-label="Keyingi hafta">›</button></div>
  </div></header>
 <div class="stk"><div class="w"><div id="tabs" class="tabs"></div></div></div>
 <main class="w">
- <div class="hero"><div class="hh"><span id="dn"></span><b id="pg"></b></div><div class="pb"><i id="bar"></i></div><div id="mh" style="font-size:13px;margin-top:6px;cursor:pointer"></div></div>
+ <div class="hero"><div id="gr" style="font-size:13px;opacity:.85;margin-bottom:4px"></div><div class="hh"><span id="dn"></span><b id="pg"></b></div><div class="pb"><i id="bar"></i></div><div id="mh" style="font-size:13px;margin-top:6px;cursor:pointer"></div><div id="sk" style="font-size:13px;margin-top:6px"></div></div>
  <div id="plb" class="pln" hidden></div>
  <div id="rtb" class="pln" hidden></div>
  <div id="odb" class="pln wr" hidden style="cursor:pointer"></div>
@@ -123,7 +146,7 @@ button:focus-visible,input:focus-visible,a:focus-visible{outline:2px solid var(-
  <button class="bt g" id="oc">Yopish</button>
 </div></div>
 <div class="ov cen" id="lo" hidden><div class="sh">
- <h2>Routix</h2>
+ <div style="text-align:center;margin-bottom:14px"><svg class="lgo" style="width:78px;height:78px"><use href="#lgs"/></svg><h2 style="margin:8px 0 0;font-size:28px">Routix</h2><div class="by" style="margin-top:3px;font-size:11px;letter-spacing:5px">by AZIMOV</div></div>
  <label for="gn">Login</label><input id="gn" class="in" autocomplete="username" autocapitalize="none" spellcheck="false">
  <label for="pw">Parol</label><input id="pw" class="in" type="password" autocomplete="current-password">
  <p id="le" style="color:var(--dg);margin:0 0 4px"></p>
@@ -193,7 +216,7 @@ button:focus-visible,input:focus-visible,a:focus-visible{outline:2px solid var(-
  <button class="rw" id="ag" hidden>👥 Agentlar va obuna</button>
  <button class="rw" id="gb">📖 Qoʻllanma · Руководство</button>
  <button class="rw" id="out">⏻ Chiqish</button>
- <p class="em" style="padding:6px">Routix</p><button class="bt g" id="mnc">Yopish</button>
+ <p class="em" style="padding:6px">Routix · <span class="byt">by AZIMOV</span> · v1.0</p><button class="bt g" id="mnc">Yopish</button>
 </div></div>
 <div class="ov" id="gd" hidden><div class="sh">
  <div class="dd" id="gdl" style="margin:0 0 8px"></div><h2 id="gdt"></h2><div id="gdb"></div><button class="bt" id="gdo"></button>
@@ -219,7 +242,7 @@ button:focus-visible,input:focus-visible,a:focus-visible{outline:2px solid var(-
 <script>
 const $=s=>document.querySelector(s);
 const D=["Dushanba","Seshanba","Chorshanba","Payshanba","Juma","Shanba","Yakshanba"],S=["Du","Se","Ch","Pa","Ju","Sh","Ya"],M=["yanvar","fevral","mart","aprel","may","iyun","iyul","avgust","sentyabr","oktyabr","noyabr","dekabr"];
-let PLAN=null,ro=false,ROI={},POS={},DU={},rt=false,RO=null,goals={},dueN=0,near=false,me=null,BAL={},orders={},pays={},miss={},pos=null,DB=null,shops={},visits={},wk=0,day=(new Date().getDay()+6)%7,flt="all",q="",openId=null,editId=null,logo="",fd=new Set(),cb=null;
+let PLAN=null,uName="",ro=false,ROI={},POS={},DU={},rt=false,RO=null,goals={},dueN=0,near=false,me=null,BAL={},orders={},pays={},miss={},pos=null,DB=null,shops={},visits={},wk=0,day=(new Date().getDay()+6)%7,flt="all",q="",openId=null,editId=null,logo="",fd=new Set(),cb=null;
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const pad=n=>String(n).padStart(2,"0"),dk=d=>d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate());
 function monday(){const d=new Date();d.setHours(12,0,0,0);d.setDate(d.getDate()-((d.getDay()+6)%7)+wk*7);return d}
@@ -295,7 +318,13 @@ function missed(k){
 function nextCard(L,M,k){
  const open=L.filter(x=>!visits[k+"|"+x.id]&&!miss[k+"|"+x.id]),mo=M.filter(x=>x.st==1&&!miss[k+"|"+x.s.id]).map(x=>x.s);
  const pool=near&&me?open.concat(mo):(open.length?open:mo);
- if(!pool.length)return L.length||M.length?`<div class="nx"><div class="nn" style="margin:0">Bugungi doʻkonlar tugadi ✓</div></div>`:"";
+ if(!pool.length){
+  if(!(L.length||M.length))return"";
+  const t0=new Date();t0.setHours(0,0,0,0);let so=0,ge=0;
+  Object.values(orders).forEach(o=>{if(o.t>=t0)so+=o.amount});Object.values(pays).forEach(o=>{if(o.t>=t0)ge+=o.amount});
+  const vc=L.filter(x=>visits[k+"|"+x.id]).length;
+  return `<div class="nx"><div class="nn" style="margin:0 0 6px">Bugungi doʻkonlar tugadi ✓</div><div class="nl">${vc} ta doʻkonga bordingiz${so?" · sotuv "+fm(so):""}${ge?" · yigʻilgan "+fm(ge):""}</div></div>`;
+ }
  const n=near&&me?pool.slice().sort(dcmp)[0]:pool[0],dd=near&&me&&dist(n)!=null?" · "+fmtD(dist(n)):"";
  return `<div class="nx"><div class="nl">Keyingi doʻkon${dd}</div><div class="nn">${esc(n.name)}</div><div class="nb">${n.phone?`<a href="tel:${esc(n.phone)}">📞 Qoʻngʻiroq</a>`:""}<button data-a="r" data-id="${n.id}">📍 Yoʻnalish</button><button class="ok" data-a="c" data-id="${n.id}">✓ Bordim</button></div></div>`;
 }
@@ -334,13 +363,15 @@ function render(){
  const open1=MM.filter(x=>x.st==1).length;
  const miss=MF.length?`<div class="sec" id="ms">Qolib ketganlar · <b>${open1}</b></div>`+MF.map(x=>cardH(x.s,k,D[x.w]+" kuni qolgan")).join(""):"";
  const main=F.length?(miss?`<div class="sec" style="margin-top:4px">Bugun</div>`:"")+F.map(x=>cardH(x,k)).join(""):"";
- $("#ls").innerHTML=main+miss||`<p class="em">${L.length?"Hech narsa topilmadi.":"Bu kun uchun doʻkon yoʻq. Pastdagi tugma bilan qoʻshing."}</p>`;
+ $("#ls").innerHTML=main+miss||(Object.keys(shops).length?`<p class="em">${L.length?"Hech narsa topilmadi.":"Bu kun uchun doʻkon yoʻq. Pastdagi tugma bilan qoʻshing."}</p>`:WELCOME);
  $("#nxc").innerHTML=isT&&!ro?nextCard(L,MM,k):"";
  $("#mh").textContent=open1?"⚠ Qolib ketgan: "+open1+" ta ↓":"";
  $("#rtb").hidden=!rt;$("#rtb").textContent=rt?(RO&&RO._n?`Marshrut: ${RO._n} ta doʻkon · taxminan ${fmtD(RO._d)} (toʻgʻri chiziq boʻyicha)`:"Marshrut uchun joylashuv va doʻkonlarda koordinata kerak"):"";
  const odl=Object.entries(DU).filter(x=>shops[x[0]]),n1=odl.filter(x=>x[1].od>0).length,n2=odl.length-n1;
  $("#odb").hidden=!odl.length;$("#odb").textContent=odl.length?"⏰ "+(n1?n1+" ta doʻkonda toʻlov muddati oʻtgan":"")+(n1&&n2?", ":"")+(n2?n2+" tasida muddat yaqin":""):"";
  if(ro){$("#rtb").hidden=false;$("#rtb").textContent="↕ Tartiblash: ▲ ▼ tugmalari yoki № bosib aniq oʻrin kiriting. Tugagach «↕ Tartib» ni qayta bosing."}
+ const hr=new Date().getHours();$("#gr").textContent=(hr<5?"Xayrli tun":hr<12?"Xayrli tong":hr<18?"Xayrli kun":"Xayrli kech")+(uName?", "+uName:"")+"!";
+ const stk=streak();$("#sk").textContent=stk>=2?"🔥 "+stk+" kun ketma-ket":"";
  if(window.scrollY!==sy)window.scrollTo(0,sy);
 }
 
@@ -350,7 +381,7 @@ $("#ac").onclick=()=>{$("#am").hidden=true};
 
 function toggle(id){
  const dt=dk(dayDate(day)),k=dt+"|"+id,d={shop_id:id,visit_date:dt};
- const mark=()=>{delete miss[k];visits[k]=1;put("visits",k,{...d,status:"visited"});out("visit","up",{...d,status:"visited",reason:null});render();if(near||rt)locate(render)};
+ const mark=()=>{delete miss[k];visits[k]=1;put("visits",k,{...d,status:"visited"});out("visit","up",{...d,status:"visited",reason:null});render();if(near||rt)locate(render);buzz();try{checkDone()}catch(e){}};
  if(visits[k])ask("Adashib bosdingizmi?","Doʻkon belgisi olib tashlansinmi?","Ha, olib tashlansin",()=>{delete visits[k];put("visits",k);out("visit","del",d);render()});
  else if(miss[k])ask("Bormadi belgisi turibdi","Bordi deb oʻzgartiraymi?","Ha, bordi",mark);
  else mark();
@@ -447,11 +478,13 @@ async function boot(){
  try{PLAN=JSON.parse(localStorage.getItem("plan_"+uid))}catch(e){}
  try{goals=JSON.parse(localStorage.getItem("goals_"+uid))||{}}catch(e){goals={}}
  try{POS=JSON.parse(localStorage.getItem("pos_"+uid))||{}}catch(e){POS={}}
+ try{uName=localStorage.getItem("name_"+uid)||""}catch(e){}
  try{if(!localStorage.getItem("guide_"+uid))setTimeout(showGuide,500)}catch(e){}
  paintPlan();
  if(navigator.onLine){
-  const{data:p}=await sb.from("profiles").select("active,paid_until,role").eq("id",uid).maybeSingle();
+  const{data:p}=await sb.from("profiles").select("active,paid_until,role,full_name,login").eq("id",uid).maybeSingle();
   if(p&&!p.active){await sb.auth.signOut();uid=null;$("#lo").hidden=false;$("#le").textContent="Akkaunt bloklangan. Egasiga murojaat qiling.";return}
+  if(p){uName=p.full_name||p.login||uName;try{localStorage.setItem("name_"+uid,uName)}catch(e){}render()}
   if(p&&p.role=="owner"){$("#ag").hidden=false;PLAN=null;paintPlan()}
   else{const{data:pl}=await sb.rpc("my_plan");if(pl){PLAN=pl;try{localStorage.setItem("plan_"+uid,JSON.stringify(pl))}catch(e){}paintPlan()}}
  }
@@ -648,6 +681,20 @@ function paintPlan(){
   t="Bepul rejim: "+Math.min(PLAN.total,lim)+"/"+lim+" doʻkon"+(PLAN.total>lim?" · "+(PLAN.total-lim)+" ta qulflangan":"")+". Toʻliq foydalanish uchun egasiga murojaat qiling";
  }
  e.textContent=t;e.className="pln"+(w?" wr":"");e.hidden=false;
+}
+const WELCOME=`<div class="wl"><svg class="lgo" style="width:76px;height:76px"><use href="#lgs"/></svg><h2>Routix’ga xush kelibsiz!</h2><p>Boshlash uchun doʻkonlaringizni qoʻshing. Koʻp boʻlsa, Excel’dan bir yoʻla yuklang.</p><button class="bt" onclick="openForm()">+ Doʻkon qoʻshish</button><button class="bt g" onclick="document.getElementById('im').click()">📥 Excel’dan yuklash</button><p style="font-size:12px;margin-top:16px" class="byt">BY AZIMOV</p></div>`;
+function streak(){const ds=new Set();for(const k in visits)ds.add(k.slice(0,10));let n=0;const d=new Date();d.setHours(12,0,0,0);if(!ds.has(dk(d)))d.setDate(d.getDate()-1);while(ds.has(dk(d))){n++;d.setDate(d.getDate()-1)}return n}
+function buzz(){try{navigator.vibrate&&navigator.vibrate(12)}catch(e){}}
+function checkDone(){
+ if(!(wk===0&&day===(new Date().getDay()+6)%7))return;
+ const k=dk(new Date()),L=Object.values(shops).filter(x=>x.days.includes(day));
+ if(L.length>=3&&L.every(x=>visits[k+"|"+x.id])){confetti();toast("Ajoyib! Bugungi hamma doʻkonlar tugadi 🎉")}
+}
+function confetti(){
+ const c=document.createElement("canvas");c.style.cssText="position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:90";document.body.appendChild(c);
+ const w=c.width=innerWidth,h=c.height=innerHeight,x=c.getContext("2d"),cols=["#f2a30f","#0e7c66","#2f7bf6","#d63a3a","#ffffff"];
+ const P=Array.from({length:140},()=>({x:w/2,y:h*.55,vx:(Math.random()-.5)*14,vy:-Math.random()*16-4,s:4+Math.random()*5,c:cols[Math.random()*5|0],r:Math.random()*6}));
+ let t=0;(function f(){x.clearRect(0,0,w,h);P.forEach(p=>{p.vy+=.45;p.x+=p.vx;p.y+=p.vy;p.r+=.2;x.fillStyle=p.c;x.save();x.translate(p.x,p.y);x.rotate(p.r);x.fillRect(-p.s/2,-p.s/2,p.s,p.s*.6);x.restore()});if(++t<130)requestAnimationFrame(f);else c.remove()})();
 }
 const fm=n=>Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g," ")+" soʻm";
 function bal(){const b={};for(const o of Object.values(orders))b[o.shop_id]=(b[o.shop_id]||0)+o.amount;for(const o of Object.values(pays))b[o.shop_id]=(b[o.shop_id]||0)-o.amount;return b}
