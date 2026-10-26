@@ -136,6 +136,8 @@ main.w{padding-bottom:200px}#ts{bottom:calc(170px + env(safe-area-inset-bottom,0
 .rc a{min-width:38px;height:38px;border-radius:10px;border:1px solid var(--ln);display:grid;place-items:center;text-decoration:none;color:var(--tx)}
 .rc .okb{background:linear-gradient(135deg,#1fc29a,#0e7c66);color:#fff;border-color:transparent}
 .nm3 b{display:grid;place-items:center;width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--gold2),var(--gold));color:#14212b;font-size:13px;border:2px solid #fff;box-shadow:0 3px 8px rgba(0,0,0,.35)}
+html.lk,html.lk body{overflow:hidden}html.lk body{position:fixed;left:0;right:0;width:100%}
+.ov,.ov *{overscroll-behavior:contain}.sh{-webkit-overflow-scrolling:touch}
 </style></head><body>
 <div id="sp"><svg viewBox="0 0 120 120" class="spl"><rect width="120" height="120" rx="28" fill="#14212b" stroke="rgba(255,255,255,.14)"/><circle class="dt" style="--i:0" cx="33.9" cy="94.8" r="2.5" fill="#f2a30f"/><circle class="dt" style="--i:1" cx="40.0" cy="89.7" r="2.5" fill="#f2a30f"/><circle class="dt" style="--i:2" cx="44.7" cy="83.2" r="2.5" fill="#f2a30f"/><circle class="dt" style="--i:3" cx="51.6" cy="79.2" r="2.5" fill="#f2a30f"/><circle class="dt" style="--i:4" cx="59.6" cy="77.9" r="2.5" fill="#f2a30f"/><circle class="dt" style="--i:5" cx="67.6" cy="77.1" r="2.5" fill="#f2a30f"/><circle class="dt" style="--i:6" cx="75.5" cy="75.9" r="2.5" fill="#f2a30f"/><circle class="dt" style="--i:7" cx="82.5" cy="72.2" r="2.5" fill="#f2a30f"/><circle cx="26" cy="96" r="6" fill="#fff"/><g class="pn"><path d="M86 14c-11 0-19.5 8-19.5 18.5 0 13.5 19.5 31 19.5 31s19.5-17.5 19.5-31C105.5 22 97 14 86 14z" fill="#f2a30f"/><circle cx="86" cy="32" r="9" fill="#14212b"/><path d="M81.5 32l3.5 3.5 6-7" fill="none" stroke="#f2a30f" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></g></svg><h1>Routix</h1><div class="by">by AZIMOV</div></div>
 <script>try{if(sessionStorage.getItem("sp")){document.getElementById("sp").remove()}else{sessionStorage.setItem("sp","1")}}catch(e){}</script>
@@ -197,6 +199,7 @@ main.w{padding-bottom:200px}#ts{bottom:calc(170px + env(safe-area-inset-bottom,0
  <button class="bt" id="lb">Kirish</button>
  <div class="dd" id="lgl" style="justify-content:center;margin:14px 0 0"></div>
  <button class="bt g" id="demo" style="margin-top:10px">👀 Demoni koʻrish</button>
+ <p id="lct" style="text-align:center;font-size:12px;color:var(--mu);margin:12px 0 0"></p>
 </div></div>
 <div class="ov" id="fm" hidden><div class="sh">
  <h2 id="ft"></h2>
@@ -267,6 +270,8 @@ main.w{padding-bottom:200px}#ts{bottom:calc(170px + env(safe-area-inset-bottom,0
  <button class="rw" id="ag" hidden>👥 Agentlar va obuna</button>
  <button class="rw" id="gb">📖 Qoʻllanma · Руководство</button>
  <div class="rw" style="cursor:default"><span>🌐 Til / Язык</span><span class="dd" id="lgc" style="margin:0"></span></div>
+ <div class="rw" style="cursor:default;flex-wrap:wrap"><span>🎨 Mavzu</span><span class="dd" id="thc" style="margin:0"></span></div>
+ <button class="rw" id="stb" hidden>⚙ Sozlamalar</button>
  <button class="rw" id="pdb">📦 Mahsulotlar</button>
  <button class="rw" id="prb">💎 Pro tarif</button>
  <button class="rw" id="tmb2">📄 Foydalanish shartlari</button>
@@ -298,7 +303,7 @@ main.w{padding-bottom:200px}#ts{bottom:calc(170px + env(safe-area-inset-bottom,0
 </div></div>
 <div class="ov" id="pro" hidden><div class="sh">
  <h2 id="prt"></h2><div id="prx" style="font-size:15px;line-height:1.5"></div>
- <a class="bt" id="prg" target="_blank" rel="noopener" hidden>Telegram</a><button class="bt g" id="prc">Yopish</button>
+ <a class="bt" id="prg" target="_blank" rel="noopener" hidden>Telegram</a><a class="bt g" id="prcall" hidden>Qoʻngʻiroq</a><button class="bt g" id="prc">Yopish</button>
 </div></div>
 <div class="ov" id="pd" hidden><div class="sh">
  <h2>Mahsulotlar</h2>
@@ -314,6 +319,15 @@ main.w{padding-bottom:200px}#ts{bottom:calc(170px + env(safe-area-inset-bottom,0
  <button class="bt" id="pka">Qoʻllash</button><button class="bt g" id="pkx2">Bekor qilish</button>
 </div></div>
 <div class="ov cen" id="lbx" hidden style="background:rgba(0,0,0,.88)"><img id="lbi" alt="" style="max-width:94%;max-height:86%;border-radius:12px"></div>
+<div class="ov" id="stg" hidden><div class="sh">
+ <h2>Aloqa sozlamalari</h2>
+ <label for="stt">Telegram username (@ belgisiz)</label><input id="stt" class="in" autocomplete="off" autocapitalize="none">
+ <label for="stp">Telefon raqami</label><input id="stp" class="in" type="tel" inputmode="tel">
+ <label for="stpr">Pro narxi (matn)</label><input id="stpr" class="in" placeholder="Masalan: 200 000 soʻm / oy">
+ <label for="stc">Karta raqami (toʻlov uchun, ixtiyoriy)</label><input id="stc" class="in" inputmode="numeric" autocomplete="off">
+ <label for="stcn">Karta egasi (ixtiyoriy)</label><input id="stcn" class="in" autocomplete="off">
+ <button class="bt" id="sts">Saqlash</button><button class="bt g" id="stx">Bekor qilish</button>
+</div></div>
 <div class="ov cen" id="am" hidden><div class="sh">
  <h2 id="at"></h2><p id="ap" style="margin:0 0 6px;color:var(--mu)"></p>
  <button class="bt" id="ao"></button><button class="bt g" id="ac">Yoʻq, qolsin</button>
@@ -364,6 +378,7 @@ async function pullAll(){
  let pr2=null;try{pr2=await page("products")}catch(e){}
  const ip=await sb.from("orders").select("items").limit(1);ITEMS_OK=!ip.error;try{localStorage.setItem("itemsok_"+uid,ITEMS_OK?"1":"")}catch(e){}
  let pp=null;try{pp=await page("shop_pos",null,["shop_id","day"])}catch(e){}
+ const sr=(await sb.from("app_settings").select("*")).data;if(sr){sr.forEach(r=>{if(r.key in DEF_SET)SET[r.key]=r.value});saveSetLocal();paintContact()}
  const gd=(await sb.from("agent_goals").select("*")).data;
  if(gd){gd.forEach(g=>goals[g.month]={sales:+g.sales,visits:g.visits});saveGoals()}
  if(pp){POS={};pp.forEach(x=>POS[x.day+"|"+x.shop_id]=x.pos);savePos()}
@@ -591,7 +606,7 @@ async function boot(){
   const{data:p}=await sb.from("profiles").select("active,paid_until,role,full_name,login").eq("id",uid).maybeSingle();
   if(p&&!p.active){await sb.auth.signOut();uid=null;$("#lo").hidden=false;$("#le").textContent="Akkaunt bloklangan. Egasiga murojaat qiling.";return}
   if(p){uName=p.full_name||"";try{localStorage.setItem("name_"+uid,uName)}catch(e){}render()}
-  if(p&&p.role=="owner"){isOwner=true;$("#ag").hidden=false;PLAN=null;paintPlan()}
+  if(p&&p.role=="owner"){isOwner=true;$("#ag").hidden=false;$("#stb").hidden=false;PLAN=null;paintPlan()}
   else{const{data:pl}=await sb.rpc("my_plan");if(pl){PLAN=pl;try{localStorage.setItem("plan_"+uid,JSON.stringify(pl))}catch(e){}paintPlan()}}
  }
  sync(true);
@@ -1205,7 +1220,12 @@ $("#mnb").onclick=()=>{let t=0;try{t=+localStorage.getItem("bk_"+uid)||0}catch(e
 $("#mnc").onclick=()=>{$("#mn").hidden=true};
 $("#mn").onclick=e=>{if(e.target.closest("button")&&e.target.id!="mnc")$("#mn").hidden=true};
 /* ---- OWNER SOZLAMALARI: Telegram username (@siz) va narx matni ---- */
-const OWNER_TG="",PRICE_TEXT="";
+const DEF_SET={tg:"printer_uaa",phone:"+998950651635",price:"",card:"",cardname:""};
+let SET={...DEF_SET};try{const j=JSON.parse(localStorage.getItem("set_v1")||"null");if(j)SET={...DEF_SET,...j}}catch(e){}
+function saveSetLocal(){try{localStorage.setItem("set_v1",JSON.stringify(SET))}catch(e){}}
+function fmtPhone(x){const d=String(x).replace(/\D/g,"");return d.length==12&&d.startsWith("998")?"+998 "+d.slice(3,5)+" "+d.slice(5,8)+" "+d.slice(8,10)+" "+d.slice(10):x}
+function contactHtml(){const a=[];if(SET.tg)a.push(`<a href="https://t.me/${esc(SET.tg)}" target="_blank" rel="noopener">@${esc(SET.tg)}</a>`);if(SET.phone)a.push(`<a href="tel:${esc(SET.phone.replace(/[^\d+]/g,""))}">${esc(fmtPhone(SET.phone))}</a>`);return a.join(" · ")}
+function paintContact(){const h=contactHtml();$("#lct").innerHTML=h?"Aloqa: "+h:""}
 /* ---- foydalanish shartlari ---- */
 const TERMS={
  uz:{t:"Foydalanish shartlari va maxfiylik",ok:"Qabul qilaman",s:[
@@ -1235,7 +1255,7 @@ const TERMS={
   ["Изменения","Условия могут обновляться. О важных изменениях сообщат в приложении; продолжая пользоваться Сервисом, вы принимаете новые условия."],
   ["Контакты","По вопросам свяжитесь с Автором (AZIMOV) через Telegram."]]}
 };
-function termsHtml(){const T=TERMS[LANG];return T.s.map((x,i)=>"<p style='margin:0 0 10px'><b>"+(i+1)+". "+esc(x[0])+"</b><br>"+esc(x[1])+"</p>").join("")+(OWNER_TG?"<p style='margin:0'>Telegram: @"+esc(OWNER_TG)+"</p>":"")+"<p style='margin:8px 0 0;color:var(--mu);font-size:12px'>v1.0</p>"}
+function termsHtml(){const T=TERMS[LANG];return T.s.map((x,i)=>"<p style='margin:0 0 10px'><b>"+(i+1)+". "+esc(x[0])+"</b><br>"+esc(x[1])+"</p>").join("")+(contactHtml()?"<p style='margin:0'>"+contactHtml()+"</p>":"")+"<p style='margin:8px 0 0;color:var(--mu);font-size:12px'>v1.0</p>"}
 function showTerms(must){
  const T=TERMS[LANG];$("#tmt").textContent=T.t;$("#tmx").innerHTML=termsHtml();$("#tma").textContent=T.ok;
  $("#tma").hidden=!must;$("#tmc").hidden=!!must;$("#tm").hidden=false;
@@ -1248,10 +1268,13 @@ const PRO={
  uz:{t:"💎 Routix Pro",l:["Cheksiz doʻkon (bepul rejimda 50 tagacha)","Qarz, sotuv va toʻlov muddati hisobi","Eng qisqa marshrut va barcha doʻkonlar xaritasi","Hisobotlar, oylik maqsad va tashriflar tarixi","Excel zaxira va oʻchirilganlar qutisi","Barcha qurilmalarda sinxronlash, internetsiz ishlash"],price:"Narx",ask:"Obuna uchun egasiga yozing.",tg:"Telegram’da yozish"},
  ru:{t:"💎 Routix Pro",l:["Неограниченное число магазинов (в бесплатном режиме до 50)","Учёт долгов, продаж и сроков оплаты","Кратчайший маршрут и карта всех магазинов","Отчёты, цель на месяц и история визитов","Резервная копия в Excel и корзина удалённых","Синхронизация на всех устройствах, работа без интернета"],price:"Цена",ask:"Для подписки напишите владельцу.",tg:"Написать в Telegram"}
 };
+const PRO2={uz:{card:"Toʻlov uchun karta",copy:"Nusxalash",call:"📞 Qoʻngʻiroq",after:"Toʻlovdan soʻng chekni Telegram’ga yuboring, obunani darhol faollashtiramiz."},ru:{card:"Карта для оплаты",copy:"Копировать",call:"📞 Позвонить",after:"После оплаты отправьте чек в Telegram, мы сразу активируем подписку."}};
 function showPro(){
- const P=PRO[LANG];$("#prt").textContent=P.t;
- $("#prx").innerHTML="<ul style='padding-left:20px;margin:0 0 12px;line-height:1.7'>"+P.l.map(x=>"<li>"+esc(x)+"</li>").join("")+"</ul>"+(PRICE_TEXT?"<p style='margin:0 0 6px'><b>"+P.price+":</b> "+esc(PRICE_TEXT)+"</p>":"")+"<p style='margin:0;color:var(--mu)'>"+P.ask+"</p>";
- const g=$("#prg");g.hidden=!OWNER_TG;if(OWNER_TG){g.href="https://t.me/"+OWNER_TG;g.textContent=P.tg}
+ const P=PRO[LANG],X=PRO2[LANG];$("#prt").textContent=P.t;
+ $("#prx").innerHTML="<ul style='padding-left:20px;margin:0 0 12px;line-height:1.7'>"+P.l.map(x=>"<li>"+esc(x)+"</li>").join("")+"</ul>"+(SET.price?"<p style='margin:0 0 6px'><b>"+P.price+":</b> "+esc(SET.price)+"</p>":"")+(SET.card?"<p style='margin:0 0 6px'><b>"+X.card+":</b> "+esc(SET.card)+(SET.cardname?" ("+esc(SET.cardname)+")":"")+" <button class='ch' id='cpcard' type='button'>"+X.copy+"</button></p>":"")+"<p style='margin:0;color:var(--mu)'>"+(SET.card?X.after:P.ask)+"</p>";
+ const g=$("#prg");g.hidden=!SET.tg;if(SET.tg){g.href="https://t.me/"+SET.tg;g.textContent=P.tg}
+ const c=$("#prcall");c.hidden=!SET.phone;if(SET.phone){c.href="tel:"+SET.phone.replace(/[^\d+]/g,"");c.textContent=X.call}
+ const cp=$("#cpcard");if(cp)cp.onclick=async()=>{try{await navigator.clipboard.writeText(SET.card.replace(/\s/g,""));toast("Nusxalandi")}catch(e){toast("Qoʻlda koʻchirib oling")}};
  $("#pro").hidden=false;
 }
 $("#prb").onclick=showPro;$("#prc").onclick=()=>{$("#pro").hidden=true};
@@ -1431,7 +1454,7 @@ function startDemo(){
  $("#lo").hidden=true;paintPlan();render();toast("Demo rejim: maʼlumotlar saqlanmaydi");
 }
 $("#demo").onclick=startDemo;
-$("#plb").onclick=()=>{if(DEMO)location.reload()};
+$("#plb").onclick=()=>{if(DEMO)location.reload();else showPro()};
 /* ---- qoʻshimcha tarjimalar ---- */
 Object.assign(RU,{"👀 Demoni koʻrish":"👀 Посмотреть демо","👀 DEMO":"👀 ДЕМО","👀 DEMO rejim: namunaviy maʼlumotlar, hech narsa saqlanmaydi. Chiqish uchun bosing":"👀 ДЕМО-режим: примерные данные, ничего не сохраняется. Нажмите, чтобы выйти","Demo rejim: maʼlumotlar saqlanmaydi":"Демо-режим: данные не сохраняются",
  "📦 Mahsulotlar":"📦 Товары","Mahsulotlar":"Товары","Mahsulot nomi":"Название товара","Narxi (soʻm)":"Цена (сум)","Qoʻshish":"Добавить","Mahsulot yoʻq":"Товаров нет","Mahsulot nomini yozing":"Введите название товара","Mahsulot oʻchirilsinmi?":"Удалить товар?","Eski sotuvlardagi yozuvlar saqlanib qoladi.":"Записи в прошлых продажах сохранятся.",
@@ -1454,5 +1477,38 @@ $("#nl").onclick=e=>{
  if(/^yandexnavi:/.test(h)){e.preventDefault();openNavi(h)}
 };
 Object.assign(RU,{"Yandex Navigator ochilmadi":"Яндекс Навигатор не открылся","Ilova telefonda oʻrnatilmagan boʻlishi mumkin (App Store yoki Play Marketdan oʻrnatish mumkin). Yoʻnalishni Yandex Xarita bilan ochaymi?":"Приложение, возможно, не установлено (его можно установить из App Store или Play Маркета). Открыть маршрут в Яндекс Картах?","Yandex Xarita bilan ochish":"Открыть в Яндекс Картах"});
+/* ---- aloqa sozlamalari (egasi) ---- */
+$("#stb").onclick=()=>{$("#stt").value=SET.tg;$("#stp").value=SET.phone;$("#stpr").value=SET.price;$("#stc").value=SET.card;$("#stcn").value=SET.cardname;$("#stg").hidden=false};
+$("#stx").onclick=()=>{$("#stg").hidden=true};
+$("#sts").onclick=async()=>{
+ SET={tg:$("#stt").value.trim().replace(/^@/,""),phone:$("#stp").value.trim(),price:$("#stpr").value.trim(),card:$("#stc").value.trim(),cardname:$("#stcn").value.trim()};
+ saveSetLocal();paintContact();$("#stg").hidden=true;
+ if(DEMO)return toast("Saqlandi");
+ const{error}=await sb.from("app_settings").upsert(Object.keys(DEF_SET).map(k=>({key:k,value:SET[k]||""})));
+ toast(error?"Faqat shu telefonda saqlandi (server yangilanishi kerak)":"Saqlandi");
+};
+paintContact();
+/* ---- mavzu: tizim / kunduz / kech ---- */
+let THEME="auto";try{THEME=localStorage.getItem("theme")||"auto"}catch(e){}
+function paintTh(){$("#thc").innerHTML=[["auto","Tizim"],["light","Kunduz"],["dark","Kech"]].map(x=>`<button type="button" class="ch${THEME==x[0]?" on":""}" data-t="${x[0]}">${x[1]}</button>`).join("")}
+function setTheme(t){
+ THEME=t;try{localStorage.setItem("theme",t)}catch(e){}
+ const h=document.documentElement;if(t=="auto")h.removeAttribute("data-theme");else h.setAttribute("data-theme",t);
+ let dark=t=="dark";try{if(t=="auto")dark=!!(window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches)}catch(e){}
+ const m=document.querySelector('meta[name="theme-color"]');if(m)m.setAttribute("content",dark?"#0b1218":"#f3f0e9");
+ paintTh();
+}
+$("#thc").onclick=e=>{const b=e.target.closest("[data-t]");if(b)setTheme(b.dataset.t)};
+setTheme(THEME);
+try{if(window.matchMedia)matchMedia("(prefers-color-scheme: dark)").addEventListener("change",()=>{if(THEME=="auto")setTheme("auto")})}catch(e){}
+/* ---- oynalar ochiqligida orqa fon qotadi ---- */
+let lkY=0;
+function syncLock(){
+ const open=!!document.querySelector(".ov:not([hidden])"),h=document.documentElement;
+ if(open&&!h.classList.contains("lk")){lkY=window.scrollY||0;document.body.style.top="calc(env(safe-area-inset-top,0px) - "+lkY+"px)";h.classList.add("lk")}
+ else if(!open&&h.classList.contains("lk")){h.classList.remove("lk");document.body.style.top="";window.scrollTo(0,lkY)}
+}
+if(typeof MutationObserver!="undefined")new MutationObserver(syncLock).observe(document.body,{subtree:true,attributes:true,attributeFilter:["hidden"]});
+Object.assign(RU,{"🎨 Mavzu":"🎨 Тема","Tizim":"Система","Kunduz":"День","Kech":"Ночь","⚙ Sozlamalar":"⚙ Настройки","Aloqa sozlamalari":"Контактные данные","Telegram username (@ belgisiz)":"Telegram (без @)","Pro narxi (matn)":"Цена Pro (текст)","Masalan: 200 000 soʻm / oy":"Например: 200 000 сум / мес","Karta raqami (toʻlov uchun, ixtiyoriy)":"Номер карты (для оплаты, необязательно)","Karta egasi (ixtiyoriy)":"Владелец карты (необязательно)","Aloqa:":"Контакты:","Faqat shu telefonda saqlandi (server yangilanishi kerak)":"Сохранено только на этом телефоне (нужно обновить сервер)"});
 boot();
 </script></body></html>
