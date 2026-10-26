@@ -101,17 +101,51 @@ main.w{padding-bottom:170px}
 #ts{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(150px + env(safe-area-inset-bottom,0px));background:var(--ink);color:#fff;padding:10px 16px;border-radius:12px;font-size:14px;z-index:60;opacity:0;pointer-events:none;transition:opacity .2s}
 #ts.on{opacity:1}
 button:focus-visible,input:focus-visible,a:focus-visible{outline:2px solid var(--am);outline-offset:2px}
+
+/* ===== PREMIUM THEME ===== */
+:root{--bg:#f3f0e9;--ln:#e4ded1;--glass:rgba(255,255,255,.86);--gold:#f2a30f;--gold2:#ffd166}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0b1218;--cd:#131e28;--ln:#223140;--ink:#14283a;--glass:rgba(19,30,40,.84)}}
+:root[data-theme="dark"]{--bg:#0b1218;--cd:#131e28;--ln:#223140;--ink:#14283a;--glass:rgba(19,30,40,.84)}
+body{background:radial-gradient(900px 420px at 50% -140px,rgba(242,163,15,.11),transparent 65%),var(--bg)}
+.hero{display:flex;align-items:center;gap:14px;position:relative;overflow:hidden;background:linear-gradient(135deg,#19354d 0%,#0f202e 58%,#16281f 100%);border:1px solid rgba(255,255,255,.09);box-shadow:0 14px 34px rgba(8,16,24,.28);border-radius:26px;padding:16px 18px;margin-top:6px}
+.hero::after{content:"";position:absolute;right:-50px;top:-60px;width:190px;height:190px;background:radial-gradient(circle,rgba(242,163,15,.30),transparent 70%);pointer-events:none}
+.hl{flex:1;min-width:0;position:relative;z-index:1}.hh{display:flex;align-items:baseline;gap:8px;margin-top:2px}.hh b{font-size:34px;line-height:1.1;letter-spacing:-1px}.hs{font-size:12px;opacity:.7}
+.ring{position:relative;width:78px;height:78px;flex:none;z-index:1}.ring svg{width:100%;height:100%;transform:rotate(-90deg)}
+.rb{fill:none;stroke:rgba(255,255,255,.14);stroke-width:4}.rf{fill:none;stroke:var(--gold);stroke-width:4;stroke-linecap:round;stroke-dasharray:113.1;stroke-dashoffset:113.1;transition:stroke-dashoffset .7s cubic-bezier(.3,.9,.3,1)}
+.ring span{position:absolute;inset:0;display:grid;place-items:center;font-weight:700;font-size:15px;color:#fff}
+.tab{border-radius:16px;border:1px solid var(--ln);box-shadow:0 1px 0 rgba(255,255,255,.04)}
+.tab.on{background:linear-gradient(135deg,var(--gold2),var(--gold));border-color:transparent;color:#3a2a00;box-shadow:0 8px 18px rgba(242,163,15,.35)}.tab.on b{color:#14212b}.tab.td:not(.on){border-color:var(--gold)}
+.c{border-radius:20px;box-shadow:0 2px 12px rgba(10,20,30,.07)}.c.v{border-left:4px solid var(--ok)}.c.m{border-left:4px solid var(--am)}
+.av{border-radius:15px;box-shadow:0 4px 10px rgba(0,0,0,.18)}
+.v .ck{background:linear-gradient(135deg,#1fc29a,#0e7c66);border-color:transparent;box-shadow:0 6px 14px rgba(14,124,102,.4)}
+.ch.on{background:linear-gradient(135deg,var(--gold2),var(--gold));color:#14212b;border-color:transparent;font-weight:600}
+.bt{background:linear-gradient(135deg,var(--gold2),var(--gold));color:#14212b;border-radius:16px;box-shadow:0 8px 20px rgba(242,163,15,.28)}.bt.g{background:transparent;color:var(--tx);box-shadow:none}.bt.d{background:transparent;color:var(--dg);box-shadow:none}
+.fab{background:linear-gradient(135deg,var(--gold2),var(--gold));color:#14212b;box-shadow:0 12px 28px rgba(242,163,15,.5);bottom:calc(96px + env(safe-area-inset-bottom,0px))}
+.bn{left:12px;right:12px;bottom:calc(10px + env(safe-area-inset-bottom,0px));border:1px solid var(--ln);border-radius:26px;padding:6px;background:var(--glass);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);box-shadow:0 14px 34px rgba(0,0,0,.28)}
+.bn button{border-radius:18px;font-size:10.5px}.bn button b{font-size:19px}
+main.w{padding-bottom:200px}#ts{bottom:calc(170px + env(safe-area-inset-bottom,0px))}
+.sh{border-radius:28px 28px 0 0}.ov:not(.cen)>.sh:not([style*="border-radius:0"])::before{content:"";display:block;width:42px;height:4px;border-radius:2px;background:var(--ln);margin:-6px auto 14px}
+.nx{background:linear-gradient(135deg,#19354d,#0f202e);border:1px solid rgba(255,255,255,.08);border-radius:22px;box-shadow:0 10px 26px rgba(8,16,24,.25)}
+.nb .ok{background:linear-gradient(135deg,var(--gold2),var(--gold))}
+.pln{border-radius:14px}
+#bdg{font-size:11px;font-weight:700;padding:3px 9px;border-radius:20px;background:linear-gradient(110deg,var(--gold2),var(--gold),var(--gold2));background-size:200% 100%;animation:shn 3.2s linear infinite;color:#14212b;cursor:pointer;white-space:nowrap}
+@keyframes shn{to{background-position:-200% 0}}
+.top{gap:8px}
+.rn{background:linear-gradient(135deg,var(--gold2),var(--gold))!important;color:#14212b;font-size:18px}
+.rc a{min-width:38px;height:38px;border-radius:10px;border:1px solid var(--ln);display:grid;place-items:center;text-decoration:none;color:var(--tx)}
+.rc .okb{background:linear-gradient(135deg,#1fc29a,#0e7c66);color:#fff;border-color:transparent}
+.nm3 b{display:grid;place-items:center;width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--gold2),var(--gold));color:#14212b;font-size:13px;border:2px solid #fff;box-shadow:0 3px 8px rgba(0,0,0,.35)}
 </style></head><body>
 <div id="sp"><svg viewBox="0 0 120 120" class="spl"><rect width="120" height="120" rx="28" fill="#14212b" stroke="rgba(255,255,255,.14)"/><circle class="dt" style="--i:0" cx="33.9" cy="94.8" r="2.5" fill="#f2a30f"/><circle class="dt" style="--i:1" cx="40.0" cy="89.7" r="2.5" fill="#f2a30f"/><circle class="dt" style="--i:2" cx="44.7" cy="83.2" r="2.5" fill="#f2a30f"/><circle class="dt" style="--i:3" cx="51.6" cy="79.2" r="2.5" fill="#f2a30f"/><circle class="dt" style="--i:4" cx="59.6" cy="77.9" r="2.5" fill="#f2a30f"/><circle class="dt" style="--i:5" cx="67.6" cy="77.1" r="2.5" fill="#f2a30f"/><circle class="dt" style="--i:6" cx="75.5" cy="75.9" r="2.5" fill="#f2a30f"/><circle class="dt" style="--i:7" cx="82.5" cy="72.2" r="2.5" fill="#f2a30f"/><circle cx="26" cy="96" r="6" fill="#fff"/><g class="pn"><path d="M86 14c-11 0-19.5 8-19.5 18.5 0 13.5 19.5 31 19.5 31s19.5-17.5 19.5-31C105.5 22 97 14 86 14z" fill="#f2a30f"/><circle cx="86" cy="32" r="9" fill="#14212b"/><path d="M81.5 32l3.5 3.5 6-7" fill="none" stroke="#f2a30f" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></g></svg><h1>Routix</h1><div class="by">by AZIMOV</div></div>
 <script>try{if(sessionStorage.getItem("sp")){document.getElementById("sp").remove()}else{sessionStorage.setItem("sp","1")}}catch(e){}</script>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="lgs" viewBox="0 0 120 120"><rect width="120" height="120" rx="28" fill="#14212b"/><g fill="#f2a30f"><circle cx="33.9" cy="94.8" r="2.5"/><circle cx="40.0" cy="89.7" r="2.5"/><circle cx="44.7" cy="83.2" r="2.5"/><circle cx="51.6" cy="79.2" r="2.5"/><circle cx="59.6" cy="77.9" r="2.5"/><circle cx="67.6" cy="77.1" r="2.5"/><circle cx="75.5" cy="75.9" r="2.5"/><circle cx="82.5" cy="72.2" r="2.5"/></g><circle cx="26" cy="96" r="6" fill="#fff"/><path d="M86 14c-11 0-19.5 8-19.5 18.5 0 13.5 19.5 31 19.5 31s19.5-17.5 19.5-31C105.5 22 97 14 86 14z" fill="#f2a30f"/><circle cx="86" cy="32" r="9" fill="#14212b"/><path d="M81.5 32l3.5 3.5 6-7" fill="none" stroke="#f2a30f" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></symbol></svg>
 <header><div class="w">
- <div class="top"><div class="brand"><svg class="lgo"><use href="#lgs"/></svg><div><h1>Routix</h1><div class="by">by AZIMOV</div></div></div><small id="sy" style="font-size:12px;color:var(--mu);cursor:pointer"></small></div>
+ <div class="top"><div class="brand"><svg class="lgo"><use href="#lgs"/></svg><div><h1>Routix</h1><div class="by">by AZIMOV</div></div></div><div style="display:flex;align-items:center;gap:8px"><span id="bdg" hidden></span><small id="sy" style="font-size:12px;color:var(--mu);cursor:pointer"></small></div></div>
  <div class="nav wkr"><button id="pv" aria-label="Oldingi hafta">‹</button><span id="wk"></span><button id="nx" aria-label="Keyingi hafta">›</button></div>
  </div></header>
 <div class="stk"><div class="w"><div id="tabs" class="tabs"></div></div></div>
 <main class="w">
- <div class="hero"><div id="gr" style="font-size:13px;opacity:.85;margin-bottom:4px"></div><div class="hh"><span id="dn"></span><b id="pg"></b></div><div class="pb"><i id="bar"></i></div><div id="mh" style="font-size:13px;margin-top:6px;cursor:pointer"></div><div id="sk" style="font-size:13px;margin-top:6px"></div></div>
+ <div class="hero"><div class="hl"><div id="gr" style="font-size:13px;opacity:.85;margin-bottom:2px"></div><div id="dn" style="font-weight:600"></div><div class="hh"><b id="pg"></b><span class="hs">bordi / reja</span></div><div id="mh" style="font-size:13px;margin-top:6px;cursor:pointer"></div><div id="sk" style="font-size:13px;margin-top:4px"></div></div><div class="ring"><svg viewBox="0 0 44 44"><circle class="rb" cx="22" cy="22" r="18"/><circle id="ring" class="rf" cx="22" cy="22" r="18"/></svg><span id="rp2">0%</span></div><div class="pb" style="display:none"><i id="bar"></i></div></div>
  <div id="plb" class="pln" hidden></div>
  <div id="rtb" class="pln" hidden></div>
  <div id="odb" class="pln wr" hidden style="cursor:pointer"></div>
@@ -122,7 +156,7 @@ button:focus-visible,input:focus-visible,a:focus-visible{outline:2px solid var(-
  <div id="ls"></div>
 </main>
 <button class="fab" id="add">+ Doʻkon qoʻshish</button>
-<nav class="bn"><button id="bh"><b>🏠</b>Bugun</button><button id="mapb"><b>🗺</b>Xarita</button><button id="rb"><b>📊</b>Hisobot</button><button id="mnb"><b>☰</b>Menyu</button></nav>
+<nav class="bn"><button id="bh"><b>🏠</b>Bugun</button><button id="rnb"><b>🧭</b>Marshrut</button><button id="mapb"><b>🗺</b>Xarita</button><button id="rb"><b>📊</b>Hisobot</button><button id="mnb"><b>☰</b>Menyu</button></nav>
 <div id="ts"></div>
 
 <div class="ov" id="mv2" hidden style="align-items:stretch"><div class="sh" style="border-radius:0;height:100%;max-height:100%;display:flex;flex-direction:column;gap:8px;padding-top:calc(14px + env(safe-area-inset-top,0px))">
@@ -130,6 +164,14 @@ button:focus-visible,input:focus-visible,a:focus-visible{outline:2px solid var(-
  <div style="position:relative;flex:1;min-height:260px"><div id="map2" style="position:absolute;inset:0;border-radius:14px"></div></div>
  <div id="m2i" style="font-size:13px;color:var(--mu)"></div>
  <div style="font-size:12px;color:var(--mu)">🔴 qarzdor · 🟢 bugun borilgan · 🔵 boshqa</div>
+</div></div>
+<div class="ov" id="rt2" hidden style="align-items:stretch"><div class="sh" style="border-radius:0;height:100%;max-height:100%;display:flex;flex-direction:column;gap:8px;padding-top:calc(14px + env(safe-area-inset-top,0px))">
+ <div style="display:flex;justify-content:space-between;align-items:center"><h2 style="margin:0">🧭 Marshrut</h2><button class="sb" id="r2x" style="flex:none">Yopish</button></div>
+ <div id="r2s" class="tl" style="margin:0"></div>
+ <div class="dd" id="r2c" style="margin:0"></div>
+ <div id="r2l" style="flex:1;overflow:auto;min-height:120px"></div>
+ <div id="r2m" style="flex:1;position:relative;min-height:240px;display:none"><div id="map3" style="position:absolute;inset:0;border-radius:14px"></div></div>
+ <div style="display:flex;gap:8px"><button class="bt" id="r2g" style="margin:0;flex:1">▶ Boshlash</button><a class="bt g" id="r2y" target="_blank" rel="noopener" style="margin:0;flex:1;border:1px solid var(--ln)">Yandex</a><a class="bt g" id="r2gg" target="_blank" rel="noopener" style="margin:0;flex:1;border:1px solid var(--ln)">Google</a></div>
 </div></div>
 <div class="ov" id="nv" hidden><div class="sh">
  <h2 id="nt"></h2><div id="nl"></div>
@@ -152,6 +194,7 @@ button:focus-visible,input:focus-visible,a:focus-visible{outline:2px solid var(-
  <label for="pw">Parol</label><input id="pw" class="in" type="password" autocomplete="current-password">
  <p id="le" style="color:var(--dg);margin:0 0 4px"></p>
  <button class="bt" id="lb">Kirish</button>
+ <div class="dd" id="lgl" style="justify-content:center;margin:14px 0 0"></div>
 </div></div>
 <div class="ov" id="fm" hidden><div class="sh">
  <h2 id="ft"></h2>
@@ -218,6 +261,9 @@ button:focus-visible,input:focus-visible,a:focus-visible{outline:2px solid var(-
  <button class="rw" id="trb">🗑 Oʻchirilganlar qutisi</button>
  <button class="rw" id="ag" hidden>👥 Agentlar va obuna</button>
  <button class="rw" id="gb">📖 Qoʻllanma · Руководство</button>
+ <div class="rw" style="cursor:default"><span>🌐 Til / Язык</span><span class="dd" id="lgc" style="margin:0"></span></div>
+ <button class="rw" id="prb">💎 Pro tarif</button>
+ <button class="rw" id="tmb2">📄 Foydalanish shartlari</button>
  <button class="rw" id="out">⏻ Chiqish</button>
  <p class="em" style="padding:6px">Routix · <span class="byt">by AZIMOV</span> · v1.0</p><button class="bt g" id="mnc">Yopish</button>
 </div></div>
@@ -240,6 +286,14 @@ button:focus-visible,input:focus-visible,a:focus-visible{outline:2px solid var(-
  <h2>Oʻchirilganlar qutisi</h2><p style="margin:0 0 10px;color:var(--mu);font-size:14px">Oʻchirilgan doʻkonlar 30 kun saqlanadi, keyin butunlay oʻchadi.</p>
  <div id="trl"></div><button class="bt g" id="trc">Yopish</button>
 </div></div>
+<div class="ov" id="tm" hidden><div class="sh">
+ <h2 id="tmt"></h2><div id="tmx" style="font-size:14px;line-height:1.5;max-height:52vh;overflow:auto;margin-bottom:10px"></div>
+ <button class="bt" id="tma"></button><button class="bt g" id="tmc">Yopish</button>
+</div></div>
+<div class="ov" id="pro" hidden><div class="sh">
+ <h2 id="prt"></h2><div id="prx" style="font-size:15px;line-height:1.5"></div>
+ <a class="bt" id="prg" target="_blank" rel="noopener" hidden>Telegram</a><button class="bt g" id="prc">Yopish</button>
+</div></div>
 <div class="ov cen" id="am" hidden><div class="sh">
  <h2 id="at"></h2><p id="ap" style="margin:0 0 6px;color:var(--mu)"></p>
  <button class="bt" id="ao"></button><button class="bt g" id="ac">Yoʻq, qolsin</button>
@@ -249,7 +303,7 @@ button:focus-visible,input:focus-visible,a:focus-visible{outline:2px solid var(-
 <script>
 const $=s=>document.querySelector(s);
 const D=["Dushanba","Seshanba","Chorshanba","Payshanba","Juma","Shanba","Yakshanba"],S=["Du","Se","Ch","Pa","Ju","Sh","Ya"],M=["yanvar","fevral","mart","aprel","may","iyun","iyul","avgust","sentyabr","oktyabr","noyabr","dekabr"];
-let PLAN=null,trash={},TRASH=false,uName="",ro=false,ROI={},POS={},DU={},rt=false,RO=null,goals={},dueN=0,near=false,me=null,BAL={},orders={},pays={},miss={},pos=null,DB=null,shops={},visits={},wk=0,day=(new Date().getDay()+6)%7,flt="all",q="",openId=null,editId=null,logo="",fd=new Set(),cb=null;
+let PLAN=null,isOwner=false,trash={},TRASH=false,uName="",ro=false,ROI={},POS={},DU={},rt=false,RO=null,goals={},dueN=0,near=false,me=null,BAL={},orders={},pays={},miss={},pos=null,DB=null,shops={},visits={},wk=0,day=(new Date().getDay()+6)%7,flt="all",q="",openId=null,editId=null,logo="",fd=new Set(),cb=null;
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const pad=n=>String(n).padStart(2,"0"),dk=d=>d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate());
 function monday(){const d=new Date();d.setHours(12,0,0,0);d.setDate(d.getDate()-((d.getDay()+6)%7)+wk*7);return d}
@@ -375,6 +429,7 @@ function render(){
  $("#dn").textContent=D[day]+", "+d.getDate()+" "+M[d.getMonth()];
  $("#pg").textContent=v+" / "+L.length;
  $("#bar").style.width=(L.length?v/L.length*100:0)+"%";
+ const pcr=L.length?v/L.length:0;$("#ring").style.strokeDashoffset=String(113.1*(1-pcr));$("#rp2").textContent=Math.round(pcr*100)+"%";
  $("#fl").innerHTML=[["all","Hammasi",L.length],["left","Qolgan",L.length-v],["done","Bordi",v]].map(x=>`<button class="ch${flt==x[0]?" on":""}" data-f="${x[0]}">${x[1]} ${x[2]}</button>`).join("")+`<button class="ch${near?" on":""}" data-f="near">📍 Yaqin</button><button class="ch${rt?" on":""}" data-f="route">🧭 Marshrut</button><button class="ch${ro?" on":""}" data-f="order">↕ Tartib</button>`;
  const ql=q.trim().toLowerCase();
  const F=L.filter(s=>(flt=="all"||(flt=="done")===!!visits[k+"|"+s.id])&&(!ql||s.name.toLowerCase().includes(ql)||s.phone.includes(ql)));
@@ -428,7 +483,7 @@ $("#mh").onclick=()=>{const x=document.getElementById("ms");if(x)x.scrollIntoVie
 $("#ls").onclick=e=>{
  const c=e.target.closest(".c");if(!c||e.target.closest("a"))return;
  const id=c.dataset.id,a=(e.target.closest("[data-a]")||{dataset:{}}).dataset.a;
- if(a=="c")toggle(id);else if(a=="e")openForm(id);else if(a=="r")openNav(id);else if(a=="x")xClick(id);else if(a=="m")openSm(id);else if(a=="up")moveBy(id,-1);else if(a=="dn")moveBy(id,1);else if(a=="no"){const cur=ROI[id]||1,v=prompt("Nechanchi oʻringa qoʻyamiz? (1 dan "+Object.keys(ROI).length+" gacha)",cur);const n=parseInt(v,10);if(n>0)moveTo(id,n)}
+ if(a=="c")toggle(id);else if(a=="e")openForm(id);else if(a=="r")openNav(id);else if(a=="x")xClick(id);else if(a=="m")openSm(id);else if(a=="up")moveBy(id,-1);else if(a=="dn")moveBy(id,1);else if(a=="no"){const cur=ROI[id]||1,v=prompt(LANG=="ru"?"На какую позицию поставить? (от 1 до "+Object.keys(ROI).length+")":"Nechanchi oʻringa qoʻyamiz? (1 dan "+Object.keys(ROI).length+" gacha)",cur);const n=parseInt(v,10);if(n>0)moveTo(id,n)}
  else if(a=="o"&&!ro){openId=openId==id?null:id;render();if(openId){const el=document.querySelector('.c[data-id="'+id+'"]');if(el&&el.scrollIntoView)el.scrollIntoView({block:"nearest",behavior:"smooth"})}}
 };
 $("#tabs").onclick=e=>{const b=e.target.closest(".tab");if(b){day=+b.dataset.i;openId=null;render()}};
@@ -501,13 +556,13 @@ async function boot(){
  try{POS=JSON.parse(localStorage.getItem("pos_"+uid))||{}}catch(e){POS={}}
  try{uName=localStorage.getItem("name_"+uid)||""}catch(e){}
  try{TRASH=localStorage.getItem("trashok_"+uid)=="1"}catch(e){}
- try{if(!localStorage.getItem("guide_"+uid))setTimeout(showGuide,500)}catch(e){}
+ try{if(!localStorage.getItem("terms_"+uid))showTerms(true);else if(!localStorage.getItem("guide_"+uid))setTimeout(showGuide,500)}catch(e){}
  paintPlan();
  if(navigator.onLine){
   const{data:p}=await sb.from("profiles").select("active,paid_until,role,full_name,login").eq("id",uid).maybeSingle();
   if(p&&!p.active){await sb.auth.signOut();uid=null;$("#lo").hidden=false;$("#le").textContent="Akkaunt bloklangan. Egasiga murojaat qiling.";return}
   if(p){uName=p.full_name||p.login||uName;try{localStorage.setItem("name_"+uid,uName)}catch(e){}render()}
-  if(p&&p.role=="owner"){$("#ag").hidden=false;PLAN=null;paintPlan()}
+  if(p&&p.role=="owner"){isOwner=true;$("#ag").hidden=false;PLAN=null;paintPlan()}
   else{const{data:pl}=await sb.rpc("my_plan");if(pl){PLAN=pl;try{localStorage.setItem("plan_"+uid,JSON.stringify(pl))}catch(e){}paintPlan()}}
  }
  sync(true);
@@ -690,8 +745,9 @@ $("#nc").onclick=()=>{$("#nv").hidden=true};
 function isFull(){return !PLAN||PLAN.lifetime||PLAN.paid_until>=dk(new Date())}
 function roomLeft(){return isFull()?Infinity:Math.max(0,(PLAN.limit||50)-Object.keys(shops).length)}
 function limMsg(){return "Bepul rejimda "+((PLAN&&PLAN.limit)||50)+" ta doʻkongacha. Davom etish uchun egasiga murojaat qiling."}
+function paintBadge(){const b=$("#bdg");let t="";if(isOwner)t="👑 Egasi";else if(PLAN){const td=dk(new Date());if(PLAN.lifetime)t="💎 Umrbod";else if(PLAN.paid_until>=td){const tr=PLAN.paid_until<=dk(new Date(Date.parse(PLAN.created_at)+7*864e5));t=tr?"✨ Sinov":"💎 Pro"}else t="Bepul"}b.textContent=t;b.hidden=!t}
 function paintPlan(){
- const e=$("#plb");if(!PLAN){e.hidden=true;return}
+ paintBadge();const e=$("#plb");if(!PLAN){e.hidden=true;return}
  let t="",w=false;const td=dk(new Date());
  if(PLAN.lifetime)t="♾ Umrbod premium";
  else if(PLAN.paid_until>=td){
@@ -962,21 +1018,105 @@ $("#gly").onclick=()=>{
 };
 /* ---- marshrutni optimallashtirish ---- */
 const hv=(a,b)=>{const R=6371e3,r=Math.PI/180,dl=(b.lat-a.lat)*r,dn=(b.lng-a.lng)*r,x=Math.sin(dl/2)**2+Math.cos(a.lat*r)*Math.cos(b.lat*r)*Math.sin(dn/2)**2;return 2*R*Math.asin(Math.sqrt(x))};
-function routeRank(L,k){
- const P=L.filter(x=>x.lat!=null&&x.lng!=null&&!visits[k+"|"+x.id]&&!miss[k+"|"+x.id]),rk={};
- if(!P.length||!me)return rk;
- const left=P.slice(),pts=[me];let cur=me;
- while(left.length){let bi=0,bd=1e18;left.forEach((x,i)=>{const d=hv(cur,x);if(d<bd){bd=d;bi=i}});cur=left.splice(bi,1)[0];pts.push(cur)}
+function pathLen(p){let t=0;for(let i=1;i<p.length;i++)t+=hv(p[i-1],p[i]);return t}
+function improvePath(pts){
  let imp=true,it=0;
- while(imp&&it++<40){imp=false;for(let i=1;i<pts.length-1;i++)for(let j=i+1;j<pts.length;j++){
-  const a=pts[i-1],b=pts[i],c=pts[j],d=pts[j+1];
-  const before=hv(a,b)+(d?hv(c,d):0),after=hv(a,c)+(d?hv(b,d):0);
-  if(after<before-1){const seg=pts.slice(i,j+1).reverse();pts.splice(i,j-i+1,...seg);imp=true}
- }}
- let tot=0;for(let i=1;i<pts.length;i++)tot+=hv(pts[i-1],pts[i]);
- pts.slice(1).forEach((x,i)=>rk[x.id]=i);rk._n=pts.length-1;rk._d=tot;
+ while(imp&&it++<60){
+  imp=false;
+  for(let i=1;i<pts.length-1;i++)for(let j=i+1;j<pts.length;j++){
+   const a=pts[i-1],b=pts[i],c=pts[j],d=pts[j+1];
+   const before=hv(a,b)+(d?hv(c,d):0),after=hv(a,c)+(d?hv(b,d):0);
+   if(after<before-1){const seg=pts.slice(i,j+1).reverse();pts.splice(i,j-i+1,...seg);imp=true}
+  }
+  for(let len=1;len<=3;len++)for(let i=1;i+len<=pts.length;i++){
+   const seg=pts.slice(i,i+len),rest=pts.slice(0,i).concat(pts.slice(i+len)),cur=pathLen(pts);
+   let best=cur,bp=null;
+   for(let j=0;j<rest.length;j++){
+    for(const sg of[seg,seg.slice().reverse()]){
+     const cand=rest.slice(0,j+1).concat(sg,rest.slice(j+1)),l=pathLen(cand);
+     if(l<best-1){best=l;bp=cand}
+    }
+   }
+   if(bp){pts.splice(0,pts.length,...bp);imp=true}
+  }
+ }
+ return pts;
+}
+function routeRank(L,k,start){
+ const P=L.filter(x=>x.lat!=null&&x.lng!=null&&!visits[k+"|"+x.id]&&!miss[k+"|"+x.id]),rk={},S0=start||me;
+ if(!P.length||!S0)return rk;
+ const left=P.slice(),pts=[S0];let cur=S0;
+ while(left.length){let bi=0,bd=1e18;left.forEach((x,i)=>{const d=hv(cur,x);if(d<bd){bd=d;bi=i}});cur=left.splice(bi,1)[0];pts.push(cur)}
+ improvePath(pts);
+ pts.slice(1).forEach((x,i)=>rk[x.id]=i);rk._n=pts.length-1;rk._d=pathLen(pts);
  return rk;
 }
+/* ---- marshrut ekrani ---- */
+const ROAD=1.35,SPEED=25,STOPMIN=6;
+let r2m=true,r2v="l",map3=null,lay3=null;
+function fmtT(m){return m<60?m+" daq":Math.floor(m/60)+" s "+(m%60?m%60+" daq":"")}
+function planRoute(){
+ const isT=wk===0&&day===(new Date().getDay()+6)%7,k=dk(dayDate(day));
+ const pool=Object.values(shops).filter(x=>x.days.includes(day));
+ if(isT&&r2m)missed(k).filter(x=>x.st==1).forEach(x=>{if(!pool.includes(x.s))pool.push(x.s)});
+ const open=x=>!visits[k+"|"+x.id]&&!miss[k+"|"+x.id],geo=pool.filter(x=>x.lat!=null&&x.lng!=null&&open(x));
+ let stops=[],start=me?{lat:me.lat,lng:me.lng}:null;
+ if(geo.length){
+  if(me){const rk=routeRank(geo,k,me);stops=geo.slice().sort((a,b)=>rk[a.id]-rk[b.id])}
+  else{const f=geo[0],rest=geo.filter(x=>x!==f),rk=routeRank(rest,k,f);stops=[f].concat(rest.sort((a,b)=>rk[a.id]-rk[b.id]));start={lat:f.lat,lng:f.lng}}
+ }
+ let prev=start,tot=0;
+ const legs=stops.map(x=>{const d=prev?hv(prev,x)*ROAD:0;prev=x;tot+=d;return d});
+ return{stops,legs,tot,usedMe:!!me,start,k,noGeo:pool.filter(x=>(x.lat==null||x.lng==null)&&open(x)),done:pool.filter(x=>visits[k+"|"+x.id])};
+}
+function rtLinks(R){
+ const P8=R.stops.slice(0,8),ll=x=>x.lat+","+x.lng;
+ if(!P8.length){$("#r2y").hidden=true;$("#r2gg").hidden=true;return}
+ $("#r2y").hidden=false;$("#r2gg").hidden=false;
+ let ys=(R.usedMe?[ll(me)]:[]).concat(P8.map(ll));if(ys.length<2)ys.unshift("");
+ $("#r2y").href="https://yandex.com/maps/?rtext="+ys.join("~")+"&rtt=auto";
+ $("#r2y").textContent="Yandex ("+P8.length+")";
+ const org=R.usedMe?ll(me):ll(P8[0]),dst=ll(P8[P8.length-1]),wp=(R.usedMe?P8.slice(0,-1):P8.slice(1,-1)).map(ll).join("|");
+ $("#r2gg").href="https://www.google.com/maps/dir/?api=1&origin="+org+"&destination="+dst+(wp?"&waypoints="+encodeURIComponent(wp):"")+"&travelmode=driving";
+ $("#r2gg").textContent="Google ("+P8.length+")";
+}
+function paintRt(){
+ const R=planRoute(),n=R.stops.length,mins=Math.round(R.tot/1000/SPEED*60)+n*STOPMIN;
+ $("#r2s").innerHTML=`<div><b>${n}</b><span>Doʻkonlar</span></div><div><b style="font-size:16px">${R.tot?fmtD(R.tot):"—"}</b><span>Masofa (taxminan)</span></div><div><b style="font-size:16px">${n?fmtT(mins):"—"}</b><span>Vaqt (taxminan)</span></div>`;
+ $("#r2c").innerHTML=`<button class="ch${r2v=="l"?" on":""}" data-v="l">Roʻyxat</button><button class="ch${r2v=="m"?" on":""}" data-v="m">Xarita</button><button class="ch${r2m?" on":""}" data-q="1">Qolib ketganlar</button><button class="ch" data-q="loc">↻ Joylashuv</button>`;
+ let cum=0;
+ const li=R.stops.map((x,i)=>{cum+=R.legs[i];
+  const sub=(i||R.usedMe?"↳ "+fmtD(R.legs[i])+" · ":"")+(i||R.usedMe?"jami "+fmtD(cum):"Boshlanish nuqtasi");
+  return `<div class="c"><div class="r" style="cursor:default"><div class="av rn">${i+1}</div><div class="nm">${esc(x.name)}<small class="ds">${sub}</small></div><div class="rc">${x.phone?`<a href="tel:${esc(x.phone)}" aria-label="Qoʻngʻiroq">📞</a>`:""}<button data-a="r" data-id="${x.id}" aria-label="Yoʻnalish">📍</button><button data-a="m" data-id="${x.id}" aria-label="Qarz/sotuv">💰</button><button class="okb" data-a="c" data-id="${x.id}" aria-label="Bordim">✓</button></div></div></div>`}).join("");
+ const ng=R.noGeo.length?`<div class="sec">Joylashuvi yoʻq doʻkonlar · ${R.noGeo.length}</div>`+R.noGeo.map(x=>`<div class="rw" style="cursor:default"><span>${esc(x.name)}</span><button class="ch" data-a="e" data-id="${x.id}">📍 Qoʻshish</button></div>`).join(""):"";
+ const dn=R.done.length?`<div class="sec">Bajarilgan · ${R.done.length}</div>`+R.done.map(x=>`<div class="rw" style="cursor:default;opacity:.6"><span>✓ ${esc(x.name)}</span></div>`).join(""):"";
+ const warn=!R.usedMe&&n?`<p class="em" style="padding:6px">Joylashuvingiz aniqlanmadi: marshrut birinchi doʻkondan boshlanadi. ↻ Joylashuv tugmasini bosing.</p>`:"";
+ $("#r2l").innerHTML=(n||R.noGeo.length||R.done.length?warn+li+ng+dn:`<p class="em">Marshrut uchun doʻkonlar yoʻq</p>`);
+ $("#r2l").style.display=r2v=="l"?"block":"none";$("#r2m").style.display=r2v=="m"?"block":"none";
+ rtLinks(R);if(r2v=="m")paintRtMap(R);
+}
+async function paintRtMap(R){
+ try{await loadLeaflet()}catch(e){return toast("Xarita yuklanmadi. Internetni tekshiring")}
+ if(!map3){map3=L.map("map3",{preferCanvas:true}).setView([41.3111,69.2797],12);L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:19,attribution:"© OpenStreetMap"}).addTo(map3);lay3=L.layerGroup().addTo(map3)}
+ lay3.clearLayers();const pts=[];
+ if(R.usedMe){L.circleMarker([me.lat,me.lng],{radius:8,color:"#ffffff",weight:3,fillColor:"#2f7bf6",fillOpacity:1}).addTo(lay3);pts.push([me.lat,me.lng])}
+ R.stops.forEach((x,i)=>{pts.push([x.lat,x.lng]);L.marker([x.lat,x.lng],{icon:L.divIcon({className:"nm3",html:"<b>"+(i+1)+"</b>",iconSize:[28,28],iconAnchor:[14,14]})}).addTo(lay3).on("click",()=>openNav(x.id))});
+ if(pts.length>1)L.polyline(pts,{color:"#f2a30f",weight:4,opacity:.9,dashArray:"6 8"}).addTo(lay3);
+ setTimeout(()=>{map3.invalidateSize();if(pts.length)map3.fitBounds(pts,{padding:[30,30],maxZoom:16})},60);
+}
+$("#rnb").onclick=()=>{$("#rt2").hidden=false;paintRt();locate(paintRt)};
+$("#r2x").onclick=()=>{$("#rt2").hidden=true;render()};
+$("#r2c").onclick=e=>{
+ const v=e.target.closest("[data-v]"),q=e.target.closest("[data-q]");
+ if(v){r2v=v.dataset.v;paintRt()}
+ else if(q){if(q.dataset.q=="loc")locate(paintRt);else{r2m=!r2m;paintRt()}}
+};
+$("#r2l").onclick=e=>{
+ const b=e.target.closest("[data-a]");if(!b)return;const id=b.dataset.id,a=b.dataset.a;
+ if(a=="r")openNav(id);else if(a=="m")openSm(id);else if(a=="e")openForm(id);
+ else if(a=="c"){toggle(id);paintRt();locate(paintRt)}
+};
+$("#r2g").onclick=()=>{const R=planRoute();if(R.stops[0])openNav(R.stops[0].id);else toast("Marshrut uchun joylashuvli doʻkon yoʻq")};
 /* ---- barcha doʻkonlar xaritasi ---- */
 let map2=null,mk2=null,m2f="all";
 function paintM2c(){$("#m2f").innerHTML=[["all","Hammasi"],["today","Bugungi reja"]].map(x=>`<button type="button" class="ch${m2f==x[0]?" on":""}" data-m="${x[0]}">${x[1]}</button>`).join("")}
@@ -1021,7 +1161,7 @@ const GD={
 };
 let gLang="uz";
 function paintGd(){const g=GD[gLang];$("#gdl").innerHTML=[["uz","Oʻzbekcha"],["ru","Русский"]].map(x=>`<button type="button" class="ch${gLang==x[0]?" on":""}" data-g="${x[0]}">${x[1]}</button>`).join("");$("#gdt").textContent=g.t;$("#gdb").innerHTML="<ol style='padding-left:20px;margin:0 0 12px;line-height:1.5'>"+g.s.map(x=>"<li style='margin-bottom:8px'>"+x+"</li>").join("")+"</ol>";$("#gdo").textContent=g.ok}
-function showGuide(){paintGd();$("#gd").hidden=false}
+function showGuide(){gLang=LANG;paintGd();$("#gd").hidden=false}
 $("#gdl").onclick=e=>{const b=e.target.closest("[data-g]");if(b){gLang=b.dataset.g;paintGd()}};
 $("#gdo").onclick=()=>{$("#gd").hidden=true;try{localStorage.setItem("guide_"+uid,"1")}catch(e){}};
 $("#gb").onclick=showGuide;
@@ -1031,5 +1171,137 @@ $("#mapb").onclick=openMap2;
 $("#mnb").onclick=()=>{let t=0;try{t=+localStorage.getItem("bk_"+uid)||0}catch(e){}const d=t?Math.floor((Date.now()-t)/864e5):-1;$("#bkd").textContent=t?(d<=0?"Oxirgi zaxira: bugun":"Oxirgi zaxira: "+d+" kun oldin"):"Hali zaxira olinmagan";$("#mn").hidden=false};
 $("#mnc").onclick=()=>{$("#mn").hidden=true};
 $("#mn").onclick=e=>{if(e.target.closest("button")&&e.target.id!="mnc")$("#mn").hidden=true};
+/* ---- OWNER SOZLAMALARI: Telegram username (@siz) va narx matni ---- */
+const OWNER_TG="",PRICE_TEXT="";
+/* ---- foydalanish shartlari ---- */
+const TERMS={
+ uz:{t:"Foydalanish shartlari va maxfiylik",ok:"Qabul qilaman",s:[
+  ["Xizmat haqida","Routix — savdo agentlari uchun doʻkonlar, marshrut, qarz va hisobotlarni yuritish ilovasi («Xizmat»). Xizmat egasi: AZIMOV («Muallif»). Xizmatdan foydalanib, siz ushbu shartlarga rozilik bildirasiz. Xizmatdan foydalanish uchun 18 yoshdan katta boʻlishingiz kerak."],
+  ["Akkaunt","Login va parol faqat sizga tegishli. Ularni boshqalarga bermang: akkaunt orqali qilingan barcha amallar uchun siz javobgarsiz. Parol yoʻqolsa, Muallifdan yangisini soʻrang."],
+  ["Tariflar va toʻlov","Yangi akkauntga 7 kunlik sinov muddati beriladi. Sinov tugagach akkaunt bepul rejimga oʻtadi: 50 ta doʻkongacha bepul foydalanish mumkin. Cheksiz doʻkon va toʻliq imkoniyatlar pullik obuna bilan beriladi; narx va muddat Muallif bilan kelishiladi. Toʻlov qabul qilingandan soʻng obuna muddati uzaytiriladi. Muddat tugasa maʼlumotlaringiz oʻchmaydi: limitdan ortiq doʻkonlar vaqtincha qulflanadi va obuna uzaytirilganda qaytadi. Toʻlovni qaytarish tartibi Muallif bilan alohida kelishiladi."],
+  ["Sizning maʼlumotlaringiz","Siz kiritgan doʻkonlar, telefon raqamlari, qarzlar, sotuvlar va boshqa maʼlumotlar sizniki. Muallif ularni sotmaydi, reklama uchun ishlatmaydi va uchinchi shaxslarga bermaydi (qonun talab qilgan hollar bundan mustasno). Boshqa agentlar sizning maʼlumotlaringizni koʻra olmaydi. Muallif faqat umumiy statistikani (doʻkonlar soni, faollik) koʻradi; texnik nosozlikni bartaraf etish yoki siz soʻragan yordam uchun maʼlumotlarga texnik jihatdan kirishi mumkin. Maʼlumotlar bulutli serverda (Supabase) saqlanadi."],
+  ["Joylashuv va xaritalar","Ilova joylashuvingizni faqat siz tegishli tugmani bossangiz yoki «Yaqin», «Marshrut», «Xarita» imkoniyatlaridan foydalansangiz soʻraydi. Marshrutni hisoblash qurilmangizda bajariladi. Doʻkon uchun saqlagan koordinatalaringiz sizning maʼlumotingiz hisoblanadi. Xarita va joy qidirish uchun OpenStreetMap xizmatlaridan foydalaniladi; Yandex, Google va Apple xaritalariga havolalar tashqi ilovalarni ochadi, ularning shartlari alohida. Joylashuvga ruxsatni istalgan payt qurilma sozlamalaridan oʻchirishingiz mumkin."],
+  ["Mijozlaringiz maʼlumoti","Siz kiritgan doʻkon egalari va mijozlarning maʼlumotlari (nom, telefon) uchun siz javobgarsiz. Ularni faqat qonuniy va ish maqsadida ishlating."],
+  ["Zaxira va ishonchlilik","Muallif maʼlumotlarni saqlash uchun oqilona choralar koʻradi, lekin uzluksiz ishlash yoki maʼlumot yoʻqolmasligini kafolatlay olmaydi. Oʻz maʼlumotlaringizni muntazam Excel faylga yuklab (Menyu → Zaxira) saqlab boring."],
+  ["Taqiqlanadi","Xizmatni qonunga xilof maqsadlarda ishlatish, tizimni buzishga urinish, boshqa foydalanuvchilarning akkauntiga kirish, spam va ruxsatsiz avtomatlashtirilgan soʻrovlar yuborish."],
+  ["Masʼuliyat chegarasi","Xizmat «boricha» taqdim etiladi. Qonun ruxsat bergan doirada Muallif xizmatdan foydalanish natijasida kelib chiqqan yoʻqotishlar, yoʻqotilgan daromad yoki maʼlumotlar uchun javobgar boʻlmaydi."],
+  ["Bloklash va oʻchirish","Shartlar buzilsa yoki toʻlov amalga oshirilmasa, Muallif akkauntni cheklashi yoki bloklashi mumkin. Siz istalgan paytda akkaunt va maʼlumotlaringizni oʻchirishni Muallifdan soʻrashingiz mumkin."],
+  ["Oʻzgarishlar","Shartlar yangilanishi mumkin. Muhim oʻzgarishlar haqida ilovada xabar beriladi; xizmatdan foydalanishda davom etsangiz, yangi shartlarga rozilik bildirgan hisoblanasiz."],
+  ["Aloqa","Savollar uchun Muallif (AZIMOV) bilan Telegram orqali bogʻlaning."]]},
+ ru:{t:"Условия использования и конфиденциальность",ok:"Принимаю",s:[
+  ["О сервисе","Routix — приложение для торговых агентов: ведение магазинов, маршрута, долгов и отчётов («Сервис»). Владелец сервиса: AZIMOV («Автор»). Используя Сервис, вы соглашаетесь с этими условиями. Для использования Сервиса вам должно быть не менее 18 лет."],
+  ["Аккаунт","Логин и пароль принадлежат только вам. Не передавайте их другим: вы отвечаете за все действия, выполненные через ваш аккаунт. Если пароль утерян, запросите новый у Автора."],
+  ["Тарифы и оплата","Новому аккаунту даётся 7 дней пробного периода. После него аккаунт переходит в бесплатный режим: бесплатно можно вести до 50 магазинов. Неограниченное число магазинов и все возможности доступны по платной подписке; цена и срок согласуются с Автором. После получения оплаты срок подписки продлевается. По окончании срока ваши данные не удаляются: магазины сверх лимита временно блокируются и возвращаются при продлении подписки. Порядок возврата оплаты согласуется с Автором отдельно."],
+  ["Ваши данные","Введённые вами магазины, номера телефонов, долги, продажи и другие данные принадлежат вам. Автор не продаёт их, не использует для рекламы и не передаёт третьим лицам (кроме случаев, предусмотренных законом). Другие агенты не видят ваши данные. Автор видит только общую статистику (число магазинов, активность); для устранения технических неполадок или по вашему запросу он может технически получить доступ к данным. Данные хранятся на облачном сервере (Supabase)."],
+  ["Геолокация и карты","Приложение запрашивает ваше местоположение только когда вы нажимаете соответствующую кнопку или пользуетесь функциями «Рядом», «Маршрут», «Карта». Расчёт маршрута выполняется на вашем устройстве. Координаты, сохранённые вами для магазина, являются вашими данными. Для карты и поиска мест используются сервисы OpenStreetMap; ссылки на карты Яндекс, Google и Apple открывают внешние приложения, их условия действуют отдельно. Доступ к геолокации можно отключить в настройках устройства в любой момент."],
+  ["Данные ваших клиентов","Вы отвечаете за данные владельцев магазинов и клиентов (название, телефон), которые вносите. Используйте их только законно и в рабочих целях."],
+  ["Резервные копии и надёжность","Автор принимает разумные меры для сохранности данных, но не гарантирует бесперебойную работу и отсутствие потери данных. Регулярно скачивайте свои данные в Excel (Меню → Резервная копия)."],
+  ["Запрещено","Использовать Сервис в противоправных целях, пытаться взломать систему, заходить в чужие аккаунты, рассылать спам и отправлять несанкционированные автоматические запросы."],
+  ["Ограничение ответственности","Сервис предоставляется «как есть». В пределах, допускаемых законом, Автор не отвечает за убытки, упущенную выгоду или потерю данных, возникшие при использовании Сервиса."],
+  ["Блокировка и удаление","При нарушении условий или неоплате Автор может ограничить или заблокировать аккаунт. Вы можете в любой момент попросить Автора удалить аккаунт и ваши данные."],
+  ["Изменения","Условия могут обновляться. О важных изменениях сообщат в приложении; продолжая пользоваться Сервисом, вы принимаете новые условия."],
+  ["Контакты","По вопросам свяжитесь с Автором (AZIMOV) через Telegram."]]}
+};
+function termsHtml(){const T=TERMS[LANG];return T.s.map((x,i)=>"<p style='margin:0 0 10px'><b>"+(i+1)+". "+esc(x[0])+"</b><br>"+esc(x[1])+"</p>").join("")+(OWNER_TG?"<p style='margin:0'>Telegram: @"+esc(OWNER_TG)+"</p>":"")+"<p style='margin:8px 0 0;color:var(--mu);font-size:12px'>v1.0</p>"}
+function showTerms(must){
+ const T=TERMS[LANG];$("#tmt").textContent=T.t;$("#tmx").innerHTML=termsHtml();$("#tma").textContent=T.ok;
+ $("#tma").hidden=!must;$("#tmc").hidden=!!must;$("#tm").hidden=false;
+}
+$("#tma").onclick=()=>{try{localStorage.setItem("terms_"+uid,String(Date.now()))}catch(e){}$("#tm").hidden=true;try{if(!localStorage.getItem("guide_"+uid))setTimeout(showGuide,300)}catch(e){}};
+$("#tmc").onclick=()=>{$("#tm").hidden=true};
+$("#tmb2").onclick=()=>showTerms(false);
+/* ---- Pro tarif ---- */
+const PRO={
+ uz:{t:"💎 Routix Pro",l:["Cheksiz doʻkon (bepul rejimda 50 tagacha)","Qarz, sotuv va toʻlov muddati hisobi","Eng qisqa marshrut va barcha doʻkonlar xaritasi","Hisobotlar, oylik maqsad va tashriflar tarixi","Excel zaxira va oʻchirilganlar qutisi","Barcha qurilmalarda sinxronlash, internetsiz ishlash"],price:"Narx",ask:"Obuna uchun egasiga yozing.",tg:"Telegram’da yozish"},
+ ru:{t:"💎 Routix Pro",l:["Неограниченное число магазинов (в бесплатном режиме до 50)","Учёт долгов, продаж и сроков оплаты","Кратчайший маршрут и карта всех магазинов","Отчёты, цель на месяц и история визитов","Резервная копия в Excel и корзина удалённых","Синхронизация на всех устройствах, работа без интернета"],price:"Цена",ask:"Для подписки напишите владельцу.",tg:"Написать в Telegram"}
+};
+function showPro(){
+ const P=PRO[LANG];$("#prt").textContent=P.t;
+ $("#prx").innerHTML="<ul style='padding-left:20px;margin:0 0 12px;line-height:1.7'>"+P.l.map(x=>"<li>"+esc(x)+"</li>").join("")+"</ul>"+(PRICE_TEXT?"<p style='margin:0 0 6px'><b>"+P.price+":</b> "+esc(PRICE_TEXT)+"</p>":"")+"<p style='margin:0;color:var(--mu)'>"+P.ask+"</p>";
+ const g=$("#prg");g.hidden=!OWNER_TG;if(OWNER_TG){g.href="https://t.me/"+OWNER_TG;g.textContent=P.tg}
+ $("#pro").hidden=false;
+}
+$("#prb").onclick=showPro;$("#prc").onclick=()=>{$("#pro").hidden=true};
+$("#bdg").onclick=()=>{if(!isOwner)showPro()};
+/* ---- RUS TILI (tarjima qatlami) ---- */
+let LANG="uz";try{LANG=localStorage.getItem("lang")||"uz"}catch(e){}
+const RU={"+ Doʻkon qoʻshish":"+ Добавить магазин","Agent qoʻshish":"Добавить агента","Agent toʻlagan summa (soʻm)":"Сумма, оплаченная агентом (сум)","Agentlar":"Агенты","Bekor qilish":"Отмена","Bugun":"Сегодня","Doʻkon nomi":"Название магазина","Doʻkon yoki raqam qidirish":"Поиск магазина или номера","Doʻkonni oʻchirish":"Удалить магазин","Excel/CSV’dan yuklash":"Импорт из Excel/CSV","Fayl tanlash (.xlsx, .xls, .csv)":"Выбрать файл (.xlsx, .xls, .csv)","Faylda kun koʻrsatilmagan doʻkonlar qaysi kunlarga qoʻshilsin":"В какие дни добавить магазины без указанного дня","Faylning birinchi qatorida ustun nomlari boʻlsin: Nomi, Telefon, Manzil, Kun (ixtiyoriy: Kenglik, Uzunlik). Ustunlar tartibi muhim emas.":"В первой строке файла должны быть названия столбцов: Название, Телефон, Адрес, День (по желанию: Широта, Долгота). Порядок столбцов не важен.","Hisobot":"Отчёт","Ism (ixtiyoriy)":"Имя (необязательно)","Izoh (ixtiyoriy)":"Заметка (необязательно)","Joy nomi yoki manzil":"Название места или адрес","Joylashuv (GPS)":"Местоположение (GPS)","Keyingi hafta":"Следующая неделя","Oldingi hafta":"Предыдущая неделя","Kirish":"Войти","Login":"Логин","Login (masalan: aziz01)":"Логин (например: aziz01)","Logo (ixtiyoriy)":"Логотип (необязательно)","Manzil (ixtiyoriy)":"Адрес (необязательно)","Masalan: Chilonzor, 9-kvartal":"Например: Чиланзар, 9-й квартал","Masalan: kassada Aziza, 10 dan keyin":"Например: на кассе Азиза, после 10","Menyu":"Меню","Nega bormadingiz?":"Почему не зашли?","Nusxalash":"Копировать","Olib tashlash":"Убрать","Oy maqsadi":"Цель на месяц","Oʻchirilgan doʻkonlar 30 kun saqlanadi, keyin butunlay oʻchadi.":"Удалённые магазины хранятся 30 дней, затем удаляются навсегда.","Oʻchirilganlar qutisi":"Корзина","Oʻchirish":"Удалить","Parol":"Пароль","Parol (kamida 6 belgi)":"Пароль (минимум 6 символов)","Pul oldim":"Получил деньги","Qaysi kunlari boriladi":"В какие дни посещаете","Qidirish":"Искать","Qoʻllash":"Применить","Saqlash":"Сохранить","Saqlash va yana qoʻshish":"Сохранить и добавить ещё","Savdo maqsadi (soʻm)":"Цель по продажам (сум)","Shablonni yuklab olish (Excel)":"Скачать шаблон (Excel)","Shu joyni tanlash":"Выбрать это место","Sotdim":"Продал","Summa (soʻm)":"Сумма (сум)","Summasiz uzaytirish (sovgʻa)":"Продлить без суммы (подарок)","Tashriflar soni":"Количество визитов","Telefon raqami":"Номер телефона","Toʻlov bilan uzaytirish":"Продлить с оплатой","Toʻlov muddati (sotuv uchun)":"Срок оплаты (для продажи)","Xarita":"Карта","Yangi agent":"Новый агент","Yopish":"Закрыть","Yoʻq, qolsin":"Нет, оставить","Yuklash":"Загрузить","⏻ Chiqish":"⏻ Выйти","🎲 Parol yaratish":"🎲 Сгенерировать пароль","👥 Agentlar va obuna":"👥 Агенты и подписка","📍 Joylashuvni saqlash":"📍 Сохранить местоположение","📖 Qoʻllanma · Руководство":"📖 Руководство · Qoʻllanma","📤 Zaxira: Excel’ga yuklab olish":"📤 Резервная копия: скачать в Excel","📥 Excel/CSV’dan yuklash":"📥 Импорт из Excel/CSV","🔴 qarzdor · 🟢 bugun borilgan · 🔵 boshqa":"🔴 должник · 🟢 посещён сегодня · 🔵 остальные","🗑 Oʻchirilganlar qutisi":"🗑 Корзина","🗺 Xaritadan tanlash":"🗺 Выбрать на карте","41.3111, 69.2797 yoki xarita havolasi":"41.3111, 69.2797 или ссылка на карту","Marshrut":"Маршрут","💎 Pro tarif":"💎 Тариф Pro","📄 Foydalanish shartlari":"📄 Условия использования","Hafta":"Неделя","Oy":"Месяц","Dushanba":"Понедельник","Seshanba":"Вторник","Chorshanba":"Среда","Payshanba":"Четверг","Juma":"Пятница","Shanba":"Суббота","Yakshanba":"Воскресенье","Du":"Пн","Se":"Вт","Ch":"Ср","Pa":"Чт","Ju":"Пт","Sh":"Сб","Ya":"Вс","Yopiq":"Закрыто","Pul yoʻq":"Нет денег","Egasi yoʻq":"Владельца нет","Keyinga qoldirdi":"Отложил","Boshqa":"Другое","📍 Yaqin":"📍 Рядом","🧭 Marshrut":"🧭 Маршрут","↕ Tartib":"↕ Порядок","bordi / reja":"были / план","Qolib ketganlar":"Пропущенные","Keyingi doʻkon":"Следующий магазин","📞 Qoʻngʻiroq":"📞 Позвонить","📍 Yoʻnalish":"📍 Маршрут","✓ Bordim":"✓ Был","Bugungi doʻkonlar tugadi ✓":"Магазины на сегодня закончились ✓","Raqam kiritilmagan":"Номер не указан","💰 Qarz/sotuv":"💰 Долг/продажа","Tahrirlash":"Изменить","muddati oʻtgan":"просрочено","Hech narsa topilmadi.":"Ничего не найдено.","Bu kun uchun doʻkon yoʻq. Pastdagi tugma bilan qoʻshing.":"На этот день магазинов нет. Добавьте кнопкой внизу.","Routix’ga xush kelibsiz!":"Добро пожаловать в Routix!","Boshlash uchun doʻkonlaringizni qoʻshing. Koʻp boʻlsa, Excel’dan bir yoʻla yuklang.":"Чтобы начать, добавьте свои магазины. Если их много, загрузите всё сразу из Excel.","📥 Excel’dan yuklash":"📥 Импорт из Excel","Hammasi":"Все","Qolgan":"Осталось","Bordi":"Были","Bormadi":"Не был","Bugungi reja":"План на сегодня","Xayrli tong!":"Доброе утро!","Xayrli kun!":"Добрый день!","Xayrli kech!":"Добрый вечер!","Xayrli tun!":"Доброй ночи!","Shu hafta":"Эта неделя","♾ Umrbod premium":"♾ Премиум навсегда","💎 Umrbod":"💎 Навсегда","💎 Pro":"💎 Pro","✨ Sinov":"✨ Пробный","Bepul":"Бесплатный","👑 Egasi":"👑 Владелец","Sinov":"Пробный","Obuna":"Подписка","Bloklangan":"Заблокирован","Toʻliq foydalanish uchun egasiga murojaat qiling":"Для полного доступа обратитесь к владельцу","Uzaytirish uchun egasiga murojaat qiling":"Для продления обратитесь к владельцу","Saqlandi":"Сохранено","Nusxalandi":"Скопировано","Qoʻlda koʻchirib oling":"Скопируйте вручную","Summani yozing":"Введите сумму","Sotuv yozildi":"Продажа записана","Toʻlov yozildi":"Платёж записан","Doʻkon nomini yozing":"Введите название магазина","Kamida bitta kunni tanlang":"Выберите хотя бы один день","Joylashuv qoʻllab-quvvatlanmaydi":"Геолокация не поддерживается","Joylashuvga ruxsat bering":"Разрешите доступ к геолокации","Joylashuv aniqlanmoqda…":"Определяем местоположение…","Aniqlanmoqda…":"Определяем…","Marshrut hisoblanmoqda…":"Считаем маршрут…","Xarita yuklanmadi. Internetni tekshiring":"Карта не загрузилась. Проверьте интернет","Internetni tekshiring":"Проверьте интернет","Internetni tekshiring (kutubxona yuklanishi kerak)":"Проверьте интернет (нужно загрузить библиотеку)","Avval manzil yoki joylashuvni qoʻshing":"Сначала добавьте адрес или местоположение","Qisqa havola oʻqilmadi. Koordinatani nusxalab yozing":"Короткая ссылка не читается. Скопируйте координаты","Koordinata topilmadi":"Координаты не найдены","Ajoyib! Bugungi hamma doʻkonlar tugadi 🎉":"Отлично! Все магазины на сегодня пройдены 🎉","Maqsad saqlandi":"Цель сохранена","Matn nusxalandi. Telegramda joylang":"Текст скопирован. Вставьте в Telegram","Parol kamida 6 belgi":"Пароль минимум 6 символов","Login: 3–30 ta lotin harf yoki raqam":"Логин: 3–30 латинских букв или цифр","Login yoki parol notoʻgʻri":"Неверный логин или пароль","Birinchi kirish uchun internet kerak":"Для первого входа нужен интернет","Akkaunt bloklangan. Egasiga murojaat qiling.":"Аккаунт заблокирован. Обратитесь к владельцу.","Bepul rejim sababli baʼzi oʻzgarishlar saqlanmadi":"Из-за бесплатного режима часть изменений не сохранена","Doʻkon yonidagi ▲ ▼ yoki № bilan joyini oʻzgartiring":"Меняйте место магазина кнопками ▲ ▼ или №","Hali zaxira olinmagan":"Резервная копия ещё не создавалась","Oxirgi zaxira: bugun":"Последняя копия: сегодня","Adashib bosdingizmi?":"Нажали по ошибке?","Doʻkon belgisi olib tashlansinmi?":"Убрать отметку магазина?","Ha, olib tashlansin":"Да, убрать","Bormadi belgisi turibdi":"Стоит отметка «Не был»","Bordi deb oʻzgartiraymi?":"Изменить на «Был»?","Ha, bordi":"Да, был","Belgini olib tashlaysizmi?":"Убрать отметку?","Bormadi belgisi oʻchadi.":"Отметка «Не был» будет удалена.","Bordi belgisi turibdi":"Стоит отметка «Был»","Bormadi deb oʻzgartiraymi?":"Изменить на «Не был»?","Ha, oʻzgartirilsin":"Да, изменить","Sababni tanlang":"Выберите причину","Chiqasizmi?":"Выйти?","Kutayotgan oʻzgarishlar telefonda saqlanadi.":"Неотправленные изменения сохранятся на телефоне.","Ha, chiqish":"Да, выйти","Doʻkon oʻchirilsinmi?":"Удалить магазин?","Doʻkon «Oʻchirilganlar qutisi»ga tushadi, 30 kun ichida qaytarish mumkin.":"Магазин попадёт в корзину, в течение 30 дней его можно вернуть.","Bu doʻkon va uning qarz, sotuv maʼlumotlari butunlay oʻchadi.":"Магазин и данные о его долгах и продажах будут удалены навсегда.","Ha, oʻchirilsin":"Да, удалить","Doʻkon qutiga tushdi (30 kun saqlanadi)":"Магазин в корзине (хранится 30 дней)","Doʻkon qaytarildi":"Магазин возвращён","Butunlay oʻchirilsinmi?":"Удалить навсегда?","Qaytarib boʻlmaydi.":"Это нельзя отменить.","Ha, butunlay":"Да, навсегда","Quti boʻsh":"Корзина пуста","Quti server yangilanishidan keyin ishlaydi":"Корзина заработает после обновления сервера","Qaytarish":"Вернуть","Butunlay":"Навсегда","Yozuv oʻchirilsinmi?":"Удалить запись?","Qarz qayta hisoblanadi.":"Долг будет пересчитан.","Agent bloklansinmi?":"Заблокировать агента?","U ilovaga kira olmaydi.":"Он не сможет войти в приложение.","Ha, bloklansin":"Да, заблокировать","Agent oʻchirilsinmi?":"Удалить агента?","Barcha doʻkon va maʼlumotlari butunlay oʻchadi. Qaytarib boʻlmaydi.":"Все магазины и данные будут удалены навсегда. Это нельзя отменить.","Davom etish":"Продолжить","Aniq oʻchiraymi?":"Точно удалить?","Ha, butunlay oʻchirilsin":"Да, удалить навсегда","Agent oʻchirildi":"Агент удалён","Yangi parol yaratilsinmi?":"Создать новый пароль?","Eski parol ishlamay qoladi. Yangisi bir marta koʻrsatiladi.":"Старый пароль перестанет работать. Новый будет показан один раз.","Ha, yaratilsin":"Да, создать","Bloklash":"Заблокировать","Faollashtirish":"Активировать","♾ Olish":"♾ Снять","♾ Umrbod":"♾ Навсегда","Agent yaratildi. Maʼlumotlarni agentga yuboring (parol bir marta koʻrsatiladi):":"Агент создан. Отправьте данные агенту (пароль показывается один раз):","Yangi parol yaratildi. Agentga yuboring (bir marta koʻrsatiladi):":"Новый пароль создан. Отправьте агенту (показывается один раз):","Doʻkonni tahrirlash":"Изменить магазин","Yangi doʻkon":"Новый магазин","📍 Qayta aniqlash":"📍 Определить заново","✓ saqlandi":"✓ сохранено","— aniq emas, doʻkon oldida qayta aniqlang":"— неточно, определите заново у магазина","aniq emas, doʻkon oldida qayta aniqlang":"неточно, определите заново у магазина","Faylda doʻkon topilmadi.":"В файле магазины не найдены.","Faylni oʻqib boʻlmadi. Excel (.xlsx) yoki CSV yuklang.":"Не удалось прочитать файл. Загрузите Excel (.xlsx) или CSV.","Oʻqilmoqda…":"Читаем…","ta yangi doʻkon topildi":"новых магазинов найдено","raqamsiz":"без номера","kun yoʻq":"дней нет","Yandex Xarita":"Яндекс Карты","Boshqa ilova":"Другое приложение","Aniq yoʻnalish uchun doʻkonda turib 📍 Joylashuvni saqlang yoki xaritadan tanlang.":"Для точного маршрута сохраните 📍 местоположение в магазине или выберите на карте.","Topilmadi. Boshqacha yozib koʻring yoki xaritani suring.":"Не найдено. Попробуйте иначе или сдвиньте карту.","Qidiruv ishlamadi":"Поиск не сработал","Qidirilmoqda…":"Ищем…","· ✓ saqlangan":"· ✓ сохранено","· oflayn":"· офлайн","· ⚠ qayta uriniladi":"· ⚠ повторная попытка","Internetga ulaning":"Подключитесь к интернету","Bosing: qayta urinish":"Нажмите: повторить","Marshrut uchun joylashuv va doʻkonlarda koordinata kerak":"Для маршрута нужны геопозиция и координаты магазинов","↕ Tartiblash: ▲ ▼ tugmalari yoki № bosib aniq oʻrin kiriting. Tugagach «↕ Tartib» ni qayta bosing.":"↕ Сортировка: кнопки ▲ ▼ или № для точной позиции. Закончив, снова нажмите «↕ Порядок».","Qarz yoʻq":"Долга нет","Soʻnggi yozuvlar":"Последние записи","Sotuv":"Продажи","Toʻlov":"Платёж","Yoʻq":"Нет","Bu oy":"Этот месяц","Oʻtgan oy":"Прошлый месяц","Jami":"Всего","Reja":"План","Yigʻilgan pul":"Собрано","Umumiy qarz":"Общий долг","21 kundan beri buyurtma bermaganlar":"Не заказывали более 21 дня","Muddati yetgan qarz yoʻq":"Просроченных долгов нет","⏰ Toʻlov muddati":"⏰ Срок оплаты","🎯 Oy maqsadi":"🎯 Цель на месяц","Savdo:":"Продажи:","Tashrif:":"Визиты:","Maqsad qoʻyilmagan":"Цель не задана","Maqsad qoʻyish":"Поставить цель","Maqsadni oʻzgartirish":"Изменить цель","▶ Boshlash":"▶ Начать","Doʻkonlar":"Магазины","Masofa (taxminan)":"Расстояние (примерно)","Vaqt (taxminan)":"Время (примерно)","Roʻyxat":"Список","↻ Joylashuv":"↻ Геопозиция","Boshlanish nuqtasi":"Точка старта","Joylashuvi yoʻq doʻkonlar":"Магазины без местоположения","📍 Qoʻshish":"📍 Добавить","Bajarilgan":"Выполнено","Joylashuvingiz aniqlanmadi: marshrut birinchi doʻkondan boshlanadi. ↻ Joylashuv tugmasini bosing.":"Ваше местоположение не определено: маршрут начнётся с первого магазина. Нажмите ↻ Геопозиция.","Marshrut uchun doʻkonlar yoʻq":"Для маршрута нет магазинов","Marshrut uchun joylashuvli doʻkon yoʻq":"Нет магазинов с местоположением для маршрута","Agent yoʻq. Yuqoridagi forma bilan qoʻshing.":"Агентов нет. Добавьте через форму выше.","Yuklab boʻlmadi. SQL yangilanishi ishga tushirilganmi?":"Не удалось загрузить. Запущено ли обновление SQL?","Foydalanish shartlari":"Условия использования","Qabul qilaman":"Принимаю","Qolib ketganlar ·":"Пропущенные ·","Umrbod":"Навсегда","Umumiy qarz ·":"Общий долг ·"};
+const TPL=[["Hammasi {0}","Все {0}"],["Qolgan {0}","Осталось {0}"],["Bordi {0}","Были {0}"],["⚠ Qolib ketgan: {d0} ta ↓","⚠ Пропущено: {0} ↓"],["🔥 {d0} kun ketma-ket","🔥 {0} дн. подряд"],["Xayrli tong, {0}!","Доброе утро, {0}!"],["Xayrli kun, {0}!","Добрый день, {0}!"],["Xayrli kech, {0}!","Добрый вечер, {0}!"],["Xayrli tun, {0}!","Доброй ночи, {0}!"],["{d0} ta doʻkonga bordingiz","Вы посетили магазинов: {0}"],["sotuv {0}","продажи {0}"],["yigʻilgan {0}","собрано {0}"],["Qarz: {0}","Долг: {0}"],["Bormadi: {0}","Не был: {0}"],["{0} kuni qolgan","Пропущен: {0}"],["Qarzi: {0}","Долг: {0}"],["Avans: {0}","Аванс: {0}"],["muddat {0}","срок {0}"],["{d0} kun qoldi","осталось {0} дн."],["{d0} kun","{0} дн."],["Sinov muddati: {d0} kun qoldi","Пробный период: осталось {0} дн."],["Sinov muddati: bugun tugaydi","Пробный период: заканчивается сегодня"],["Obuna: {d0} kun qoldi","Подписка: осталось {0} дн."],["Obuna: bugun tugaydi","Подписка: заканчивается сегодня"],["Bepul rejim: {0}/{d1} doʻkon","Бесплатный режим: {0}/{1} магазинов"],["{d0} ta qulflangan","заблокировано: {0}"],["Sinov: {d0} kun qoldi ({1})","Пробный: осталось {0} дн. ({1})"],["Obuna: {d0} kun qoldi ({1})","Подписка: осталось {0} дн. ({1})"],["Sinov: bugun tugaydi ({0})","Пробный: заканчивается сегодня ({0})"],["Obuna: bugun tugaydi ({0})","Подписка: заканчивается сегодня ({0})"],["Bepul rejim (muddat tugagan: {0})","Бесплатный режим (срок истёк: {0})"],["Bepul rejimda {d0} ta doʻkongacha. Davom etish uchun egasiga murojaat qiling.","В бесплатном режиме до {0} магазинов. Чтобы продолжить, обратитесь к владельцу."],["Bepul limit sababli faqat {d0} tasi qoʻshiladi.","Из-за бесплатного лимита будет добавлено только {0}."],["{d0} ta doʻkon qoʻshildi","Добавлено магазинов: {0}"],["{d0} ta takror oʻtkazildi","повторов пропущено: {0}"],["{d0} tasi bepul limit sababli qoʻshilmadi","не добавлено из-за бесплатного лимита: {0}"],["{d0} ta doʻkonni qoʻshish","Добавить магазинов: {0}"],["{d0} tasi oldin bor (oʻtkazib yuboriladi)","{0} уже есть (будут пропущены)"],["{d0} ta qatorda nom yoʻq (oʻtkazib yuboriladi)","в {0} строках нет названия (будут пропущены)"],["{d0} tasida kun koʻrsatilmagan, ular yuqorida tanlangan kunlarga qoʻshiladi.","В {0} не указан день, они будут добавлены в выбранные выше дни."],["{d0} ta doʻkon xaritada","На карте магазинов: {0}"],["{d0} tasida joylashuv yoʻq","у {0} нет местоположения"],["✓ saqlandi (±{0} m)","✓ сохранено (±{0} м)"],["Marshrut: {d0} ta doʻkon","Маршрут, магазинов: {0}"],["taxminan {0} (toʻgʻri chiziq boʻyicha)","примерно {0} (по прямой)"],["⏰ {d0} ta doʻkonda toʻlov muddati oʻtgan","⏰ Просрочена оплата в магазинах: {0}"],["{d0} tasida muddat yaqin","срок близко у {0}"],["· {d0} ta kutmoqda","· ожидает: {0}"],["⏳ {d0} ta oʻzgarish hali serverga yuborilmagan","⏳ Не отправлено на сервер изменений: {0}"],["⚠ Maʼlumotlaringiz {0} kundan beri faqat telefonda! Internetga ulaning ({d1} ta oʻzgarish yuborilmagan)","⚠ Ваши данные уже {0} дн. только на телефоне! Подключитесь к интернету (не отправлено изменений: {1})"],["Oxirgi zaxira: {d0} kun oldin","Последняя копия: {0} дн. назад"],["Zaxira yuklandi: {d0} doʻkon, {1} sotuv","Копия скачана: магазинов {0}, продаж {1}"],["Xatolik: {0}","Ошибка: {0}"],["Sabablar: {0}","Причины: {0}"],["{d0} doʻkon","магазинов: {0}"],["30 kunda {0} tashrif","за 30 дней визитов: {0}"],["Qolib ketganlar · {0}","Пропущенные · {0}"],["{d0} s {d1} daq","{0} ч {1} мин"],["{d0} s","{0} ч"],["{d0} daq","{0} мин"],["jami {0}","всего {0}"],["Joylashuvi yoʻq doʻkonlar · {0}","Магазины без местоположения · {0}"],["Bajarilgan · {0}","Выполнено · {0}"],["Sinov muddati: {0}","Пробный период: {0}"],["Yandex ({0})","Яндекс ({0})"]].map(x=>[new RegExp("^"+x[0].replace(/[.*+?^${}()|[\]\\]/g,"\\$&").replace(/\\\{d(\d)\\\}/g,"(\\d[\\d.,]*)").replace(/\\\{(\d)\\\}/g,"(.+?)")+"$"),x[1]]);
+function trSub(g){const r=trC(g);return r===null?g:r}
+function trWhole(t){
+ if(RU[t]!=null)return RU[t];
+ const nm=t.match(/^(.+) (\d+)$/);if(nm&&RU[nm[1]]!=null&&/^(Yopiq|Pul yoʻq|Egasi yoʻq|Keyinga qoldirdi|Boshqa)$/.test(nm[1]))return RU[nm[1]]+" "+nm[2];
+ for(const x of TPL){const m=t.match(x[0]);if(m)return x[1].replace(/\{(\d)\}/g,(q,i)=>trSub(m[+i+1]))}
+ return null;
+}
+const SEPS=[" · ",". "," — ",", "];
+function trC(t,lv){
+ const w=trWhole(t);if(w!==null)return w;
+ for(let i=lv||0;i<SEPS.length;i++){
+  const ps=t.split(SEPS[i]);
+  if(ps.length>1){let ch=false;const o=ps.map(p=>{const r=trC(p,i+1);if(r!==null){ch=true;return r}return p});if(ch)return o.join(SEPS[i])}
+ }
+ return null;
+}
+function trText(s){
+ if(LANG!="ru")return s;
+ const t=s.trim();if(!t)return s;
+ let r=trC(t);const lead=s.slice(0,s.indexOf(t)),trail=s.slice(s.indexOf(t)+t.length);
+ let o=r===null?t:r;
+ const MO={yanvar:"января",fevral:"февраля",mart:"марта",aprel:"апреля",may:"мая",iyun:"июня",iyul:"июля",avgust:"августа",sentyabr:"сентября",oktyabr:"октября",noyabr:"ноября",dekabr:"декабря"};
+ o=o.replace(/(\d{1,2}) (yanvar|fevral|mart|aprel|may|iyun|iyul|avgust|sentyabr|oktyabr|noyabr|dekabr)\b/g,(q,d,m)=>d+" "+MO[m]);
+ o=o.replace(/(\d) soʻm/g,"$1 сум").replace(/(\d) km\b/g,"$1 км").replace(/(\d) m(?=$|[\s)·])/g,"$1 м").replace(/\.\.(?=\s|$)/g,".");
+ return o===t?s:lead+o+trail;
+}
+const NT=new WeakMap();
+function trNode(n){
+ const v=n.nodeValue,rec=NT.get(n);
+ if(rec&&v===rec[1])return;
+ const r=trText(v);
+ if(r!==v){NT.set(n,[v,r]);n.nodeValue=r}else if(rec)NT.delete(n);
+}
+const TA=["placeholder","aria-label","title"];
+function trAttr(el,a){
+ const cur=el.getAttribute(a);if(cur==null)return;
+ const o=el.getAttribute("data-o-"+a);
+ if(o!=null&&cur===trText(o))return;
+ el.setAttribute("data-o-"+a,cur);const r=trText(cur);if(r!==cur)el.setAttribute(a,r);else el.removeAttribute("data-o-"+a);
+}
+function trTree(root){
+ if(!root)return;
+ if(root.nodeType==3){if(root.parentNode&&!/^(SCRIPT|STYLE)$/.test(root.parentNode.nodeName))trNode(root);return}
+ if(root.nodeType!=1||/^(SCRIPT|STYLE)$/.test(root.nodeName))return;
+ const w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT);let n;
+ while((n=w.nextNode())){if(!/^(SCRIPT|STYLE)$/.test(n.parentNode.nodeName))trNode(n)}
+ TA.forEach(a=>{if(root.hasAttribute&&root.hasAttribute(a))trAttr(root,a);root.querySelectorAll("["+a+"]").forEach(el=>trAttr(el,a))});
+}
+function trRestore(){
+ const w=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT);let n;
+ while((n=w.nextNode())){const rec=NT.get(n);if(rec&&n.nodeValue===rec[1]){n.nodeValue=rec[0];NT.delete(n)}}
+ TA.forEach(a=>document.querySelectorAll("[data-o-"+a+"]").forEach(el=>{el.setAttribute(a,el.getAttribute("data-o-"+a));el.removeAttribute("data-o-"+a)}));
+}
+function paintLg(){
+ const h=[["uz","Oʻzbekcha"],["ru","Русский"]].map(x=>`<button type="button" class="ch${LANG==x[0]?" on":""}" data-l="${x[0]}">${x[1]}</button>`).join("");
+ $("#lgc").innerHTML=h;$("#lgl").innerHTML=h;
+}
+function setLang(l){
+ LANG=l;try{localStorage.setItem("lang",l)}catch(e){}
+ document.documentElement.lang=l;
+ if(l=="ru")trTree(document.body);else trRestore();
+ paintLg();gLang=l;
+ try{render();paintPlan();st();if(!$("#rt2").hidden)paintRt()}catch(e){}
+}
+$("#lgc").onclick=$("#lgl").onclick=e=>{const b=e.target.closest("[data-l]");if(b&&b.dataset.l!=LANG)setLang(b.dataset.l)};
+paintLg();
+document.documentElement.lang=LANG;
+if(LANG=="ru")trTree(document.body);
+if(typeof MutationObserver!="undefined")new MutationObserver(ms=>{
+ if(LANG!="ru")return;
+ for(const m of ms){
+  if(m.type=="childList")m.addedNodes.forEach(trTree);
+  else if(m.type=="characterData")trNode(m.target);
+  else if(m.type=="attributes")trAttr(m.target,m.attributeName);
+ }
+}).observe(document.body,{childList:true,subtree:true,characterData:true,attributes:true,attributeFilter:TA});
 boot();
 </script></body></html>
