@@ -1218,7 +1218,7 @@ $("#bh").onclick=()=>{wk=0;day=(new Date().getDay()+6)%7;flt="all";q="";$("#sq")
 $("#mapb").onclick=openMap2;
 $("#mnb").onclick=()=>{let t=0;try{t=+localStorage.getItem("bk_"+uid)||0}catch(e){}const d=t?Math.floor((Date.now()-t)/864e5):-1;$("#bkd").textContent=t?(d<=0?"Oxirgi zaxira: bugun":"Oxirgi zaxira: "+d+" kun oldin"):"Hali zaxira olinmagan";$("#mn").hidden=false};
 $("#mnc").onclick=()=>{$("#mn").hidden=true};
-$("#mn").onclick=e=>{if(e.target.closest("button")&&e.target.id!="mnc")$("#mn").hidden=true};
+$("#mn").onclick=e=>{if(e.target.closest("#thc,#lgc"))return;if(e.target.closest("button")&&e.target.id!="mnc")$("#mn").hidden=true};
 /* ---- OWNER SOZLAMALARI: Telegram username (@siz) va narx matni ---- */
 const DEF_SET={tg:"printer_uaa",phone:"+998950651635",price:"",card:"",cardname:""};
 let SET={...DEF_SET};try{const j=JSON.parse(localStorage.getItem("set_v1")||"null");if(j)SET={...DEF_SET,...j}}catch(e){}
