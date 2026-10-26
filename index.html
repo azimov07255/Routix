@@ -637,6 +637,7 @@ function openNav(id){
   K.push(["gm","Google Maps","https://www.google.com/maps/search/?api=1&query="+t]);
   if(ios)K.push(["am","Apple Maps","https://maps.apple.com/?q="+t]);
  }
+ navFb=(K.find(x=>x[0]=="ym")||[])[2]||"";
  $("#nt").textContent=s.name;
  $("#nl").innerHTML=`<div class="ag">${K.map(x=>`<a class="ap" href="${esc(x[2])}"${/^https?:/.test(x[2])?' target="_blank" rel="noopener"':""}>${IC[x[0]]}<span>${x[1]}</span></a>`).join("")}</div>`+(has?"":`<p class="em" style="padding:6px">Aniq yoʻnalish uchun doʻkonda turib 📍 Joylashuvni saqlang yoki xaritadan tanlang.</p>`);
  $("#nv").hidden=false;
@@ -1436,5 +1437,22 @@ Object.assign(RU,{"👀 Demoni koʻrish":"👀 Посмотреть демо","�
  "📦 Mahsulotlar":"📦 Товары","Mahsulotlar":"Товары","Mahsulot nomi":"Название товара","Narxi (soʻm)":"Цена (сум)","Qoʻshish":"Добавить","Mahsulot yoʻq":"Товаров нет","Mahsulot nomini yozing":"Введите название товара","Mahsulot oʻchirilsinmi?":"Удалить товар?","Eski sotuvlardagi yozuvlar saqlanib qoladi.":"Записи в прошлых продажах сохранятся.",
  "Mahsulotlardan tanlash":"Выбор из товаров","📦 Mahsulotlardan tanlash":"📦 Выбрать из товаров","📦 Top mahsulotlar":"📦 Топ товаров","Doʻkon rasmi (javon, peshtaxta)":"Фото магазина (полка, прилавок)","📷 Rasm":"📷 Фото","Yandex Navigator":"Яндекс Навигатор"});
 [["Jami: {0}","Итого: {0}"],["{d0} xil mahsulot tanlandi","выбрано товаров: {0}"],["{d0} ta · {1}","{0} шт · {1}"]].forEach(x=>TPL.push([new RegExp("^"+x[0].replace(/[.*+?^${}()|[\]\\]/g,"\\$&").replace(/\\\{d(\d)\\\}/g,"(\\d[\\d.,]*)").replace(/\\\{(\d)\\\}/g,"(.+?)")+"$"),x[1]]));
+/* ---- Yandex Navigator: oʻrnatilmagan boʻlsa muqobil taklif ---- */
+let navFb="";
+function openNavi(url){
+ let hid=!!document.hidden;const vh=()=>{if(document.hidden)hid=true};
+ document.addEventListener("visibilitychange",vh);
+ location.href=url;
+ setTimeout(()=>{
+  document.removeEventListener("visibilitychange",vh);
+  if(!hid&&navFb)ask("Yandex Navigator ochilmadi","Ilova telefonda oʻrnatilmagan boʻlishi mumkin (App Store yoki Play Marketdan oʻrnatish mumkin). Yoʻnalishni Yandex Xarita bilan ochaymi?","Yandex Xarita bilan ochish",()=>{window.open(navFb,"_blank")});
+ },1800);
+}
+$("#nl").onclick=e=>{
+ const a=e.target.closest("a.ap");if(!a)return;
+ const h=a.getAttribute("href")||"";
+ if(/^yandexnavi:/.test(h)){e.preventDefault();openNavi(h)}
+};
+Object.assign(RU,{"Yandex Navigator ochilmadi":"Яндекс Навигатор не открылся","Ilova telefonda oʻrnatilmagan boʻlishi mumkin (App Store yoki Play Marketdan oʻrnatish mumkin). Yoʻnalishni Yandex Xarita bilan ochaymi?":"Приложение, возможно, не установлено (его можно установить из App Store или Play Маркета). Открыть маршрут в Яндекс Картах?","Yandex Xarita bilan ochish":"Открыть в Яндекс Картах"});
 boot();
 </script></body></html>
