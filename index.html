@@ -115,6 +115,7 @@ button:focus-visible,input:focus-visible,a:focus-visible{outline:2px solid var(-
  <div id="plb" class="pln" hidden></div>
  <div id="rtb" class="pln" hidden></div>
  <div id="odb" class="pln wr" hidden style="cursor:pointer"></div>
+ <div id="syb" class="pln wr" hidden style="cursor:pointer"></div>
  <div id="nxc"></div>
  <input id="sq" class="in" type="search" placeholder="Doʻkon yoki raqam qidirish">
  <div id="fl" class="fl"></div>
@@ -213,6 +214,8 @@ button:focus-visible,input:focus-visible,a:focus-visible{outline:2px solid var(-
 <div class="ov" id="mn" hidden><div class="sh">
  <h2>Menyu</h2>
  <button class="rw" id="im">📥 Excel/CSV’dan yuklash</button>
+ <button class="rw" id="exb"><span>📤 Zaxira: Excel’ga yuklab olish<br><small id="bkd" style="color:var(--mu)"></small></span></button>
+ <button class="rw" id="trb">🗑 Oʻchirilganlar qutisi</button>
  <button class="rw" id="ag" hidden>👥 Agentlar va obuna</button>
  <button class="rw" id="gb">📖 Qoʻllanma · Руководство</button>
  <button class="rw" id="out">⏻ Chiqish</button>
@@ -233,6 +236,10 @@ button:focus-visible,input:focus-visible,a:focus-visible{outline:2px solid var(-
  <input id="pmn2" class="in" placeholder="Izoh (ixtiyoriy)" style="margin-top:-4px">
  <button class="bt" id="pms">Toʻlov bilan uzaytirish</button><button class="bt g" id="pmz">Summasiz uzaytirish (sovgʻa)</button><button class="bt g" id="pmc">Bekor qilish</button>
 </div></div>
+<div class="ov" id="tr" hidden><div class="sh">
+ <h2>Oʻchirilganlar qutisi</h2><p style="margin:0 0 10px;color:var(--mu);font-size:14px">Oʻchirilgan doʻkonlar 30 kun saqlanadi, keyin butunlay oʻchadi.</p>
+ <div id="trl"></div><button class="bt g" id="trc">Yopish</button>
+</div></div>
 <div class="ov cen" id="am" hidden><div class="sh">
  <h2 id="at"></h2><p id="ap" style="margin:0 0 6px;color:var(--mu)"></p>
  <button class="bt" id="ao"></button><button class="bt g" id="ac">Yoʻq, qolsin</button>
@@ -242,7 +249,7 @@ button:focus-visible,input:focus-visible,a:focus-visible{outline:2px solid var(-
 <script>
 const $=s=>document.querySelector(s);
 const D=["Dushanba","Seshanba","Chorshanba","Payshanba","Juma","Shanba","Yakshanba"],S=["Du","Se","Ch","Pa","Ju","Sh","Ya"],M=["yanvar","fevral","mart","aprel","may","iyun","iyul","avgust","sentyabr","oktyabr","noyabr","dekabr"];
-let PLAN=null,uName="",ro=false,ROI={},POS={},DU={},rt=false,RO=null,goals={},dueN=0,near=false,me=null,BAL={},orders={},pays={},miss={},pos=null,DB=null,shops={},visits={},wk=0,day=(new Date().getDay()+6)%7,flt="all",q="",openId=null,editId=null,logo="",fd=new Set(),cb=null;
+let PLAN=null,trash={},TRASH=false,uName="",ro=false,ROI={},POS={},DU={},rt=false,RO=null,goals={},dueN=0,near=false,me=null,BAL={},orders={},pays={},miss={},pos=null,DB=null,shops={},visits={},wk=0,day=(new Date().getDay()+6)%7,flt="all",q="",openId=null,editId=null,logo="",fd=new Set(),cb=null;
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const pad=n=>String(n).padStart(2,"0"),dk=d=>d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate());
 function monday(){const d=new Date();d.setHours(12,0,0,0);d.setDate(d.getDate()-((d.getDay()+6)%7)+wk*7);return d}
@@ -253,20 +260,33 @@ function toast(t){const e=$("#ts");e.textContent=t;e.classList.add("on");clearTi
 const sb=supabase.createClient("https://wkqtqwwhchmycbkyopmh.supabase.co","sb_publishable_VNlbN1cvm9q7BwlvzvSFFw_DFdSr8Sw");
 let uid=null,syncing=false,again=false;
 const uuid=()=>crypto.randomUUID?crypto.randomUUID():"xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g,c=>{const r=Math.random()*16|0;return(c=="x"?r:r&3|8).toString(16)});
-function idb(){return new Promise(r=>{try{const o=indexedDB.open("marshrut_"+uid,3);o.onupgradeneeded=()=>{const d=o.result;["shops","visits","orders","pays"].forEach(n=>d.objectStoreNames.contains(n)||d.createObjectStore(n));d.objectStoreNames.contains("q")||d.createObjectStore("q",{autoIncrement:true})};o.onsuccess=()=>r(o.result);o.onerror=()=>r(null)}catch(e){r(null)}})}
+function idb(){return new Promise(r=>{try{const o=indexedDB.open("marshrut_"+uid,4);o.onupgradeneeded=()=>{const d=o.result;["shops","visits","orders","pays","trash"].forEach(n=>d.objectStoreNames.contains(n)||d.createObjectStore(n));d.objectStoreNames.contains("q")||d.createObjectStore("q",{autoIncrement:true})};o.onsuccess=()=>r(o.result);o.onerror=()=>r(null)}catch(e){r(null)}})}
 function put(st,k,v){try{if(!DB)return;const o=DB.transaction(st,"readwrite").objectStore(st);v===undefined?o.delete(k):o.put(v,k)}catch(e){}}
 function all(st){return new Promise(r=>{try{const g=DB.transaction(st).objectStore(st).getAll();g.onsuccess=()=>r(g.result);g.onerror=()=>r([])}catch(e){r([])}})}
 function qall(){return new Promise(r=>{const a=[];try{const c=DB.transaction("q").objectStore("q").openCursor();c.onsuccess=()=>{const x=c.result;if(x){a.push({k:x.key,v:x.value});x.continue()}else r(a)};c.onerror=()=>r(a)}catch(e){r(a)}})}
 function repl(st,rows,kf){return new Promise(r=>{try{const t=DB.transaction(st,"readwrite"),o=t.objectStore(st);o.clear();rows.forEach(x=>o.put(x,kf(x)));t.oncomplete=()=>r();t.onerror=()=>r()}catch(e){r()}})}
-async function st(ok){if(!DB)return;const n=(await qall()).length;$("#sy").textContent=!navigator.onLine?"· oflayn":ok===false?"· ⚠ qayta uriniladi":n?"· "+n+" ta kutmoqda":"· ✓ saqlangan"}
+async function st(ok){
+ if(!DB)return;
+ const n=(await qall()).length;
+ $("#sy").textContent=!navigator.onLine?"· oflayn":ok===false?"· ⚠ qayta uriniladi":n?"· "+n+" ta kutmoqda":"· ✓ saqlangan";
+ let ts=0;try{ts=+localStorage.getItem("pend_"+uid)||0;if(!n){localStorage.removeItem("pend_"+uid);ts=0}else if(!ts){ts=Date.now();localStorage.setItem("pend_"+uid,String(ts))}}catch(e){}
+ const age=ts?Date.now()-ts:0,b=$("#syb");
+ if(n&&age>10*60*1000){b.hidden=false;b.textContent=age>864e5?"⚠ Maʼlumotlaringiz "+Math.floor(age/864e5)+" kundan beri faqat telefonda! Internetga ulaning ("+n+" ta oʻzgarish yuborilmagan). Bosing: qayta urinish":"⏳ "+n+" ta oʻzgarish hali serverga yuborilmagan. Internetga ulaning. Bosing: qayta urinish"}
+ else b.hidden=true;
+}
 function out(t,op,d){try{DB.transaction("q","readwrite").objectStore("q").add({t,op,d})}catch(e){}st();sync()}
 async function page(tb,f,ob){let a=[],i=0;for(;;){let b=sb.from(tb).select("*");(ob||["id"]).forEach(c=>{b=b.order(c)});if(f)b=f(b);const{data,error}=await b.range(i,i+999);if(error)throw error;a=a.concat(data);if(data.length<1000)return a;i+=1000}}
 async function pullAll(){
  const since=dk(new Date(Date.now()-60*864e5));
- const sh=await page("shops"),vs=await page("visits",b=>b.gte("visit_date",since));
+ const sh0=await page("shops"),vs=await page("visits",b=>b.gte("visit_date",since));
  const od=(await page("orders")).map(x=>({id:x.id,shop_id:x.shop_id,amount:+x.total,note:x.note,due:x.due_date||null,t:Date.parse(x.created_at)}));
  const py=(await page("payments")).map(x=>({id:x.id,shop_id:x.shop_id,amount:+x.amount,note:x.note,t:Date.parse(x.created_at)}));
  if((await qall()).length)return;
+ const sh=sh0.filter(x=>!x.deleted_at),tr=sh0.filter(x=>x.deleted_at);
+ tr.forEach(x=>x.t=Date.parse(x.created_at));
+ await repl("trash",tr,x=>x.id);trash={};tr.forEach(x=>trash[x.id]=x);
+ const pr=await sb.from("shops").select("deleted_at").limit(1);TRASH=!pr.error;try{localStorage.setItem("trashok_"+uid,TRASH?"1":"")}catch(e){}
+ purgeTrash();
  let pp=null;try{pp=await page("shop_pos",null,["shop_id","day"])}catch(e){}
  const gd=(await sb.from("agent_goals").select("*")).data;
  if(gd){gd.forEach(g=>goals[g.month]={sales:+g.sales,visits:g.visits});saveGoals()}
@@ -455,30 +475,32 @@ function save(again){
  if(!editId&&roomLeft()<=0)return toast(limMsg());
  const s=editId?shops[editId]:{id:uuid(),t:Date.now()};
  Object.assign(s,{name:n,phone:$("#fp").value.trim(),logo,days:[...fd].sort(),address:$("#fa").value.trim(),note:$("#fnt").value.trim(),lat:pos?pos.lat:null,lng:pos?pos.lng:null});
- shops[s.id]=s;put("shops",s.id,s);out("shop","up",{id:s.id,name:s.name,phone:s.phone,logo:s.logo||null,days:s.days,address:s.address||null,note:s.note||null,lat:s.lat==null?null:s.lat,lng:s.lng==null?null:s.lng});
+ shops[s.id]=s;put("shops",s.id,s);out("shop","up",shopPay(s));
  if(again&&!editId){toast("Saqlandi");$("#fn").value="";$("#fp").value="";$("#fa").value="";$("#fnt").value="";pos=null;logo="";paintForm();$("#fn").focus()}
  else $("#fm").hidden=true;
  render();
 }
 $("#sv").onclick=()=>save(false);
 $("#sa").onclick=()=>save(true);
-$("#del").onclick=()=>ask("Doʻkon oʻchirilsinmi?","Bu doʻkon barcha kunlardan oʻchadi.","Ha, oʻchirilsin",()=>{const id=editId;delete shops[id];put("shops",id);out("shop","del",{id});$("#fm").hidden=true;openId=null;render()});
+$("#del").onclick=()=>ask("Doʻkon oʻchirilsinmi?",TRASH?"Doʻkon «Oʻchirilganlar qutisi»ga tushadi, 30 kun ichida qaytarish mumkin.":"Bu doʻkon va uning qarz, sotuv maʼlumotlari butunlay oʻchadi.","Ha, oʻchirilsin",()=>{delShop(editId);$("#fm").hidden=true;openId=null;render()});
 
 async function boot(){
  const{data:{session}}=await sb.auth.getSession();
  if(!session){$("#lo").hidden=false;return}
  uid=session.user.id;$("#lo").hidden=true;
+ try{navigator.storage&&navigator.storage.persist&&navigator.storage.persist()}catch(e){}
  DB=await idb();
  if(DB){
   (await all("shops")).forEach(x=>shops[x.id]=x);
   (await all("visits")).forEach(x=>{const k=x.visit_date+"|"+x.shop_id;if(x.status=="missed")miss[k]=x;else visits[k]=1});
-  (await all("orders")).forEach(x=>orders[x.id]=x);(await all("pays")).forEach(x=>pays[x.id]=x);
+  (await all("orders")).forEach(x=>orders[x.id]=x);(await all("pays")).forEach(x=>pays[x.id]=x);(await all("trash")).forEach(x=>trash[x.id]=x);
  }
  render();st();
  try{PLAN=JSON.parse(localStorage.getItem("plan_"+uid))}catch(e){}
  try{goals=JSON.parse(localStorage.getItem("goals_"+uid))||{}}catch(e){goals={}}
  try{POS=JSON.parse(localStorage.getItem("pos_"+uid))||{}}catch(e){POS={}}
  try{uName=localStorage.getItem("name_"+uid)||""}catch(e){}
+ try{TRASH=localStorage.getItem("trashok_"+uid)=="1"}catch(e){}
  try{if(!localStorage.getItem("guide_"+uid))setTimeout(showGuide,500)}catch(e){}
  paintPlan();
  if(navigator.onLine){
@@ -696,6 +718,53 @@ function confetti(){
  const P=Array.from({length:140},()=>({x:w/2,y:h*.55,vx:(Math.random()-.5)*14,vy:-Math.random()*16-4,s:4+Math.random()*5,c:cols[Math.random()*5|0],r:Math.random()*6}));
  let t=0;(function f(){x.clearRect(0,0,w,h);P.forEach(p=>{p.vy+=.45;p.x+=p.vx;p.y+=p.vy;p.r+=.2;x.fillStyle=p.c;x.save();x.translate(p.x,p.y);x.rotate(p.r);x.fillRect(-p.s/2,-p.s/2,p.s,p.s*.6);x.restore()});if(++t<130)requestAnimationFrame(f);else c.remove()})();
 }
+const shopPay=x=>({id:x.id,name:x.name,phone:x.phone,logo:x.logo||null,days:x.days,address:x.address||null,note:x.note||null,lat:x.lat==null?null:x.lat,lng:x.lng==null?null:x.lng});
+function delShop(id){
+ const x=shops[id];if(!x)return;
+ delete shops[id];put("shops",id);
+ if(TRASH){const t={...x,deleted_at:new Date().toISOString()};trash[id]=t;put("trash",id,t);out("shop","up",{...shopPay(x),deleted_at:t.deleted_at});toast("Doʻkon qutiga tushdi (30 kun saqlanadi)")}
+ else out("shop","del",{id});
+}
+function restoreShop(id){
+ const x=trash[id];if(!x)return;
+ if(roomLeft()<=0)return toast(limMsg());
+ delete trash[id];put("trash",id);
+ const r={...x};delete r.deleted_at;shops[id]=r;put("shops",id,r);
+ out("shop","up",{...shopPay(r),deleted_at:null});
+ paintTr();render();toast("Doʻkon qaytarildi");
+}
+function purgeOne(id){delete trash[id];put("trash",id);out("shop","del",{id})}
+function purgeTrash(){Object.values(trash).filter(x=>Date.now()-Date.parse(x.deleted_at)>30*864e5).forEach(x=>purgeOne(x.id))}
+function paintTr(){
+ const L=Object.values(trash).sort((a,b)=>Date.parse(b.deleted_at)-Date.parse(a.deleted_at));
+ $("#trl").innerHTML=L.length?L.map(x=>{const d=new Date(x.deleted_at),left=Math.max(0,30-Math.floor((Date.now()-d)/864e5));return `<div class="rw" style="cursor:default;flex-wrap:wrap"><span><b>${esc(x.name)}</b><br><small style="color:var(--mu)">${pad(d.getDate())}.${pad(d.getMonth()+1)} · ${left} kun qoldi</small></span><span style="display:flex;gap:6px"><button class="ch" data-r="${x.id}">Qaytarish</button><button class="ch" data-p="${x.id}" style="color:var(--dg)">Butunlay</button></span></div>`}).join(""):`<p class="em">${TRASH?"Quti boʻsh":"Quti server yangilanishidan keyin ishlaydi"}</p>`;
+}
+$("#trb").onclick=()=>{paintTr();$("#tr").hidden=false};
+$("#trc").onclick=()=>{$("#tr").hidden=true};
+$("#trl").onclick=e=>{
+ const r=e.target.closest("[data-r]"),q=e.target.closest("[data-p]");
+ if(r)restoreShop(r.dataset.r);
+ else if(q){const id=q.dataset.p;ask("Butunlay oʻchirilsinmi?","Qaytarib boʻlmaydi.","Ha, butunlay",()=>{purgeOne(id);paintTr()})}
+};
+async function exportAll(){
+ try{await loadX()}catch(e){return toast("Internetni tekshiring (kutubxona yuklanishi kerak)")}
+ BAL=bal();
+ const nm=id=>(shops[id]||trash[id]||{}).name||"(oʻchirilgan)";
+ const fd=t=>{const d=new Date(t);return d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate())+" "+pad(d.getHours())+":"+pad(d.getMinutes())};
+ const A=[["Nomi","Telefon","Manzil","Kun","Kenglik","Uzunlik","Izoh","Qarz (soʻm)"]].concat(Object.values(shops).sort((a,b)=>a.t-b.t).map(x=>[x.name,x.phone,x.address||"",x.days.map(i=>S[i]).join(", "),x.lat==null?"":x.lat,x.lng==null?"":x.lng,x.note||"",BAL[x.id]||0]));
+ const B=[["Sana","Doʻkon","Summa (soʻm)","Toʻlov muddati","Izoh"]].concat(Object.values(orders).sort((a,b)=>a.t-b.t).map(o=>[fd(o.t),nm(o.shop_id),o.amount,o.due||"",o.note||""]));
+ const C=[["Sana","Doʻkon","Summa (soʻm)","Izoh"]].concat(Object.values(pays).sort((a,b)=>a.t-b.t).map(o=>[fd(o.t),nm(o.shop_id),o.amount,o.note||""]));
+ const V=Object.keys(visits).map(k=>[k.slice(0,10),nm(k.slice(11)),"Bordi",""]).concat(Object.entries(miss).map(([k,m])=>[k.slice(0,10),nm(k.slice(11)),"Bormadi",m.reason||""])).sort((a,b)=>a[0]<b[0]?1:-1);
+ const wb=XLSX.utils.book_new();
+ [["Dokonlar",A],["Sotuvlar",B],["Tolovlar",C],["Tashriflar",[["Sana","Doʻkon","Holat","Sabab"]].concat(V)]].forEach(x=>XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(x[1]),x[0]));
+ XLSX.writeFile(wb,"Routix_zaxira_"+dk(new Date())+".xlsx");
+ try{localStorage.setItem("bk_"+uid,String(Date.now()))}catch(e){}
+ toast("Zaxira yuklandi: "+(A.length-1)+" doʻkon, "+(B.length-1)+" sotuv");
+}
+$("#exb").onclick=exportAll;
+$("#syb").onclick=()=>sync(true);
+setInterval(()=>{if(navigator.onLine&&uid){sync();st()}},60000);
+document.addEventListener("visibilitychange",()=>{if(document.visibilityState=="visible")sync()});
 const fm=n=>Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g," ")+" soʻm";
 function bal(){const b={};for(const o of Object.values(orders))b[o.shop_id]=(b[o.shop_id]||0)+o.amount;for(const o of Object.values(pays))b[o.shop_id]=(b[o.shop_id]||0)-o.amount;return b}
 let smId=null,rpP="d";
@@ -959,7 +1028,7 @@ $("#gb").onclick=showGuide;
 /* ---- pastki menyu ---- */
 $("#bh").onclick=()=>{wk=0;day=(new Date().getDay()+6)%7;flt="all";q="";$("#sq").value="";openId=null;render();window.scrollTo({top:0,behavior:"smooth"})};
 $("#mapb").onclick=openMap2;
-$("#mnb").onclick=()=>{$("#mn").hidden=false};
+$("#mnb").onclick=()=>{let t=0;try{t=+localStorage.getItem("bk_"+uid)||0}catch(e){}const d=t?Math.floor((Date.now()-t)/864e5):-1;$("#bkd").textContent=t?(d<=0?"Oxirgi zaxira: bugun":"Oxirgi zaxira: "+d+" kun oldin"):"Hali zaxira olinmagan";$("#mn").hidden=false};
 $("#mnc").onclick=()=>{$("#mn").hidden=true};
 $("#mn").onclick=e=>{if(e.target.closest("button")&&e.target.id!="mnc")$("#mn").hidden=true};
 boot();
